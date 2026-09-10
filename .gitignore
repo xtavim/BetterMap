@@ -367,5 +367,4 @@ FodyWeavers.xsd
 
 # Thunderstore specific
 Thunderstore/*.zip
-Thunderstore/icon.png
 Thunderstore/plugins/
