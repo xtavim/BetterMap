@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using HarmonyLib;
+using BetterMap.Scripts;
 using UnityEngine;
 
 namespace BetterMap.Scripts.Creatures
@@ -51,13 +51,6 @@ namespace BetterMap.Scripts.Creatures
         private static readonly List<Character> _characters = new List<Character>();
 
         private static float _nextRefresh;
-
-        // UpdatePins only runs when Minimap decides a redraw is needed. Moving the player sets that
-        // every frame, but standing still sets nothing, so pins would only be redrawn by our own
-        // refresh and creatures visibly stepped twice a second. Vanilla's player pins raise the same
-        // flag when a position changes, and this does the same.
-        private static readonly AccessTools.FieldRef<Minimap, bool> PinUpdateRequired =
-            AccessTools.FieldRefAccess<Minimap, bool>("m_pinUpdateRequired");
 
         // Oddities that are Characters but not creatures anyone tracks: a build piece, and the
         // later phases of a boss that are spawned as separate characters mid fight.
@@ -176,7 +169,7 @@ namespace BetterMap.Scripts.Creatures
                 moved = true;
             }
 
-            if (moved) PinUpdateRequired(Minimap.instance) = true;
+            if (moved) MapPins.RequestRedraw();
         }
 
         private static bool ShouldTrack(Character creature)
@@ -307,19 +300,12 @@ namespace BetterMap.Scripts.Creatures
         }
 
         /// <summary>
-        /// Size and colour, reapplied after Minimap.UpdatePins.
-        ///
-        /// Neither survives on its own. UpdatePins writes every pin's colour on every pass, so a
-        /// tint set once is washed straight back out, and it sizes a pin only in the frame it
-        /// builds the marker, from a size the game picks. Both have to be set here to hold.
+        /// Colour, reapplied after Minimap.UpdatePins, which writes every pin's colour on every pass
+        /// and would otherwise wash the tint straight back out.
         /// </summary>
         public static void RestylePins()
         {
             if (_tracked.Count == 0 || Minimap.instance == null) return;
-
-            var map = Minimap.instance;
-            var size = (map.m_mode == Minimap.MapMode.Large ? map.m_pinSizeLarge : map.m_pinSizeSmall)
-                       * Plugin.creatureIconScale.Value;
 
             var tintTamed = Plugin.tintTamedCreatures.Value;
             var tintHostile = Plugin.tintHostileCreatures.Value;
@@ -328,15 +314,7 @@ namespace BetterMap.Scripts.Creatures
             {
                 var tracked = pair.Value;
                 var pin = tracked.Pin;
-                if (pin?.m_uiElement == null) continue;
-
-                if (!Mathf.Approximately(pin.m_uiElement.rect.width, size))
-                {
-                    pin.m_uiElement.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size);
-                    pin.m_uiElement.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size);
-                }
-
-                if (pin.m_iconElement == null) continue;
+                if (pin?.m_iconElement == null) continue;
 
                 // Anything left alone keeps the white UpdatePins just gave it, which is what a
                 // creature that is neither tamed nor out for blood should look like.

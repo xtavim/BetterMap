@@ -1,5 +1,5 @@
+using BetterMap.Scripts;
 using HarmonyLib;
-using UnityEngine;
 
 namespace BetterMap.Scripts.Map
 {
@@ -18,6 +18,16 @@ namespace BetterMap.Scripts.Map
         private static void Minimap_UpdateExplore_Prefix(Minimap __instance)
         {
             __instance.m_exploreRadius = Plugin.explorationRadius.Value;
+        }
+
+        /// <summary>
+        /// Every pin on the map is resized here, the game's included, because this is the only point
+        /// at which a size sticks.
+        /// </summary>
+        [HarmonyPostfix, HarmonyPatch(typeof(Minimap), "UpdatePins")]
+        private static void Minimap_UpdatePins_Postfix()
+        {
+            MapPins.ApplyScale();
         }
 
         /// <summary>

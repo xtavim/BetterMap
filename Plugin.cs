@@ -6,6 +6,7 @@ using ServerSync;
 using BetterMap.Scripts;
 using BetterMap.Scripts.Creatures;
 using BetterMap.Scripts.Map;
+using BetterMap.Scripts.Vehicles;
 using UnityEngine;
 
 namespace BetterMap
@@ -19,11 +20,12 @@ namespace BetterMap
         public static ConfigEntry<bool> showEntityNames;
         public static ConfigEntry<bool> tintTamedCreatures;
         public static ConfigEntry<bool> tintHostileCreatures;
-        public static ConfigEntry<float> creatureIconScale;
 
         // Vehicles
         public static ConfigEntry<bool> showBoats;
         public static ConfigEntry<bool> showCarts;
+        public static ConfigEntry<bool> rotateBoatIcons;
+        public static ConfigEntry<bool> showVehicleNames;
         public static ConfigEntry<float> vehicleRefreshInterval;
 
         // Auto pins
@@ -35,6 +37,7 @@ namespace BetterMap
         // Map
         public static ConfigEntry<int> deathMarkersKept;
         public static ConfigEntry<float> explorationRadius;
+        public static ConfigEntry<float> iconScale;
 
         public static ConfigEntry<bool> debugMode;
         public static ConfigEntry<bool> dumpPrefabs;
@@ -62,6 +65,8 @@ namespace BetterMap
             VegetationDumper.TryDump();
             CreatureTracker.Tick();
             DeathMarkers.Tick();
+            VehicleTracker.Tick();
+            VehicleIndex.Tick();
         }
 
         private ConfigEntry<T> ConfigSync<T>(string group, string name, T value, ConfigDescription description,
@@ -99,11 +104,6 @@ namespace BetterMap
                 new ConfigDescription(
                     "Show a name under every creature pin. Creatures with no trophy icon, and tamed creatures that have been given a name, always show theirs regardless of this setting."));
 
-            creatureIconScale = ConfigSync("Creatures", "Creature Icon Scale", 1f,
-                new ConfigDescription(
-                    "Size of creature icons, as a multiple of a normal pin. 1 is the size of a vanilla pin, 32 pixels on the minimap and 48 on the map.",
-                    new AcceptableValueRange<float>(0.5f, 3f)));
-
             tintTamedCreatures = ConfigSync("Creatures", "Tint Tamed Creatures", true,
                 new ConfigDescription(
                     "Tint the pins of tamed creatures green so they stand out from the wildlife."));
@@ -116,11 +116,19 @@ namespace BetterMap
 
             showBoats = ConfigSync("Vehicles", "Show Boats", true,
                 new ConfigDescription(
-                    "Show boats on the map, rotated to their heading. Boats are tracked anywhere in the world, not only near the player."));
+                    "Show boats on the map. Boats are found anywhere in the world, not only near you, which is what makes one you left adrift findable. Playing alone or hosting, that means every boat there is. As a guest on a server you get the ones in every area you have loaded since connecting, and a boat far away sits where it was when you were last near it."));
 
             showCarts = ConfigSync("Vehicles", "Show Carts", true,
                 new ConfigDescription(
-                    "Show carts on the map, wherever they are in the world."));
+                    "Show carts on the map, wherever you left them."));
+
+            rotateBoatIcons = ConfigSync("Vehicles", "Rotate Boat Icons", true,
+                new ConfigDescription(
+                    "Turn boat icons to point the way the boat is facing. While you are sailing, this also replaces the game's own boat marker so both look the same."));
+
+            showVehicleNames = ConfigSync("Vehicles", "Show Vehicle Names", true,
+                new ConfigDescription(
+                    "Show what each vehicle is under its icon, so a raft can be told from a longship."));
 
             vehicleRefreshInterval = ConfigSync("Vehicles", "Vehicle Refresh Interval", 5f,
                 new ConfigDescription(
@@ -160,6 +168,11 @@ namespace BetterMap
                 new ConfigDescription(
                     "How much of the map is uncovered as you walk, in meters. 100 is the vanilla value.",
                     new AcceptableValueRange<float>(20f, 500f)));
+
+            iconScale = ConfigSync("Map", "Icon Scale", 1.25f,
+                new ConfigDescription(
+                    "Size of every pin on the map, as a multiple of its normal size. 1 leaves the game's own size, 32 pixels on the minimap and 48 on the map.",
+                    new AcceptableValueRange<float>(0.5f, 3f)));
 
             debugMode = ConfigSync("Debug", "Debug Mode", false,
                 new ConfigDescription(

@@ -102,10 +102,22 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <EmbeddedResource Include="assets\boat.png" />
+        <EmbeddedResource Include="assets\cart.png" />
+    </ItemGroup>
+    <ItemGroup>
         <Compile Include="Plugin.cs" />
+        <Compile Include="scripts\Icons.cs" />
+        <Compile Include="scripts\MapPins.cs" />
         <Compile Include="scripts\Creatures\CreatureIcons.cs" />
         <Compile Include="scripts\Creatures\CreatureTracker.cs" />
         <Compile Include="scripts\Creatures\CreaturePatches.cs" />
+        <Compile Include="scripts\Vehicles\VehicleKinds.cs" />
+        <Compile Include="scripts\Vehicles\VehicleMemory.cs" />
+        <Compile Include="scripts\Vehicles\VehicleIndex.cs" />
+        <Compile Include="scripts\Vehicles\VehicleRpc.cs" />
+        <Compile Include="scripts\Vehicles\VehicleTracker.cs" />
+        <Compile Include="scripts\Vehicles\VehiclePatches.cs" />
         <Compile Include="scripts\Map\DeathMarkers.cs" />
         <Compile Include="scripts\Map\MapPatches.cs" />
         <Compile Include="scripts\PrefabDumper.cs" />
