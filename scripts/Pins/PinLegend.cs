@@ -137,8 +137,8 @@ namespace BetterMap.Scripts.Pins
 
             if (extras != null)
             {
-                Anchor(extras, new Vector2(1f, 0.5f), new Vector2(1f, 0f));
-                extras.anchoredPosition = new Vector2(-Margin - vanilla.rect.width - Gap, -vanilla.rect.height / 2f);
+                Anchor(extras, new Vector2(1f, 0.5f), new Vector2(1f, 1f));
+                extras.anchoredPosition = new Vector2(-Margin - vanilla.rect.width - Gap, vanilla.rect.height / 2f);
             }
 
             var toggle = map.m_publicPosition != null ? map.m_publicPosition.transform.parent as RectTransform : null;
