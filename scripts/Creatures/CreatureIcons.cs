@@ -4,17 +4,8 @@ using UnityEngine;
 
 namespace BetterMap.Scripts.Creatures
 {
-    /// <summary>
-    /// Resolves the icon a creature is drawn with: its own trophy.
-    ///
-    /// The trophy is read from the creature's drop list rather than from a table of names, so a
-    /// creature added by a Valheim update or by another mod gets an icon without anything here
-    /// changing. Of the 162 creatures in 1.0.7, 109 have one.
-    /// </summary>
     public static class CreatureIcons
     {
-        // Keyed by prefab name. Null is cached too: a creature with no trophy should be looked up
-        // once, not on every refresh.
         private static readonly Dictionary<string, Sprite> _icons = new Dictionary<string, Sprite>();
 
         public static Sprite Get(Character creature)

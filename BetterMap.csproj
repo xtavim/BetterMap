@@ -100,6 +100,9 @@
         <Reference Include="UnityEngine.CoreModule">
             <HintPath>$(GamePath)\valheim_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath>$(GamePath)\valheim_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Include="assets\ore.png" />
@@ -122,6 +125,7 @@
         <Compile Include="scripts\Pins\PinNames.cs" />
         <Compile Include="scripts\Pins\AutoPins.cs" />
         <Compile Include="scripts\Pins\PortalPins.cs" />
+        <Compile Include="scripts\Pins\PinLegend.cs" />
         <Compile Include="scripts\Pins\NamedPins.cs" />
         <Compile Include="scripts\MapPins.cs" />
         <Compile Include="scripts\Creatures\CreatureIcons.cs" />
@@ -135,8 +139,6 @@
         <Compile Include="scripts\Vehicles\VehiclePatches.cs" />
         <Compile Include="scripts\Map\DeathMarkers.cs" />
         <Compile Include="scripts\Map\MapPatches.cs" />
-        <Compile Include="scripts\PrefabDumper.cs" />
-        <Compile Include="scripts\VegetationDumper.cs" />
         <Compile Include="PluginInfo.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>

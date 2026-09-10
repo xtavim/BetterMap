@@ -6,26 +6,14 @@ using UnityEngine;
 
 namespace BetterMap.Scripts
 {
-    /// <summary>
-    /// Sprites shipped with the mod, drawn for the map rather than borrowed from somewhere else.
-    ///
-    /// The images live inside the assembly, so there are no loose files to lose and nothing to load
-    /// from disk at the wrong moment. Plain Unity does the rest: a texture, the bytes decoded into
-    /// it, and a sprite over the whole thing. No asset bundle, and nothing here needs Jotunn.
-    ///
-    /// Only pins that are not saved can use these. The map stores a pin as name, position, type,
-    /// checked, owner and author, and no sprite, so a saved pin comes back with whatever icon its
-    /// type carries.
-    /// </summary>
     public static class Icons
     {
         private static readonly Dictionary<string, Sprite> _sprites = new Dictionary<string, Sprite>();
 
-        // Called through reflection rather than referenced. The module holding it is built against a
-        // newer standard library than this project targets, so naming it in the project file fails
-        // the build even though the call itself is fine at runtime.
         private static readonly MethodInfo LoadImageMethod = FindLoadImage();
 
+        // Reflected rather than referenced: the module holding LoadImage is built against a newer
+        // standard library than this project targets, so naming it fails the build.
         private static MethodInfo FindLoadImage()
         {
             var type = AccessTools.TypeByName("UnityEngine.ImageConversion");
@@ -38,11 +26,6 @@ namespace BetterMap.Scripts
         public static Sprite Boat => Get("boat.png");
         public static Sprite Cart => Get("cart.png");
 
-        /// <summary>
-        /// One icon per category rather than per resource: at pin size a copper deposit and a silver
-        /// vein are the same shape, and the pin's name already says which is which. Boss altars are
-        /// the exception and keep the game's own boss pin, which every player already reads.
-        /// </summary>
         public static Sprite For(Pins.PinCategory category)
         {
             switch (category)
@@ -81,7 +64,6 @@ namespace BetterMap.Scripts
                     return null;
                 }
 
-                // Size and format are replaced by LoadImage from the file itself.
                 var texture = new Texture2D(2, 2, TextureFormat.RGBA32, mipChain: false)
                 {
                     filterMode = FilterMode.Bilinear,
@@ -121,10 +103,6 @@ namespace BetterMap.Scripts
             return (bool)LoadImageMethod.Invoke(null, args);
         }
 
-        /// <summary>
-        /// Matched on the end of the name rather than the whole of it, because the full name is
-        /// built by the build from the namespace and folder and is not worth depending on.
-        /// </summary>
         private static byte[] Read(string file)
         {
             var assembly = Assembly.GetExecutingAssembly();

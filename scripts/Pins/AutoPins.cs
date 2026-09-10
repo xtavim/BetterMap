@@ -4,19 +4,6 @@ using UnityEngine;
 
 namespace BetterMap.Scripts.Pins
 {
-    /// <summary>
-    /// Pins resources as you come across them.
-    ///
-    /// Detection is a sweep of what the game currently has loaded, on an interval. Objects are read
-    /// through their ZDOs rather than their GameObjects, which is enough for a prefab and a
-    /// position and touches no components.
-    ///
-    /// Places are found the same way. A crypt is not a prefab you can look for, but the game leaves a
-    /// LocationProxy standing where it put one, carrying the location's name on its ZDO, and that
-    /// proxy is spawned when the zone loads. So the same sweep finds both, and a place is discovered
-    /// by being near it rather than by asking the server what the world contains, which would hand
-    /// over every crypt on the map at once.
-    /// </summary>
     public static class AutoPins
     {
         private static readonly AccessTools.FieldRef<ZNetScene, Dictionary<ZDO, ZNetView>> Instances =
@@ -24,14 +11,10 @@ namespace BetterMap.Scripts.Pins
 
         private class Watch
         {
-            // Several rules can share a prefab, the same berry bush in two biomes with two answers.
             public readonly List<PinRules.Rule> Rules = new List<PinRules.Rule>();
 
-            // Set when every rule for this prefab agrees on a category, which is the usual case and
-            // is what lets the record be consulted before the biome.
             public PinCategory? Shared;
 
-            // A place has no prefab of its own to read a name off, so it is named by the curated list.
             public bool IsLocation;
         }
 
@@ -69,6 +52,8 @@ namespace BetterMap.Scripts.Pins
             PinRecord.Flush();
         }
 
+        // A place is not a prefab to look for, but the game leaves a LocationProxy standing where
+        // it put one, carrying the location's name. So one sweep finds objects and places both.
         private static void Sweep()
         {
             var origin = Player.m_localPlayer.transform.position;
@@ -93,7 +78,6 @@ namespace BetterMap.Scripts.Pins
 
                 if (prefab == _proxyHash)
                 {
-                    // A place, named on the proxy the game leaves where it put one.
                     if (!_byLocation.TryGetValue(zdo.GetInt(ZDOVars.s_location, 0), out watch)) continue;
                 }
                 else if (!_byPrefab.TryGetValue(prefab, out watch))
@@ -104,14 +88,8 @@ namespace BetterMap.Scripts.Pins
                 var position = zdo.GetPosition();
                 if ((position - origin).sqrMagnitude > rangeSqr) continue;
 
-                // Nearly everything around you has been pinned already, and the two questions cost
-                // very different amounts: the record is a lookup in a grid, while finding a biome
-                // walks every loaded heightmap looking for the one holding the point. Ask the cheap
-                // one first whenever the answer cannot depend on the biome.
                 if (watch.Shared.HasValue && PinRecord.Has(watch.Shared.Value, position, merge)) continue;
 
-                // The same thing can be worth pinning in one biome and not in another, so the answer
-                // depends on where it stands rather than on what it is.
                 var biome = Heightmap.FindBiome(position);
 
                 foreach (var rule in watch.Rules)
@@ -127,10 +105,6 @@ namespace BetterMap.Scripts.Pins
             }
         }
 
-        /// <summary>
-        /// A portal is not on the curated list: it is something the player built, and it is pinned
-        /// wherever it stands rather than because of the biome it stands in.
-        /// </summary>
         private static void Portal(ZDO zdo, Vector3 origin, float rangeSqr, float merge)
         {
             if (!Plugin.autoPinPortals.Value) return;
@@ -154,7 +128,7 @@ namespace BetterMap.Scripts.Pins
         {
             var name = PinNames.For(rule, nview != null ? nview.gameObject : null);
 
-            var pin = Minimap.instance.AddPin(position, Plugin.AutoPinType, name,
+            var pin = Minimap.instance.AddPin(position, PinLegend.TypeOf(rule.Category), name,
                 save: true, isChecked: false);
 
             var icon = Icons.For(rule.Category);
@@ -170,10 +144,6 @@ namespace BetterMap.Scripts.Pins
             }
         }
 
-        /// <summary>
-        /// Puts the icons back on pins the save brought in. A saved pin keeps no sprite, so without
-        /// this every resource on a reloaded map comes back wearing the same generic marker.
-        /// </summary>
         public static void Restore()
         {
             if (Minimap.instance == null || ZNetScene.instance == null) return;
@@ -184,8 +154,11 @@ namespace BetterMap.Scripts.Pins
 
             foreach (var pin in MapPins.Of(Minimap.instance))
             {
-                if (pin.m_type != Plugin.AutoPinType) continue;
-                if (!PinNames.Category(pin.m_name, out var category)) continue;
+                if (!PinLegend.CategoryOf(pin.m_type, out var category))
+                {
+                    if (pin.m_type != Plugin.AutoPinType) continue;
+                    if (!PinNames.Category(pin.m_name, out category)) continue;
+                }
 
                 var icon = Icons.For(category);
                 if (icon == null || pin.m_icon == icon) continue;
@@ -250,14 +223,6 @@ namespace BetterMap.Scripts.Pins
             }
         }
 
-        /// <summary>
-        /// Says so when a rule can never match anything.
-        ///
-        /// A rule names a prefab or a place, and a name that is neither simply never comes up in the
-        /// sweep: the setting is there, the box is ticked, and nothing is ever pinned. That happened
-        /// to the tar pits, which are places and were written down as objects, and there was nothing
-        /// to see. Checking the names against the game turns a silent nothing into a line in the log.
-        /// </summary>
         private static void Verify()
         {
             var scene = ZNetScene.instance;

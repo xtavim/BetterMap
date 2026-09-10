@@ -3,15 +3,6 @@ using UnityEngine;
 
 namespace BetterMap.Scripts.Vehicles
 {
-    /// <summary>
-    /// The client asks the server where its vehicles are; the server answers.
-    ///
-    /// One path for every mode. Playing alone the request never leaves the machine, because the
-    /// player is the server, so there is no single player branch to keep working separately.
-    ///
-    /// If the server does not have the mod nothing answers, and the map falls back to the vehicles
-    /// near the player. That is a smaller map, not a broken one.
-    /// </summary>
     public static class VehicleRpc
     {
         private const string RequestName = "BetterMap_VehiclesRequest";
@@ -54,7 +45,6 @@ namespace BetterMap.Scripts.Vehicles
 
             foreach (var id in used) package.Write(id);
 
-            // No target: this goes to the server, whoever that is.
             ZRoutedRpc.instance.InvokeRoutedRPC(RequestName, package);
         }
 

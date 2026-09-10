@@ -5,14 +5,6 @@ using UnityEngine;
 
 namespace BetterMap.Scripts.Pins
 {
-    /// <summary>
-    /// Portals, pinned where they stand and named by their tag.
-    ///
-    /// The one thing here that is not ours: the icon. The game already has a portal among its pin
-    /// types, so a portal pin is saved as that type and comes back from the save wearing the right
-    /// picture without anything being put back. Which type it is is found by looking for it rather
-    /// than written down, because the answer is in the map's own icon table.
-    /// </summary>
     public static class PortalPins
     {
         private static readonly AccessTools.FieldRef<Minimap, List<Minimap.SpriteData>> Icons =
@@ -25,19 +17,11 @@ namespace BetterMap.Scripts.Pins
 
         public static Minimap.PinType PinType => _type;
 
-        /// <summary>
-        /// A portal with no tag still deserves a pin, and calling it nothing would leave the map
-        /// showing a picture with no word under it.
-        /// </summary>
         public static string Label(string tag)
         {
             return string.IsNullOrEmpty(tag) ? "$piece_portal" : tag;
         }
 
-        /// <summary>
-        /// Which prefabs are portals, taken from the component rather than a list of names, so one
-        /// added by an update or another mod is picked up without anything here changing.
-        /// </summary>
         public static bool IsPortal(int prefab)
         {
             if (_prefabs == null)
@@ -60,11 +44,8 @@ namespace BetterMap.Scripts.Pins
             return _prefabs.Contains(prefab);
         }
 
-        /// <summary>
-        /// The map's icon table pairs a pin type with the sprite drawn for it, so the portal type is
-        /// whichever one is drawn with the portal. Guessing at the five numbered icons would be a
-        /// guess; this is the map answering for itself.
-        /// </summary>
+        // Found by asking which type the map draws with a portal, rather than guessing among the
+        // five numbered icons.
         private static void FindPinType()
         {
             if (_typeFound || Minimap.instance == null) return;

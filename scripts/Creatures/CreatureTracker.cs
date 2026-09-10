@@ -5,18 +5,6 @@ using UnityEngine;
 
 namespace BetterMap.Scripts.Creatures
 {
-    /// <summary>
-    /// Draws creatures near the player on the minimap and the map.
-    ///
-    /// Creatures are tracked within the radius the map uncovers as you walk, so a pin never sits on
-    /// ground that is still black.
-    ///
-    /// Two passes at different rates. Which creatures have a pin changes slowly and is expensive to
-    /// change, because it scans every loaded character and creates or destroys UI objects, so it
-    /// runs on an interval. Where those pins are changes constantly and costs one assignment each,
-    /// so it runs every frame: Minimap.UpdatePins recomputes screen position from m_pos anyway, and
-    /// leaving m_pos stale between refreshes makes every creature visibly jump.
-    /// </summary>
     public static class CreatureTracker
     {
         private class Tracked
@@ -30,13 +18,6 @@ namespace BetterMap.Scripts.Creatures
             public bool HasIcon;
         }
 
-        /// <summary>
-        /// What a creature's pin should show right now.
-        ///
-        /// None of it is fixed for the creature's lifetime: it can be tamed, a tame can be named or
-        /// renamed, and the name setting can be toggled while the pin is on screen. Taming and
-        /// renaming do not recreate the creature, so nothing rebuilds the pin on its own.
-        /// </summary>
         private struct Style
         {
             public Sprite Icon;
@@ -52,8 +33,6 @@ namespace BetterMap.Scripts.Creatures
 
         private static float _nextRefresh;
 
-        // Oddities that are Characters but not creatures anyone tracks: a build piece, and the
-        // later phases of a boss that are spawned as separate characters mid fight.
         private static readonly HashSet<string> Excluded = new HashSet<string>
         {
             "piece_TrainingDummy",
@@ -83,15 +62,12 @@ namespace BetterMap.Scripts.Creatures
             UpdatePositions();
         }
 
-        // The expensive pass: decide which creatures should have a pin at all.
         private static void Refresh()
         {
             var origin = Player.m_localPlayer.transform.position;
             var range = Plugin.explorationRadius.Value;
             var rangeSqr = range * range;
 
-            // Drop anything that died, was destroyed or walked out of range. A dead creature is not
-            // returned by GetAllCharacters, but its entry here still holds a destroyed reference.
             _leaving.Clear();
 
             foreach (var pair in _tracked)
@@ -110,9 +86,6 @@ namespace BetterMap.Scripts.Creatures
                 Remove(creature);
             }
 
-            // Rebuild any pin whose creature no longer matches what the pin is showing. Without
-            // this a pin only picks up a tame or a rename when the creature happens to walk out of
-            // range and back in, which is what forces the marker to be built again.
             _leaving.Clear();
 
             foreach (var pair in _tracked)
@@ -122,9 +95,6 @@ namespace BetterMap.Scripts.Creatures
                 var style = Describe(pair.Key);
                 var tracked = pair.Value;
 
-                // Whether something is hostile can change under a pin that is otherwise correct,
-                // when a dvergr is provoked. Only the colour depends on it and that is written on
-                // every pass, so this is picked up in place rather than by rebuilding the pin.
                 tracked.Hostile = style.Hostile;
 
                 if (style.Tamed != tracked.Tamed || style.Named != tracked.Named ||
@@ -153,7 +123,6 @@ namespace BetterMap.Scripts.Creatures
             }
         }
 
-        // The cheap pass: one assignment per tracked creature, so they glide rather than step.
         private static void UpdatePositions()
         {
             var moved = false;
@@ -176,15 +145,12 @@ namespace BetterMap.Scripts.Creatures
         {
             if (creature == null || creature.IsDead()) return false;
 
-            // Other players are already handled by the game's own map sharing.
             if (creature.IsPlayer()) return false;
 
-            // Summons that expire on their own: skeletons from a staff, the troll from a totem.
             if (creature.GetComponent<CharacterTimedDestruction>() != null) return false;
 
             var prefab = CreatureIcons.PrefabName(creature.gameObject);
 
-            // Boss spirits, which appear during a fight and are not creatures anyone hunts.
             if (prefab.StartsWith("Aspect_", StringComparison.Ordinal)) return false;
 
             if (Excluded.Contains(prefab)) return false;
@@ -198,9 +164,6 @@ namespace BetterMap.Scripts.Creatures
             var tamed = creature.IsTamed();
             var given = GivenName(creature);
 
-            // A name is only optional when the icon already says what this is. With no trophy the
-            // name is the only identification, and a tame someone has named is the whole point of
-            // tracking it, so both ignore the setting.
             var mustName = icon == null || (tamed && !string.IsNullOrEmpty(given));
             var named = mustName || Plugin.showEntityNames.Value;
 
@@ -211,8 +174,6 @@ namespace BetterMap.Scripts.Creatures
                 Named = named,
                 Hostile = IsHostile(creature, tamed),
 
-                // Left null when no name is drawn, which also keeps the localiser out of the
-                // refresh pass for the ordinary case of an icon and no name.
                 Label = !named
                     ? null
                     : !string.IsNullOrEmpty(given)
@@ -227,7 +188,7 @@ namespace BetterMap.Scripts.Creatures
 
             var pin = Minimap.instance.AddPin(
                 creature.transform.position,
-                Minimap.PinType.Icon3,
+                Pins.PinLegend.CreatureType,
                 style.Named ? style.Label : "",
                 save: false,
                 isChecked: false);
@@ -236,8 +197,6 @@ namespace BetterMap.Scripts.Creatures
 
             if (style.Named)
             {
-                // Minimap.UpdatePins builds and positions the label itself once this exists, on
-                // whichever of the two maps is open.
                 pin.m_NamePinData = new Minimap.PinNameData(pin);
             }
 
@@ -253,15 +212,6 @@ namespace BetterMap.Scripts.Creatures
             };
         }
 
-        /// <summary>
-        /// Whether this creature will come after the player.
-        ///
-        /// Not BaseAI.IsEnemy: that answers whether two creatures fight, and from the player's side
-        /// everything that is not tamed or a dvergr comes back true, deer included. What separates
-        /// them is the AI they were built with. AnimalAI only flees and has no notion of a target,
-        /// so anything carrying it is harmless; MonsterAI hunts, unless it is one of the creatures
-        /// that waits to be provoked and has not been.
-        /// </summary>
         private static bool IsHostile(Character creature, bool tamed)
         {
             if (tamed) return false;
@@ -271,7 +221,6 @@ namespace BetterMap.Scripts.Creatures
 
             if (ai.m_aggravatable && !ai.IsAggravated()) return false;
 
-            // The world modifier that stops creatures attacking at all.
             if (ZoneSystem.instance != null && ZoneSystem.instance.GetGlobalKey(GlobalKeys.PassiveMobs))
                 return false;
 
@@ -299,10 +248,6 @@ namespace BetterMap.Scripts.Creatures
             return string.IsNullOrEmpty(text) ? null : text;
         }
 
-        /// <summary>
-        /// Colour, reapplied after Minimap.UpdatePins, which writes every pin's colour on every pass
-        /// and would otherwise wash the tint straight back out.
-        /// </summary>
         public static void RestylePins()
         {
             if (_tracked.Count == 0 || Minimap.instance == null) return;
@@ -316,8 +261,6 @@ namespace BetterMap.Scripts.Creatures
                 var pin = tracked.Pin;
                 if (pin?.m_iconElement == null) continue;
 
-                // Anything left alone keeps the white UpdatePins just gave it, which is what a
-                // creature that is neither tamed nor out for blood should look like.
                 if (tracked.Tamed)
                 {
                     if (tintTamed) pin.m_iconElement.color = TamedTint;

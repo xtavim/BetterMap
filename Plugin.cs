@@ -15,21 +15,18 @@ namespace BetterMap
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin
     {
-        // Entities
         public static ConfigEntry<bool> showCreatures;
         public static ConfigEntry<float> creatureRefreshInterval;
         public static ConfigEntry<bool> showEntityNames;
         public static ConfigEntry<bool> tintTamedCreatures;
         public static ConfigEntry<bool> tintHostileCreatures;
 
-        // Vehicles
         public static ConfigEntry<bool> showBoats;
         public static ConfigEntry<bool> showCarts;
         public static ConfigEntry<bool> rotateBoatIcons;
         public static ConfigEntry<bool> showVehicleNames;
         public static ConfigEntry<float> vehicleRefreshInterval;
 
-        // Auto pins
         public static ConfigEntry<bool> autoPin;
         public static ConfigEntry<bool> autoPinPortals;
         public static ConfigEntry<bool> nameTraderPins;
@@ -37,21 +34,13 @@ namespace BetterMap
         public static ConfigEntry<float> autoPinMergeDistance;
         public static ConfigEntry<float> autoPinInterval;
 
-        /// <summary>
-        /// The pin type every automatic pin is saved as. It decides the icon a pin falls back to
-        /// when the save brings it in without one, and which box on the map's filter bar hides it,
-        /// so putting them all on one type hands the player a switch for the lot without us building
-        /// any UI.
-        /// </summary>
         public const Minimap.PinType AutoPinType = Minimap.PinType.Icon3;
 
-        // Map
         public static ConfigEntry<int> deathMarkersKept;
         public static ConfigEntry<float> explorationRadius;
         public static ConfigEntry<float> iconScale;
 
         public static ConfigEntry<bool> debugMode;
-        public static ConfigEntry<bool> dumpPrefabs;
         public static ConfigEntry<bool> forgetPinned;
 
         public new static readonly ManualLogSource Logger =
@@ -74,7 +63,6 @@ namespace BetterMap
 
         private void Update()
         {
-            VegetationDumper.TryDump();
             CreatureTracker.Tick();
             DeathMarkers.Tick();
             VehicleTracker.Tick();
@@ -102,8 +90,6 @@ namespace BetterMap
                     "If enabled, the configuration is locked and can be changed by server admins only."));
             configSync.AddLockingConfigEntry(serverConfigLocked);
 
-            // Creatures ------------------------------------------------------
-
             showCreatures = ConfigSync("Creatures", "Show Creatures", true,
                 new ConfigDescription(
                     "Show creatures on the minimap and the map, using their trophy as the icon."));
@@ -125,8 +111,6 @@ namespace BetterMap
                 new ConfigDescription(
                     "Tint red the pins of creatures that will attack you on sight. Only applies to creatures with no trophy to use as an icon, which are drawn with a plain pin: a creature drawn as its own trophy is already recognisable."));
 
-            // Vehicles -------------------------------------------------------
-
             showBoats = ConfigSync("Vehicles", "Show Boats", true,
                 new ConfigDescription(
                     "Show boats on the map. Boats are found anywhere in the world, not only near you, which is what makes one you left adrift findable. Playing alone or hosting, that means every boat there is. As a guest on a server you get the ones in every area you have loaded since connecting, and a boat far away sits where it was when you were last near it."));
@@ -147,8 +131,6 @@ namespace BetterMap
                 new ConfigDescription(
                     "How often, in seconds, vehicles anywhere in the world are looked up. Vehicles near the player follow them continuously.",
                     new AcceptableValueRange<float>(1f, 60f)));
-
-            // Auto pins ------------------------------------------------------
 
             autoPin = ConfigSync("Auto Pins", "Enable", true,
                 new ConfigDescription(
@@ -176,16 +158,11 @@ namespace BetterMap
                     "Do not place an automatic pin within this many meters of one that is already there, so walking past the same deposit does not stack pins on it.",
                     new AcceptableValueRange<float>(1f, 50f)));
 
-            // Map ------------------------------------------------------------
-
             deathMarkersKept = ConfigSync("Map", "Death Markers Kept", 3,
                 new ConfigDescription(
                     "How many of your death markers to keep on the map. The game drops a marker where you died but never saves it, so without this they are gone the next time you load the world.",
                     new AcceptableValueRange<int>(1, 20)));
 
-            // Also the radius creatures are tracked within, deliberately not mentioned: keeping the
-            // two the same is what stops a creature being pinned on ground that is still black, and
-            // it is one less number for anyone to get wrong.
             explorationRadius = ConfigSync("Map", "Exploration Radius", 100f,
                 new ConfigDescription(
                     "How much of the map is uncovered as you walk, in meters. 100 is the vanilla value.",
@@ -206,18 +183,10 @@ namespace BetterMap
                 new ConfigDescription(
                     "Once, on the next world you load, throw away this character's record of where it has already pinned, so everything is pinned again. Turn it back off afterwards. This also undoes every automatic pin you deleted on purpose."), false);
 
-            dumpPrefabs = ConfigSync("Debug", "Dump Prefabs", false,
-                new ConfigDescription(
-                    "Write every harvestable, creature, location and vehicle prefab in the installed game to BetterMap.prefabs.txt next to this config. Runs once per game start. Diagnostic only."), false);
-
             Config.SaveOnConfigSet = true;
             Config.Save();
         }
 
-        /// <summary>
-        /// One checkbox per row of the curated list, grouped by biome. Generated rather than written
-        /// out, so the settings and the list cannot drift apart.
-        /// </summary>
         private void BindPinRules()
         {
             foreach (var rule in PinRules.All)

@@ -6,24 +6,8 @@ using UnityEngine;
 
 namespace BetterMap.Scripts.Map
 {
-    /// <summary>
-    /// Death markers that survive a reload.
-    ///
-    /// The game already drops a pin where you died, but it never reaches the save file: the writer
-    /// skips every pin of type Death, so the markers are gone the next time the world is loaded,
-    /// and within a session they pile up with no limit. The positions are kept here instead, on the
-    /// character, and the pins are rebuilt from them.
-    ///
-    /// This owns every Death pin on the map, so the game's marker and ours cannot end up stacked on
-    /// the same spot. Nothing else creates one: the map refuses that type when a pin is placed by
-    /// hand, and the only other source, the automatic pin for the last death recorded on the
-    /// profile, is switched off in the game itself.
-    /// </summary>
     public static class DeathMarkers
     {
-        // Lives in the character's custom data, which is written out with the character, so markers
-        // follow whoever died rather than the world. Each entry still records the world it happened
-        // in: the same character carries its deaths into every world it visits.
         private const string CustomDataKey = "BetterMap.deaths";
 
         private struct Marker
@@ -42,7 +26,6 @@ namespace BetterMap.Scripts.Map
         {
             if (Player.m_localPlayer == null)
             {
-                // Out of the world. The next one rebuilds from its own character.
                 _rebuilt = false;
                 return;
             }
@@ -53,16 +36,13 @@ namespace BetterMap.Scripts.Map
             Rebuild();
         }
 
-        /// <summary>
-        /// Loading map data clears every pin on the map, and it happens on either side of the
-        /// player being ready depending on how long the world takes to come up. Rather than order
-        /// the two, the rebuild is simply asked for again.
-        /// </summary>
         public static void Invalidate()
         {
             _rebuilt = false;
         }
 
+        // The game's own death pin never reaches the save file: the writer skips every pin of type
+        // Death, so the positions are kept here instead.
         public static void Record(Vector3 pos)
         {
             if (Player.m_localPlayer == null || ZNet.instance == null) return;
@@ -80,10 +60,6 @@ namespace BetterMap.Scripts.Map
             Rebuild();
         }
 
-        /// <summary>
-        /// The same text the game puts on its own death pin, composed here rather than read back
-        /// off that pin so a marker is still labelled if anything stops the game adding it.
-        /// </summary>
         private static string DayLabel()
         {
             if (EnvMan.instance == null || ZNet.instance == null) return "";
@@ -98,7 +74,6 @@ namespace BetterMap.Scripts.Map
 
             var pins = MapPins(map);
 
-            // Backwards: RemovePin takes them out of this same list.
             for (var i = pins.Count - 1; i >= 0; i--)
             {
                 if (pins[i].m_type == Minimap.PinType.Death) map.RemovePin(pins[i]);
@@ -110,16 +85,10 @@ namespace BetterMap.Scripts.Map
             {
                 if (marker.World != world) continue;
 
-                // Not saved with the map: the game would drop it on the way out anyway, and these
-                // are rebuilt from the character instead.
                 map.AddPin(marker.Pos, Minimap.PinType.Death, marker.Label, save: false, isChecked: false);
             }
         }
 
-        /// <summary>
-        /// Keeps the newest few of each world. Counting per world rather than overall stops a run
-        /// of deaths in one world from wiping the markers left in another.
-        /// </summary>
         private static List<Marker> Trim(List<Marker> markers)
         {
             var keep = Plugin.deathMarkersKept.Value;
@@ -151,7 +120,6 @@ namespace BetterMap.Scripts.Map
 
             foreach (var entry in text.Split('|'))
             {
-                // The label is whatever is left, so a separator inside it cannot split the entry.
                 var parts = entry.Split(new[] { ';' }, 5);
                 if (parts.Length < 5) continue;
 
@@ -184,7 +152,6 @@ namespace BetterMap.Scripts.Map
                 }));
             }
 
-            // Left for the game's own save to carry out, which happens on the way to respawning.
             Player.m_localPlayer.m_customData[CustomDataKey] = string.Join("|", parts.ToArray());
         }
 

@@ -2,12 +2,6 @@ using System.Collections.Generic;
 
 namespace BetterMap.Scripts.Vehicles
 {
-    /// <summary>
-    /// Which prefabs are vehicles, taken from the components they carry rather than a list of names,
-    /// so a boat added by an update or by another mod is picked up without anything here changing.
-    ///
-    /// Needed on both sides: the client to draw the right icon, the server to know what to look for.
-    /// </summary>
     public static class VehicleKinds
     {
         public class Kind
@@ -51,9 +45,6 @@ namespace BetterMap.Scripts.Vehicles
                 var boat = prefab.GetComponent<Ship>() != null;
                 if (!boat && prefab.GetComponent<Vagon>() == null) continue;
 
-                // The name the build menu gives the piece, which is what a player calls it. A
-                // dedicated server has no localisation to hand, and does not need one: only the
-                // client ever draws this.
                 var piece = prefab.GetComponent<Piece>();
                 var label = piece != null && !string.IsNullOrEmpty(piece.m_name) && Localization.instance != null
                     ? Localization.instance.Localize(piece.m_name)

@@ -4,20 +4,6 @@ using UnityEngine;
 
 namespace BetterMap.Scripts.Vehicles
 {
-    /// <summary>
-    /// Boats and carts on the map, from two places at once.
-    ///
-    /// Near the player, whoever owns them: taken from the loaded Ship and Vagon instances, which are
-    /// the real objects, so their pins follow them frame by frame while someone is driving.
-    ///
-    /// Anywhere in the world, but only yours: what you built and what you have driven, answered by
-    /// the server. Those do not need to be smooth, because a vehicle nobody has loaded is a vehicle
-    /// nobody is moving.
-    ///
-    /// The split is a decision, not a limitation. A stranger's boat appearing across the map would
-    /// be one you had no way of knowing about, so it is held to the same rule as a creature: close
-    /// enough to see.
-    /// </summary>
     public static class VehicleTracker
     {
         private class Tracked
@@ -58,8 +44,6 @@ namespace BetterMap.Scripts.Vehicles
             if (Minimap.instance == null || Player.m_localPlayer == null) return;
             if (!VehicleKinds.Ready) return;
 
-            // Whether a pin carries a name is decided when it is built rather than written to it
-            // after, so changing the setting throws the pins away and makes them again.
             if (_named != Plugin.showVehicleNames.Value)
             {
                 _named = Plugin.showVehicleNames.Value;
@@ -101,8 +85,6 @@ namespace BetterMap.Scripts.Vehicles
                 }
             }
 
-            // Yours, wherever they are. One that is also loaded is already in from the pass above
-            // and keeps its live position instead of the one the server last wrote.
             foreach (var record in VehicleRpc.Remote)
             {
                 if (_wanted.ContainsKey(record.Id)) continue;
@@ -167,8 +149,6 @@ namespace BetterMap.Scripts.Vehicles
 
                 if (_tracked.TryGetValue(pair.Key, out var existing))
                 {
-                    // One that has just come into range takes over from the position the server
-                    // gave for it, and one that has left goes back to it.
                     existing.Instance = vehicle.Instance;
 
                     if (vehicle.Instance == null)
@@ -182,13 +162,12 @@ namespace BetterMap.Scripts.Vehicles
 
                 var named = _named && !string.IsNullOrEmpty(vehicle.Kind.Label);
 
-                var pin = map.AddPin(vehicle.Pos, Minimap.PinType.Icon0,
+                var pin = map.AddPin(vehicle.Pos, Pins.PinLegend.VehicleType,
                     named ? vehicle.Kind.Label : "", save: false, isChecked: false);
 
                 var icon = vehicle.Kind.IsBoat ? Icons.Boat : Icons.Cart;
                 if (icon != null) pin.m_icon = icon;
 
-                // Minimap.UpdatePins builds and places the label itself once this exists.
                 if (named) pin.m_NamePinData = new Minimap.PinNameData(pin);
 
                 _tracked[pair.Key] = new Tracked
@@ -200,9 +179,6 @@ namespace BetterMap.Scripts.Vehicles
             }
         }
 
-        /// <summary>
-        /// The cheap pass, and the only one that runs on the real objects.
-        /// </summary>
         private static void UpdatePositions()
         {
             var moved = false;
@@ -226,11 +202,6 @@ namespace BetterMap.Scripts.Vehicles
             if (moved) MapPins.RequestRedraw();
         }
 
-        /// <summary>
-        /// Heading, reapplied after Minimap.UpdatePins. A pin's marker is thrown away when it leaves
-        /// the visible part of the map and built again from scratch on the way back, and the game has
-        /// no notion of a rotated pin to rebuild, so the angle has to be put back here.
-        /// </summary>
         public static void RestylePins()
         {
             if (_tracked.Count == 0 || !Plugin.rotateBoatIcons.Value) return;
@@ -240,8 +211,6 @@ namespace BetterMap.Scripts.Vehicles
                 var tracked = pair.Value;
                 if (tracked.Pin == null || tracked.Pin.m_uiElement == null) continue;
 
-                // North is up on the map, and a heading turns clockwise while UI angles turn the
-                // other way.
                 tracked.Pin.m_uiElement.localRotation = Quaternion.Euler(0f, 0f, -tracked.Heading);
             }
         }

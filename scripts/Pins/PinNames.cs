@@ -3,29 +3,12 @@ using UnityEngine;
 
 namespace BetterMap.Scripts.Pins
 {
-    /// <summary>
-    /// What a pin is called, and how it is recognised as ours after a reload.
-    ///
-    /// A saved pin keeps its name, position, type and checked state, and no sprite, so on the way
-    /// back in the icon has to be worked out again. The name is the only thing that can carry that,
-    /// which is safe here because Valheim has no way to rename a pin: placing one asks for a name
-    /// and makes a new pin, and clicking an existing one only ticks it off.
-    ///
-    /// Names are taken from the game rather than written out here. A pickable knows the item it
-    /// gives, a deposit knows what it drops, and those are localisation tokens, so the save holds a
-    /// token and the player reads it in their own language.
-    /// </summary>
     public static class PinNames
     {
         private static Dictionary<string, PinCategory> _categories;
 
-        /// <summary>
-        /// What a pin placed from this rule is called.
-        ///
-        /// The curated name wins when there is one. Some objects carry nothing but a drop table: the
-        /// wild beehive is not the buildable piece and has no name of its own, so read off the object
-        /// it would come out as Honey.
-        /// </summary>
+        // The name is what identifies a pin as ours after a reload, which is safe because Valheim
+        // cannot rename one: placing a pin makes a new one, clicking an existing one only ticks it.
         public static string For(PinRules.Rule rule, GameObject prefab)
         {
             if (!string.IsNullOrEmpty(rule.NameToken)) return rule.NameToken;
@@ -33,19 +16,13 @@ namespace BetterMap.Scripts.Pins
             return For(prefab) ?? rule.Name;
         }
 
-        /// <summary>
-        /// The name for a prefab, or null when nothing sensible can be read off it.
-        /// </summary>
         public static string For(GameObject prefab)
         {
             if (prefab == null) return null;
 
-            // The game's own name for the thing, when it has one. A beehive is a beehive; naming it
-            // after what falls out of it reads as though the honey were lying on the ground.
             var piece = prefab.GetComponent<Piece>();
             if (piece != null && !string.IsNullOrEmpty(piece.m_name)) return piece.m_name;
 
-            // Otherwise it is named for what it gives, which is why anyone is walking towards it.
             var pickable = prefab.GetComponent<Pickable>();
             if (pickable?.m_itemPrefab != null)
             {
@@ -74,8 +51,6 @@ namespace BetterMap.Scripts.Pins
                 if (name != null) return name;
             }
 
-            // World generation places the intact rock, which carries no harvest component at all:
-            // the MineRock lives on the fractured object it swaps to when hit.
             var destructible = prefab.GetComponent<Destructible>();
             if (destructible?.m_spawnWhenDestroyed != null) return For(destructible.m_spawnWhenDestroyed);
 
@@ -85,10 +60,6 @@ namespace BetterMap.Scripts.Pins
             return null;
         }
 
-        /// <summary>
-        /// Which category a pin belongs to, worked out from its name. Built from the same rules and
-        /// the same prefabs the pins were placed from, so the two always agree.
-        /// </summary>
         public static bool Category(string name, out PinCategory category)
         {
             Build();
@@ -111,14 +82,11 @@ namespace BetterMap.Scripts.Pins
             {
                 foreach (var prefabName in rule.Prefabs)
                 {
-                    // A place has no prefab under that name, and is named by the curated list.
                     var prefab = rule.IsLocation ? null : scene.GetPrefab(prefabName);
                     if (prefab == null && !rule.IsLocation) continue;
 
                     var name = For(rule, prefab);
 
-                    // Two rules can land on one name, the same berry in two biomes. They agree on
-                    // the category, which is all this is asked for.
                     categories[name] = rule.Category;
                 }
             }
@@ -136,16 +104,12 @@ namespace BetterMap.Scripts.Pins
             return string.IsNullOrEmpty(shared?.m_name) ? null : shared.m_name;
         }
 
-        /// <summary>
-        /// A deposit drops the rock it was buried in as well as the metal, and the rock comes first:
-        /// taking the first drop names every copper deposit "Stone". The filler is skipped so the
-        /// name lands on what anyone came for.
-        /// </summary>
         private static readonly HashSet<string> Filler = new HashSet<string>
         {
             "Stone", "Wood", "RoundLog", "FineWood", "ElderBark", "YggdrasilWood", "Grausten"
         };
 
+        // A deposit drops the rock it was buried in first, which named every copper deposit Stone.
         private static string DropName(DropTable table)
         {
             if (table?.m_drops == null) return null;
@@ -168,7 +132,6 @@ namespace BetterMap.Scripts.Pins
                 return name;
             }
 
-            // Everything it drops is filler, so that is what it is.
             return filler;
         }
     }

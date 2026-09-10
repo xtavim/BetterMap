@@ -90,43 +90,44 @@ new pin, and clicking an existing one only ticks it off.
   take it away. The record also does the work of not stacking pins, since the
   same deposit is nought metres from itself.
 
-### Our own pin types, still to do
+### Our own pin types
 
-Every automatic pin is saved as `Icon3`, which was chosen because the type is the
-only thing about a pin the save keeps that we can key the filter off. It has a
-cost that shows the first time anyone uses the map's own filter: alt clicking a
-legend icon calls `ToggleIconFilter` on that type, so hiding the player's own
-`Icon3` pins hides all of ours with them, and there is no free type. All
-eighteen already mean something.
+Each category is a pin type of its own, carrying on past the end of the enum,
+because the type is the only thing about a pin the save keeps that the icon and
+the filter can be keyed off. Nothing treats the type as a closed set: it is
+written as a number, read as a number, and looked up in a list.
 
-The fix is to give the categories types of their own, past the end of the enum,
-which also hands the player our icons to place by hand. Nothing about that needs
-Jotunn, but it is the largest piece of UI work in the mod:
+Three things have to agree with the new numbers. `m_visibleIconTypes` is built
+to the length of the enum and indexed straight into, so it is grown first, and
+`AddPin` quietly turns anything past it into a plain pin. `m_icons` pairs a type
+with the sprite drawn for it. And the legend is a column of buttons, one per
+type, which are cloned into the game's own panel so the legend stays one list.
 
-- `m_visibleIconTypes` is `new bool[Enum.GetValues(typeof(PinType)).Length]`, so
-  it has to be resized before a larger value is ever used. `AddPin` refuses
-  anything past its length, and `UpdatePins` indexes it directly.
-- `GetSprite` looks the type up in `m_icons`, a `List<SpriteData>` of type and
-  sprite pairs, so each new type needs an entry.
-- The legend buttons are ordinary UI objects. Cloning one and pointing its two
-  handlers at the new type is plain Unity.
+Creatures and vehicles get a type each but no button. Whether they are drawn is
+a setting, not something the map's filter should reach; sharing a type meant
+hiding the plain pin hid every creature and hiding the campfire hid every boat.
 
-Until then the honest answer is the `Auto Pins > Enable` setting, which is not
-the same thing: it stops us pinning rather than hiding what is pinned.
+Boss altars keep the game's boss pin and portals keep its portal pin. Both exist
+and both already mean that to a player. Which type is the portal is found by
+asking which one the map draws with a portal, not by guessing among the five.
 
-### Named pins, still to do
+Uninstalling is survivable. A saved pin of ours comes back through `AddPin`,
+which finds a type past the end of its array and turns it into a plain pin with
+a warning: the pin stays and loses its picture.
 
-Three cases where a pin should carry a name it can only get from somewhere else.
+### Named pins
 
-- **Traders.** The game pins a trader itself, through `m_locationIcons`, and the
-  pin arrives with no name. It should carry the trader's, so a map with Haldor
-  and the bog witch on it says which is which.
-- **Portals, on placing.** Dropping a portal should pin it straight away, with
-  the vanilla portal icon, which already exists and needs nothing drawn.
-- **Portals, on tagging.** Confirming the Set Tag screen should put that tag on
-  the pin already standing there. Editing the pin in place is the tidy way;
-  removing it and adding it again is acceptable and is what the death markers
-  already do, since nothing about a pin can be changed once its marker is built.
+Three pins that carry a name from somewhere other than themselves.
+
+- **Traders.** The game pins a trader and leaves the pin blank, so the name is
+  put on afterwards, from the location standing at that spot.
+- **Portals.** Pinned by the same sweep that finds everything else, named by
+  their tag. Confirming the Set Tag screen replaces the pin, since a pin's label
+  is built once and never read again.
+- **Every trader at once**, off by default. That one needed no pin: a trader is
+  a placed icon the game already draws once that part of the world exists, and
+  only waits on having been visited, so letting them through early hands the
+  whole job back to the game.
 
 ## Map
 

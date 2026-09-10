@@ -3,17 +3,6 @@ using System.Globalization;
 
 namespace BetterMap.Scripts.Vehicles
 {
-    /// <summary>
-    /// The vehicles this character has driven.
-    ///
-    /// A vehicle you built is already marked as yours: the game writes the builder's player id onto
-    /// the piece when it is placed. Driving one leaves no such trace, so it is recorded here, in the
-    /// character's custom data, the same place the death markers live. Passengers are not counted,
-    /// only whoever took the helm or picked up the cart.
-    ///
-    /// Entries are ZDOIDs, which are stable for as long as the object exists in the world, so they
-    /// still name the right boat after a reload.
-    /// </summary>
     public static class VehicleMemory
     {
         private const string CustomDataKey = "BetterMap.vehicles";
@@ -79,10 +68,6 @@ namespace BetterMap.Scripts.Vehicles
             }
         }
 
-        /// <summary>
-        /// Rewrites this world's entries and leaves other worlds' alone, since one character can
-        /// visit several and a ZDOID only means something in the world it came from.
-        /// </summary>
         private static void Store()
         {
             if (Player.m_localPlayer == null) return;

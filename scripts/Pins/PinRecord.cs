@@ -4,19 +4,6 @@ using UnityEngine;
 
 namespace BetterMap.Scripts.Pins
 {
-    /// <summary>
-    /// Where we have already pinned.
-    ///
-    /// The question before placing a pin is asked here and never of the map. Those are different
-    /// questions the moment a player deletes one of our pins: the map says there is nothing there,
-    /// this says we put something there once and were told to take it away. Walking past again must
-    /// not put it back.
-    ///
-    /// It also does the work of not stacking pins on one another, since the same deposit is nought
-    /// metres from itself and so is caught by the same distance check as its neighbours.
-    ///
-    /// Kept on the character, per world, alongside the death markers and the vehicles driven.
-    /// </summary>
     public static class PinRecord
     {
         private const string CustomDataKey = "BetterMap.pinned";
@@ -28,9 +15,6 @@ namespace BetterMap.Scripts.Pins
             public float Z;
         }
 
-        // Bucketed by a coarse grid so a world with thousands of pins does not turn every check into
-        // a walk of the whole list. Cells are wide enough that a match can only be in the nine
-        // around the point.
         private const float CellSize = 32f;
 
         private static readonly Dictionary<long, List<Entry>> _cells = new Dictionary<long, List<Entry>>();
@@ -41,6 +25,8 @@ namespace BetterMap.Scripts.Pins
 
         public static int Count { get; private set; }
 
+        // Asked instead of the map. Once a player deletes one of our pins the two disagree, and
+        // this is the one that remembers we were told to take it away.
         public static bool Has(PinCategory category, Vector3 position, float within)
         {
             Load();
@@ -83,10 +69,6 @@ namespace BetterMap.Scripts.Pins
             _dirty = true;
         }
 
-        /// <summary>
-        /// Written out in one go rather than on every pin, because a walk through new ground places
-        /// them in bursts and the string is rebuilt whole each time.
-        /// </summary>
         public static void Flush()
         {
             if (!_dirty || !_loaded || Player.m_localPlayer == null) return;
@@ -95,7 +77,6 @@ namespace BetterMap.Scripts.Pins
 
             var parts = new List<string>();
 
-            // Other worlds' entries are carried through untouched: one character can visit several.
             if (Player.m_localPlayer.m_customData.TryGetValue(CustomDataKey, out var text) && !string.IsNullOrEmpty(text))
             {
                 foreach (var entry in text.Split('|'))
@@ -127,10 +108,6 @@ namespace BetterMap.Scripts.Pins
             Player.m_localPlayer.m_customData[CustomDataKey] = string.Join("|", parts.ToArray());
         }
 
-        /// <summary>
-        /// Throws away everything this character remembers pinning, so it all gets pinned again.
-        /// There to test with; a player has no reason for it, and it undoes every pin they deleted.
-        /// </summary>
         public static void Wipe()
         {
             Load();

@@ -18,35 +18,18 @@ namespace BetterMap.Scripts.Pins
         Portal
     }
 
-    /// <summary>
-    /// What can be pinned. Curated by hand and written up in PINS.md, which holds the reasoning for
-    /// every entry; this table is generated from that file so the two cannot drift.
-    ///
-    /// One row is one setting, in the player's terms rather than the game's. Six tar pit prefabs are
-    /// one box called Tar Pits, because that is one thing as far as anyone playing is concerned.
-    ///
-    /// The same thing can be worth pinning in one biome and not in another, so a row is keyed by
-    /// both, and the biome comes from where the object stands rather than from its name.
-    /// </summary>
     public static class PinRules
     {
         public class Rule
         {
             public string Name;
             public string Description;
-
-            /// <summary>
-            /// What a pin made from this is called, when the object itself carries no name worth
-            /// using. Null means the name is read off the object.
-            /// </summary>
             public string NameToken;
             public string[] Prefabs;
             public Heightmap.Biome Biome;
             public PinCategory Category;
             public bool DefaultOn;
             public bool IsLocation;
-
-            /// <summary>Bound at startup, one checkbox per row.</summary>
             public ConfigEntry<bool> Enabled;
         }
 

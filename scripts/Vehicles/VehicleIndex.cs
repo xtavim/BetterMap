@@ -3,17 +3,6 @@ using UnityEngine;
 
 namespace BetterMap.Scripts.Vehicles
 {
-    /// <summary>
-    /// The server's answer to "where are my vehicles".
-    ///
-    /// Only the server holds every ZDO in the world. A client is sent what it has been near, so on
-    /// its own it can never find a boat left in a place it has not visited this session. Asking the
-    /// server removes that difference, and costs nothing in single player, where the player is the
-    /// server and the request never leaves the machine.
-    ///
-    /// Walking the world is slow, so it is done once into a cache, spread over frames, and only when
-    /// somebody has actually asked. Several players asking at the same time share one walk.
-    /// </summary>
     public static class VehicleIndex
     {
         public struct Record
@@ -45,8 +34,6 @@ namespace BetterMap.Scripts.Vehicles
 
         public static void Ask(long peer, long player, HashSet<ZDOID> used)
         {
-            // A walk that has only just finished is as good as a new one, and stops a room full of
-            // players from keeping the server permanently scanning.
             if (!_scanning && Time.time - _scannedAt < Plugin.vehicleRefreshInterval.Value)
             {
                 Answer(new Request { Peer = peer, Player = player, Used = used });
@@ -74,10 +61,6 @@ namespace BetterMap.Scripts.Vehicles
             Scan();
         }
 
-        /// <summary>
-        /// One step per frame. Each step walks up to 400 populated sectors, so a large world takes
-        /// several frames and no single frame pays for the whole thing.
-        /// </summary>
         private static void Scan()
         {
             var kinds = VehicleKinds.All;
@@ -86,7 +69,6 @@ namespace BetterMap.Scripts.Vehicles
             {
                 if (!ZDOMan.instance.GetAllZDOsWithPrefabIterative(kinds[_kindIndex].Prefab, _found, ref _sectorIndex))
                 {
-                    // More sectors to walk for this prefab. Pick it up next frame.
                     return;
                 }
 
@@ -119,7 +101,6 @@ namespace BetterMap.Scripts.Vehicles
                     Pos = zdo.GetPosition(),
                     Heading = zdo.GetRotation().eulerAngles.y,
 
-                    // Written by the game when the piece is placed, so this is the builder.
                     Creator = zdo.GetLong(ZDOVars.s_creator, 0L)
                 });
             }
@@ -127,10 +108,6 @@ namespace BetterMap.Scripts.Vehicles
             _found.Clear();
         }
 
-        /// <summary>
-        /// Answers with what the asker is entitled to and nothing else: what they built, and what
-        /// they have driven. A stranger's boat is not theirs to find from across the world.
-        /// </summary>
         private static void Answer(Request request)
         {
             _matched.Clear();
