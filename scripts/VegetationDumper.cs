@@ -6,6 +6,7 @@ using System.Text;
 using BepInEx;
 using HarmonyLib;
 using UnityEngine;
+using SoftReferenceableAssets;
 
 namespace BetterMap.Scripts
 {
@@ -141,6 +142,11 @@ namespace BetterMap.Scripts
 
                 var line = $"  {loc.m_prefabName,-42} qty {loc.m_quantity,-6} {icon,-12} {unique}".TrimEnd();
 
+                foreach (var content in Contents(loc))
+                {
+                    line += Environment.NewLine + "        " + content;
+                }
+
                 foreach (var biome in Biomes(loc.m_biome))
                 {
                     if (!byBiome.TryGetValue(biome, out var list))
@@ -179,6 +185,78 @@ namespace BetterMap.Scripts
             File.WriteAllText(path, report.ToString());
 
             Plugin.Logger.LogInfo($"VegetationDumper: wrote {path} ({zones.m_locations.Count} locations)");
+        }
+
+        /// <summary>
+        /// What is actually inside a location. Beehives live in Meadows houses, flametal inside
+        /// LeviathanLava, gold inside the frozen trolls: none of that is scattered as vegetation,
+        /// so a location that is only described by its name hides everything worth pinning in it.
+        ///
+        /// The prefab is a soft reference, so it is loaded, walked and released again. Slow, but
+        /// this runs once and only when the dump is switched on.
+        /// </summary>
+        private static IEnumerable<string> Contents(ZoneSystem.ZoneLocation loc)
+        {
+            GameObject asset;
+
+            try
+            {
+                if (loc.m_prefab.Load() != LoadResult.Succeeded || !loc.m_prefab.IsLoaded)
+                {
+                    yield break;
+                }
+
+                asset = loc.m_prefab.Asset;
+            }
+            finally
+            {
+            }
+
+            var harvest = new Dictionary<string, int>();
+            var spawners = new Dictionary<string, int>();
+
+            foreach (var t in asset.GetComponentsInChildren<Transform>(true))
+            {
+                var go = t.gameObject;
+                var name = CleanName(go.name);
+
+                var drops = DescribeDirectHarvest(go);
+                if (drops != null)
+                {
+                    var key = $"{name,-38} {drops}";
+                    harvest[key] = harvest.TryGetValue(key, out var n) ? n + 1 : 1;
+                }
+
+                if (go.GetComponent<SpawnArea>() != null) Count(spawners, name + "  [SpawnArea]");
+                if (go.GetComponent<CreatureSpawner>() != null) Count(spawners, name + "  [CreatureSpawner]");
+                if (go.GetComponent<Container>() != null) Count(spawners, name + "  [Container]");
+                if (go.GetComponent<Vegvisir>() != null) Count(spawners, name + "  [Vegvisir]");
+                if (go.GetComponent<RuneStone>() != null) Count(spawners, name + "  [RuneStone]");
+                if (go.GetComponent<OfferingBowl>() != null) Count(spawners, name + "  [OfferingBowl]");
+            }
+
+            loc.m_prefab.Release();
+
+            foreach (var kv in harvest.OrderByDescending(k => k.Value))
+            {
+                yield return $"x{kv.Value,-4} {kv.Key}";
+            }
+
+            foreach (var kv in spawners.OrderByDescending(k => k.Value))
+            {
+                yield return $"x{kv.Value,-4} {kv.Key}";
+            }
+        }
+
+        private static void Count(Dictionary<string, int> into, string key)
+        {
+            into[key] = into.TryGetValue(key, out var n) ? n + 1 : 1;
+        }
+
+        private static string CleanName(string name)
+        {
+            var i = name.IndexOf("(Clone)", StringComparison.Ordinal);
+            return i < 0 ? name : name.Substring(0, i);
         }
 
         private static IEnumerable<string> Biomes(Heightmap.Biome biome)
