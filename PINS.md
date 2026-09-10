@@ -68,6 +68,22 @@ Beehives are in `WoodHouse1,2,3,4,5,6,7,9,10,11,13` (qty 20 each), `BearCave` (5
 
 ## BlackForest
 
+### Decided
+
+**On by default:** `rock4_copper` (CopperOre) · `MineRock_Tin` (TinOre) · `Beehive` ·
+`BlueberryBush` · `Pickable_Thistle` · `Pickable_SeedCarrot` · `BearCave` · `TrollCave02` ·
+`Crypt2` `Crypt3` `Crypt4`
+
+**Off by default:** `GDKing` (boss altar) · `Pickable_Mushroom` · `Runestone_Greydwarfs` ·
+`Runestone_BlackForest` · `ShipWreck01-04` · `Ruin1` · `Ruin2` · `StoneHouse3` · `StoneHouse4` ·
+`StoneTowerRuins03/07/08/09/10` and the sunk variants · `Greydwarf_camp1` · `Dolmen01-03` ·
+`BigRockClearing`
+
+Crypt entrances are pinned. The no dungeon rule covers what is inside them, not the way in.
+
+`StoneTowerRuins03` is off, but the beehive inside it is still pinned: pins are placed on the
+object, not on the location that happens to contain it.
+
 ### Scattered (vegetation)
 
 | prefab | qty per zone | yields |
