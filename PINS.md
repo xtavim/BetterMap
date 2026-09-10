@@ -9,6 +9,8 @@ Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locati
 - **Dungeon interiors are never pinned.**
 - **Boss altars are off by default.** Vanilla already pins them when you use a vegvisir,
   so pinning them automatically duplicates a mechanic the game already has.
+- At the end of the curation the off-by-default lists get a pruning pass: anything that is
+  simply not worth a checkbox is dropped entirely rather than shipped as an unused config entry.
 - **Anything vanilla already pins is out of scope**, with no config entry at all: traders,
   Hildir's camps, the bog witch, the start temple, the Deep North boss room. Those are the
   locations flagged `icon:always` or `icon:placed` in the dump.
@@ -190,6 +192,18 @@ object, not on the location that happens to contain it.
 ---
 
 ## Mountain
+
+### Decided
+
+**On by default:** `silvervein` (SilverOre) · `MineRock_Obsidian` · `DrakeNest01` (DragonEgg)
+
+**Off by default:** `Dragonqueen` (boss altar) · `AbandonedLogCabin02/03/04` ·
+`StoneTowerRuins04/05` and `_leet` · `MountainWell1` · `DrakeLorestone` · `Runestone_Mountains`
+
+**Out of scope:** `AncientUpgradeStation`, `Hildir_cave`, vanilla pins both.
+
+`silvervein` is one per zone and normally needs a wishbone to find, which makes it the most
+useful pin in the biome.
 
 ### Scattered (vegetation)
 
