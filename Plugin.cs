@@ -4,6 +4,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using ServerSync;
 using BetterMap.Scripts;
+using BetterMap.Scripts.Creatures;
 using UnityEngine;
 
 namespace BetterMap
@@ -57,6 +58,7 @@ namespace BetterMap
         private void Update()
         {
             VegetationDumper.TryDump();
+            CreatureTracker.Tick();
         }
 
         private ConfigEntry<T> ConfigSync<T>(string group, string name, T value, ConfigDescription description,

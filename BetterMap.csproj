@@ -74,6 +74,12 @@
         <Reference Include="SoftReferenceableAssets">
             <HintPath>$(GamePath)/valheim_Data/Managed/SoftReferenceableAssets.dll</HintPath>
         </Reference>
+        <Reference Include="Splatform">
+            <HintPath>$(GamePath)/valheim_Data/Managed/Splatform.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>$(GamePath)/valheim_Data/Managed/UnityEngine.UI.dll</HintPath>
+        </Reference>
         <Reference Include="assembly_valheim">
           <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_valheim_publicized.dll</HintPath>
         </Reference>
@@ -97,6 +103,9 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Plugin.cs" />
+        <Compile Include="scripts\Creatures\CreatureIcons.cs" />
+        <Compile Include="scripts\Creatures\CreatureTracker.cs" />
+        <Compile Include="scripts\Creatures\CreaturePatches.cs" />
         <Compile Include="scripts\PrefabDumper.cs" />
         <Compile Include="scripts\VegetationDumper.cs" />
         <Compile Include="PluginInfo.cs" />
