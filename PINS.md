@@ -9,6 +9,10 @@ Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locati
 - **Dungeon interiors are never pinned.**
 - **Boss altars are off by default.** Vanilla already pins them when you use a vegvisir,
   so pinning them automatically duplicates a mechanic the game already has.
+- **Creature spawn sites are off by default in every biome.** A location whose only content is
+  a runestone and a set of spawners is a creature farm, not a resource site: the value comes
+  from killing what it produces. Locations that merely happen to contain spawners alongside
+  loot or a unique resource are judged on that instead.
 - At the end of the curation the off-by-default lists get a pruning pass: anything that is
   simply not worth a checkbox is dropped entirely rather than shipped as an unused config entry.
 - **Anything vanilla already pins is out of scope**, with no config entry at all: traders,
@@ -140,17 +144,17 @@ object, not on the location that happens to contain it.
 
 ### Decided
 
-**On by default:** `Pickable_SeedTurnip` · `Pickable_Thistle` · `SunkenCrypt4` · `FireHole` ·
-`Runestone_Draugr`
+**On by default:** `Pickable_SeedTurnip` · `Pickable_Thistle` · `SunkenCrypt4`
 
-**Off by default:** `Bonemass` (boss altar) · `mudpile_beacon` · `Pickable_Mushroom` ·
+**Off by default:** `FireHole` and `Runestone_Draugr`, both pure spawn sites ·
+`Bonemass` (boss altar) · `mudpile_beacon` · `Pickable_Mushroom` ·
 `InfestedTree01` · `Grave1` · `SwampHut1-5` and variants · `SwampRuin1/2` · `SwampWell1` ·
 `ShipWreck01-04` · `Runestone_Swamps`
 
 **Out of scope:** `BogWitch_Camp`, vanilla pins it.
 
-`FireHole` is in because surtling cores are gated behind it and there are only 75 per world.
-`Runestone_Draugr` carries three spawners, the same farm pattern as the boars and greydwarfs.
+`FireHole` and `Runestone_Draugr` contain nothing but spawners, so they fall under the spawn
+site rule even though surtling cores are gated behind the fire holes.
 
 ### Scattered (vegetation)
 
