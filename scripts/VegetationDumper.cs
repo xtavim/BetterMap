@@ -220,19 +220,25 @@ namespace BetterMap.Scripts
                 var go = t.gameObject;
                 var name = CleanName(go.name);
 
+                // Anything under a RandomSpawn only appears some of the time, which is the
+                // difference between a fortress that always holds its altar and a house that
+                // sometimes holds a beehive.
+                var random = go.GetComponentInParent<RandomSpawn>();
+                var chance = random != null ? $"  [{random.m_chanceToSpawn:0}% chance]" : "";
+
                 var drops = DescribeDirectHarvest(go);
                 if (drops != null)
                 {
-                    var key = $"{name,-38} {drops}";
+                    var key = $"{name,-38} {drops}{chance}";
                     harvest[key] = harvest.TryGetValue(key, out var n) ? n + 1 : 1;
                 }
 
-                if (go.GetComponent<SpawnArea>() != null) Count(spawners, name + "  [SpawnArea]");
-                if (go.GetComponent<CreatureSpawner>() != null) Count(spawners, name + "  [CreatureSpawner]");
-                if (go.GetComponent<Container>() != null) Count(spawners, name + "  [Container]");
-                if (go.GetComponent<Vegvisir>() != null) Count(spawners, name + "  [Vegvisir]");
-                if (go.GetComponent<RuneStone>() != null) Count(spawners, name + "  [RuneStone]");
-                if (go.GetComponent<OfferingBowl>() != null) Count(spawners, name + "  [OfferingBowl]");
+                if (go.GetComponent<SpawnArea>() != null) Count(spawners, name + "  [SpawnArea]" + chance);
+                if (go.GetComponent<CreatureSpawner>() != null) Count(spawners, name + "  [CreatureSpawner]" + chance);
+                if (go.GetComponent<Container>() != null) Count(spawners, name + "  [Container]" + chance);
+                if (go.GetComponent<Vegvisir>() != null) Count(spawners, name + "  [Vegvisir]" + chance);
+                if (go.GetComponent<RuneStone>() != null) Count(spawners, name + "  [RuneStone]" + chance);
+                if (go.GetComponent<OfferingBowl>() != null) Count(spawners, name + "  [OfferingBowl]" + chance);
             }
 
             loc.m_prefab.Release();
