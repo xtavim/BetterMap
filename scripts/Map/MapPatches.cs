@@ -44,12 +44,14 @@ namespace BetterMap.Scripts.Map
         }
 
         /// <summary>
-        /// Loading map data clears every pin, ours included.
+        /// Loading map data clears every pin and brings the saved ones back, and a saved pin carries
+        /// no sprite, so this is where both of ours get their icons again.
         /// </summary>
         [HarmonyPostfix, HarmonyPatch(typeof(Minimap), "SetMapData")]
         private static void Minimap_SetMapData_Postfix()
         {
             DeathMarkers.Invalidate();
+            Pins.AutoPins.Restore();
         }
     }
 }

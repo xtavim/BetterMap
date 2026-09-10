@@ -33,6 +33,12 @@ namespace BetterMap.Scripts
         /// the marker, and rebuilds that marker whenever the pin leaves the visible part of the map
         /// and comes back, so a size written anywhere else is undone the next time you pan away.
         /// </summary>
+        /// <summary>Every pin currently on the map.</summary>
+        public static List<Minimap.PinData> Of(Minimap map)
+        {
+            return Pins(map);
+        }
+
         public static void ApplyScale()
         {
             var map = Minimap.instance;

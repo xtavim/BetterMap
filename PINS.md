@@ -71,92 +71,82 @@ icon has to be put back after a reload, while the player still reads it in their
 
 ## Everything, one table
 
-`on` means pinned out of the box, `off` ships as an unchecked box. Anything not listed here was
-dropped in the pruning pass and has no config entry at all: the lore runestones, the generic
-container and spawner buildings, the shipwrecks and the infested trees.
+One row is one setting, named as a player would name it rather than as the game names the prefab.
+Six tar pit prefabs are one box called Tar Pits. `on` means pinned out of the box, `off` ships as an
+unchecked box. Anything not listed here was dropped in the pruning pass and has no config entry at
+all: the lore runestones, the generic container and spawner buildings, the shipwrecks and the
+infested trees.
 
-| biome | prefab | category | default | qty | what it is |
-|---|---|---|---|---|---|
-| Meadows | `Beehive` | beehive | **on** |  |  |
-| Meadows | `Eikthyrnir` | boss | off | 3 | OfferingBowl x1 + RuneStone x1 |
-| Meadows | `RaspberryBush` | forage | off | 1-2, 2-3 | Raspberry x1 |
-| Meadows | `Pickable_Flint` | forage | off | 30-30 | Flint x1 |
-| Meadows | `Pickable_Mushroom` | forage | off | 1-2, 3-5, 80-100 | Mushroom x1 |
-| Meadows | `Pickable_Dandelion` | forage | off | 3-5, 40-60, 8-10 | Dandelion x1 |
-| Meadows | `Runestone_Boars` | spawner | off | 50 | CreatureSpawner x9 + RuneStone x1 |
-| BlackForest | `Vegvisir` | vegvisir | **on** | 280 | reveals a boss location on the map |
-| BlackForest | `rock4_copper` | ore | **on** | 0-1 | Stone x1-1, CopperOre x1-1 |
-| BlackForest | `MineRock_Tin` | ore | **on** | 20-20 | TinOre x1-1 |
-| BlackForest | `Beehive` | beehive | **on** |  |  |
-| BlackForest | `BlueberryBush` | forage | **on** | 1-1, 3-5 | Blueberries x1 |
-| BlackForest | `Pickable_Thistle` | forage | **on** | 1-2 | Thistle x1 |
-| BlackForest | `Pickable_SeedCarrot` | forage | **on** | 0-0,5 | CarrotSeeds x3 |
-| BlackForest | `BearCave` | dungeon | **on** | 50 | `Pickable_Mushroom_yellow` -> MushroomYellow x1 + `Beehive` -> Honey x1-3, Que |
-| BlackForest | `TrollCave02` | dungeon | **on** | 200 | `Pickable_Mushroom_yellow` -> MushroomYellow x1 + Container x4 + CreatureSpawn |
-| BlackForest | `Crypt2` | dungeon | **on** | 200 | CreatureSpawner x3 |
-| BlackForest | `Crypt3` | dungeon | **on** | 200 | CreatureSpawner x3 |
-| BlackForest | `Crypt4` | dungeon | **on** | 200 | CreatureSpawner x3 |
-| BlackForest | `GDKing` | boss | off | 4 | OfferingBowl x1 + RuneStone x1 |
-| BlackForest | `Pickable_Mushroom` | forage | off | 1-2, 3-5, 80-100 | Mushroom x1 |
-| BlackForest | `Runestone_Greydwarfs` | spawner | off | 25 | CreatureSpawner x5 + RuneStone x1 |
-| Swamp | `Vegvisir` | vegvisir | **on** | 60 | reveals a boss location on the map |
-| Swamp | `Pickable_SeedTurnip` | forage | **on** | 0-0,5 | TurnipSeeds x3 |
-| Swamp | `Pickable_Thistle` | forage | **on** | 1-2 | Thistle x1 |
-| Swamp | `SunkenCrypt4` | dungeon | **on** | 175 | CreatureSpawner x2 |
-| Swamp | `FireHole` | spawner | off | 75 | CreatureSpawner x3 |
-| Swamp | `Runestone_Draugr` | spawner | off | 50 | CreatureSpawner x3 + RuneStone x1 |
-| Swamp | `Bonemass` | boss | off | 5 | OfferingBowl x1 + RuneStone x1 |
-| Swamp | `mudpile_beacon` | ore | off | 0-5 | IronScrap x1-1, WitheredBone x1-1 |
-| Swamp | `Pickable_Mushroom` | forage | off | 1-2 | Mushroom x1 |
-| Mountain | `Vegvisir` | vegvisir | **on** | 50 | reveals a boss location on the map |
-| Mountain | `silvervein` | ore | **on** | 1-1 | Stone x1-1, SilverOre x1-1 |
-| Mountain | `MineRock_Obsidian` | ore | **on** | 10-15 | Obsidian x1-1 |
-| Mountain | `DrakeNest01` | forage | **on** | 200 | `Pickable_DragonEgg` -> DragonEgg x1 + CreatureSpawner x3 |
-| Mountain | `Dragonqueen` | boss | off | 3 | RuneStone x1 + OfferingBowl x1 |
-| Plains | `Vegvisir` | vegvisir | **on** | 135 | reveals a boss location on the map |
-| Plains | `TarPit1` | tar | **on** | 100 | `Pickable_TarBig` -> Tar x15 + `Pickable_Tar` -> Tar x4 + CreatureSpawner x9 |
-| Plains | `TarPit1_1` | tar | **on** | 50 | `Pickable_TarBig` -> Tar x15 + `Pickable_Tar` -> Tar x4 + CreatureSpawner x9 |
-| Plains | `TarPit2` | tar | **on** | 16 | `Pickable_Tar` -> Tar x4 + `Pickable_TarBig` -> Tar x15 + CreatureSpawner x9 |
-| Plains | `TarPit2_1` | tar | **on** | 20 | `Pickable_Tar` -> Tar x4 + `Pickable_TarBig` -> Tar x15 + CreatureSpawner x9 |
-| Plains | `TarPit3` | tar | **on** | 100 | `Pickable_TarBig` -> Tar x15 + `Pickable_Tar` -> Tar x4 + CreatureSpawner x6 |
-| Plains | `TarPit3_1` | tar | **on** | 100 | `Pickable_TarBig` -> Tar x15 + `Pickable_Tar` -> Tar x4 + CreatureSpawner x6 |
-| Plains | `CloudberryBush` | forage | **on** | 1-3 | Cloudberry x1 |
-| Plains | `GoblinKing` | boss | off | 4 | OfferingBowl x1 + RuneStone x1 |
-| Mistlands | `YggdrasilRoot` | sap | **on** | 1-3, 2-4 | sap |
-| Mistlands | `giant_ribs` | ore | **on** | 1-2 | BlackMarble x1-1 |
-| Mistlands | `giant_helmet1` | ore | **on** | 1-2, 3-3 | IronScrap x1-1, CopperScrap x1-1 |
-| Mistlands | `giant_helmet2` | ore | **on** | 1-2, 3-3 | IronScrap x1-1, CopperScrap x1-1 |
-| Mistlands | `giant_sword1` | ore | **on** | 1-2, 3-5, 3-5 | IronScrap x1-1, CopperScrap x1-1 |
-| Mistlands | `giant_sword2` | ore | **on** | 1-2, 3-5, 3-5 | IronScrap x1-1, CopperScrap x1-1 |
-| Mistlands | `Pickable_Mushroom_Magecap` | forage | **on** | 2-2 | MushroomMagecap x1 |
-| Mistlands | `Pickable_Mushroom_JotunPuffs` | forage | **on** | 1-2 | MushroomJotunPuffs x1 |
-| Mistlands | `Mistlands_DvergrBossEntrance1` | dungeon | **on** | 5 | `dvergrprops_banner` -> JuteBlue x1-1 + `dvergrprops_curtain` -> JuteBlue x1-1 |
-| Mistlands | `Mistlands_Excavation1/2/3` | loot | **on** | 40 | `dvergrprops_wood_wall` -> Wood x1-1, CopperScrap x1-1 + `dvergrprops_wood_pol |
-| AshLands | `Vegvisir` | vegvisir | **on** | 517 | reveals a boss location on the map |
-| AshLands | `UnstableLavaRock` | ore | **on** | 1-1 | ProustitePowder x1-1 |
-| AshLands | `Pickable_SmokePuff` | forage | **on** | 2-2 | MushroomSmokePuff x1 |
-| AshLands | `ashland_pot2_red` | loot | **on** | 1-2 | Pot_Shard_Green x1-1, Pot_Shard_Green x1-1, Bronze x1-1, Iro |
-| AshLands | `LeviathanLava` | ore | **on** | 100 | `LeviathanLava` -> FlametalOreNew x1-1  (tier 3, hp 100) |
-| AshLands | `PlaceofMystery1/2/3` | loot | **on** | 1 | `Pickable_Swordpiece3` -> DyrnwynTipFragment x1 + `Spawner_CharredStone_Elite` |
-| AshLands | `CharredFortress` | dungeon | **on** | 20 | `Ashlands_Fortress_Wall_Spikes` -> BronzeScrap x1-1 + `Charred_altar_bellfragm |
-| AshLands | `SulfurArch` | ore | **on** | 100 | `Pickable_SulfurRock` -> SulfurStone x1 |
-| AshLands | `FaderLocation` | boss | off | 3 | RuneStone x1 + OfferingBowl x1 |
-| AshLands | `Pickable_Charredskull` | forage | off | 20-40 | Charredskull x1 |
-| AshLands | `VoltureNest` | loot | off | 350 | `asksvin_carrion` -> BoneFragments x2-15, AsksvinCarrionSkull + `asksvin_carri |
-| AshLands | `CharredTowerRuins1` | loot | off | 30 | `Pickable_Fiddlehead` -> Fiddleheadfern x1 + `ashland_pot1_red` -> Pot_Shard_G |
-| AshLands | `_dvergr` | loot | off |  |  |
-| AshLands | `CharredTowerRuins3` | spawner | off | 30 | `Spawner_CharredStone` -> Grausten x1-1, Charredskull x1-1 + SpawnArea x1 |
-| DeepNorth | `Vegvisir` | vegvisir | **on** | 15 | reveals a boss location on the map |
-| DeepNorth | `DN_gammeltrollFrac01` | ore | **on** | 30 | `TrollFrost_Frac_legs` -> Stone x1-1, GoldOre x1-1  (tier 6, hp 50 |
-| DeepNorth | `DN_gammeltrollFrac02` | ore | **on** | 30 | `TrollFrost_Frac_arm` -> Stone x1-1, GoldOre x1-1  (tier 6, hp 50 |
-| DeepNorth | `MorkBorg` | dungeon | **on** | 40 | `Morkhalla_Eye1` -> AncientGemstoneBlack x1 + `Morkhalla_Eye2` -> AncientGemst |
-| DeepNorth | `NorthMemorialPlace` | loot | **on** | 15 | Container x11 + RuneStone x1 + Vegvisir x1 + OfferingBowl x1 |
-| DeepNorth | `Pickable_SeedKale` | forage | **on** | 0-0,5 | KaleSeeds x3 |
-| DeepNorth | `LingonberryBush` | forage | **on** | 1-2 | Lingonberry x1 |
-| DeepNorth | `Pickable_Snowball` | forage | off | 2-5 | Snowball x1 |
-| DeepNorth | `TheHole01` | loot | off | 40 | `prop_cauldron_ext3_butchertable` -> FineWood x1-5, RoundLog x1-5 + `prop_piec |
-| Ocean | `Leviathan` | ore | **on** | 0-0,01 | Chitin x1-1 |
-
+| biome | setting | category | default | prefabs |
+|---|---|---|---|---|
+| Meadows | Beehives | beehive | **on** | `Beehive` |
+| Meadows | Raspberry Bushes | forage | off | `RaspberryBush` |
+| Meadows | Flint | forage | off | `Pickable_Flint` |
+| Meadows | Mushrooms | forage | off | `Pickable_Mushroom` |
+| Meadows | Dandelions | forage | off | `Pickable_Dandelion` |
+| Meadows | Boar Runestones | spawner | off | `Runestone_Boars` |
+| Meadows | Altar of Eikthyr | boss | off | `Eikthyrnir` |
+| BlackForest | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| BlackForest | Copper Deposits | ore | **on** | `rock4_copper` |
+| BlackForest | Tin Deposits | ore | **on** | `MineRock_Tin` |
+| BlackForest | Beehives | beehive | **on** | `Beehive` |
+| BlackForest | Blueberry Bushes | forage | off | `BlueberryBush` |
+| BlackForest | Thistle | forage | off | `Pickable_Thistle` |
+| BlackForest | Carrot Seeds | forage | **on** | `Pickable_SeedCarrot` |
+| BlackForest | Greydwarf Nests | spawner | off | `Spawner_GreydwarfNest` |
+| BlackForest | Greydwarf Runestones | spawner | off | `Runestone_Greydwarfs` |
+| BlackForest | Burial Chambers | dungeon | **on** | `Crypt2`, `Crypt3`, `Crypt4` |
+| BlackForest | Troll Caves | dungeon | **on** | `TrollCave02` |
+| BlackForest | Bear Caves | dungeon | **on** | `BearCave` |
+| BlackForest | Mushrooms | forage | off | `Pickable_Mushroom` |
+| BlackForest | Altar of the Elder | boss | off | `GDKing` |
+| Swamp | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| Swamp | Turnip Seeds | forage | **on** | `Pickable_SeedTurnip` |
+| Swamp | Thistle | forage | **on** | `Pickable_Thistle` |
+| Swamp | Sunken Crypts | dungeon | **on** | `SunkenCrypt4` |
+| Swamp | Muddy Scrap Piles | ore | off | `mudpile_beacon` |
+| Swamp | Surtling Fire Holes | spawner | off | `FireHole` |
+| Swamp | Draugr Runestones | spawner | off | `Runestone_Draugr` |
+| Swamp | Mushrooms | forage | off | `Pickable_Mushroom` |
+| Swamp | Altar of Bonemass | boss | off | `Bonemass` |
+| Mountain | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| Mountain | Silver Deposits | ore | **on** | `silvervein` |
+| Mountain | Obsidian Deposits | ore | **on** | `MineRock_Obsidian` |
+| Mountain | Drake Nests | forage | **on** | `DrakeNest01` |
+| Mountain | Altar of Moder | boss | off | `Dragonqueen` |
+| Plains | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| Plains | Tar Pits | tar | **on** | `TarPit1`, `TarPit1_1`, `TarPit2`, `TarPit2_1`, `TarPit3`, `TarPit3_1` |
+| Plains | Cloudberry Bushes | forage | **on** | `CloudberryBush` |
+| Plains | Altar of Yagluth | boss | off | `GoblinKing` |
+| Mistlands | Yggdrasil Roots | sap | **on** | `YggdrasilRoot` |
+| Mistlands | Giant Remains | ore | **on** | `giant_ribs`, `giant_helmet1`, `giant_helmet2`, `giant_sword1`, `giant_sword2` |
+| Mistlands | Magecap | forage | **on** | `Pickable_Mushroom_Magecap` |
+| Mistlands | Jotun Puffs | forage | **on** | `Pickable_Mushroom_JotunPuffs` |
+| Mistlands | Entrance to the Queen | dungeon | **on** | `Mistlands_DvergrBossEntrance1` |
+| Mistlands | Dvergr Excavations | loot | **on** | `Mistlands_Excavation1`, `Mistlands_Excavation2`, `Mistlands_Excavation3` |
+| AshLands | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| AshLands | Flametal | ore | **on** | `LeviathanLava` |
+| AshLands | Sulfur Arches | ore | **on** | `SulfurArch` |
+| AshLands | Unstable Lava Rock | ore | **on** | `UnstableLavaRock` |
+| AshLands | Smoke Puffs | forage | **on** | `Pickable_SmokePuff` |
+| AshLands | Ash Pots | loot | **on** | `ashland_pot2_red` |
+| AshLands | Places of Mystery | loot | **on** | `PlaceofMystery1`, `PlaceofMystery2`, `PlaceofMystery3` |
+| AshLands | Charred Fortresses | dungeon | **on** | `CharredFortress` |
+| AshLands | Charred Skulls | forage | off | `Pickable_Charredskull` |
+| AshLands | Volture Nests | loot | off | `VoltureNest` |
+| AshLands | Charred Tower Ruins | loot | off | `CharredTowerRuins1` |
+| AshLands | Charred Spawner Towers | spawner | off | `CharredTowerRuins3` |
+| AshLands | Dvergr Town | loot | off | `_dvergr` |
+| AshLands | Altar of Fader | boss | off | `FaderLocation` |
+| DeepNorth | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| DeepNorth | Frozen Trolls | ore | **on** | `DN_gammeltrollFrac01`, `DN_gammeltrollFrac02` |
+| DeepNorth | Morkhalla | dungeon | **on** | `MorkBorg` |
+| DeepNorth | Memorial Places | loot | **on** | `NorthMemorialPlace` |
+| DeepNorth | Kale Seeds | forage | **on** | `Pickable_SeedKale` |
+| DeepNorth | Lingonberry Bushes | forage | **on** | `LingonberryBush` |
+| DeepNorth | Snowballs | forage | off | `Pickable_Snowball` |
+| DeepNorth | The Hole | loot | off | `TheHole01` |
+| Ocean | Leviathans | ore | **on** | `Leviathan` |
 ---
 
 ## Meadows

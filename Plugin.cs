@@ -6,6 +6,7 @@ using ServerSync;
 using BetterMap.Scripts;
 using BetterMap.Scripts.Creatures;
 using BetterMap.Scripts.Map;
+using BetterMap.Scripts.Pins;
 using BetterMap.Scripts.Vehicles;
 using UnityEngine;
 
@@ -29,10 +30,18 @@ namespace BetterMap
         public static ConfigEntry<float> vehicleRefreshInterval;
 
         // Auto pins
-        public static ConfigEntry<bool> autoPinResources;
-        public static ConfigEntry<bool> autoPinLocations;
+        public static ConfigEntry<bool> autoPin;
         public static ConfigEntry<bool> autoPinPortals;
         public static ConfigEntry<float> autoPinMergeDistance;
+        public static ConfigEntry<float> autoPinInterval;
+
+        /// <summary>
+        /// The pin type every automatic pin is saved as. It decides the icon a pin falls back to
+        /// when the save brings it in without one, and which box on the map's filter bar hides it,
+        /// so putting them all on one type hands the player a switch for the lot without us building
+        /// any UI.
+        /// </summary>
+        public const Minimap.PinType AutoPinType = Minimap.PinType.Icon3;
 
         // Map
         public static ConfigEntry<int> deathMarkersKept;
@@ -41,6 +50,7 @@ namespace BetterMap
 
         public static ConfigEntry<bool> debugMode;
         public static ConfigEntry<bool> dumpPrefabs;
+        public static ConfigEntry<bool> forgetPinned;
 
         public new static readonly ManualLogSource Logger =
             BepInEx.Logging.Logger.CreateLogSource(PluginInfo.PLUGIN_NAME);
@@ -67,6 +77,7 @@ namespace BetterMap
             DeathMarkers.Tick();
             VehicleTracker.Tick();
             VehicleIndex.Tick();
+            AutoPins.Tick();
         }
 
         private ConfigEntry<T> ConfigSync<T>(string group, string name, T value, ConfigDescription description,
@@ -137,13 +148,14 @@ namespace BetterMap
 
             // Auto pins ------------------------------------------------------
 
-            autoPinResources = ConfigSync("Auto Pins", "Pin Resources", true,
+            autoPin = ConfigSync("Auto Pins", "Enable", true,
                 new ConfigDescription(
-                    "Pin resources as you find them: ore deposits, harvestable plants and the like."));
+                    "Pin resources as you come across them. What gets pinned is chosen biome by biome below, and a pin you delete is never put back."));
 
-            autoPinLocations = ConfigSync("Auto Pins", "Pin Locations", true,
+            autoPinInterval = ConfigSync("Auto Pins", "Sweep Interval", 2f,
                 new ConfigDescription(
-                    "Pin dungeons, crypts, caves and other locations as you discover them."));
+                    "How often, in seconds, the loaded world is looked over for anything worth pinning.",
+                    new AcceptableValueRange<float>(0.5f, 30f)));
 
             autoPinPortals = ConfigSync("Auto Pins", "Pin Portals", true,
                 new ConfigDescription(
@@ -174,9 +186,15 @@ namespace BetterMap
                     "Size of every pin on the map, as a multiple of its normal size. 1 leaves the game's own size, 32 pixels on the minimap and 48 on the map.",
                     new AcceptableValueRange<float>(0.5f, 3f)));
 
+            BindPinRules();
+
             debugMode = ConfigSync("Debug", "Debug Mode", false,
                 new ConfigDescription(
                     "Log what is being pinned and tracked."), false);
+
+            forgetPinned = ConfigSync("Debug", "Forget Pinned Places", false,
+                new ConfigDescription(
+                    "Once, on the next world you load, throw away this character's record of where it has already pinned, so everything is pinned again. Turn it back off afterwards. This also undoes every automatic pin you deleted on purpose."), false);
 
             dumpPrefabs = ConfigSync("Debug", "Dump Prefabs", false,
                 new ConfigDescription(
@@ -184,6 +202,19 @@ namespace BetterMap
 
             Config.SaveOnConfigSet = true;
             Config.Save();
+        }
+
+        /// <summary>
+        /// One checkbox per row of the curated list, grouped by biome. Generated rather than written
+        /// out, so the settings and the list cannot drift apart.
+        /// </summary>
+        private void BindPinRules()
+        {
+            foreach (var rule in PinRules.All)
+            {
+                rule.Enabled = ConfigSync($"Auto Pins - {rule.Biome}", rule.Name, rule.DefaultOn,
+                    new ConfigDescription(rule.Description));
+            }
         }
 
         private static void InitializeHarmonyPatches()

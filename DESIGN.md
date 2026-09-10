@@ -71,19 +71,38 @@ because the point is finding a boat that drifted off.
 
 ## Auto pins
 
-Persistent pins using vanilla `PinType` icons only. Custom sprites are not an
-option here: a saved pin persists `name, pos, type, checked, ownerID, author` and
-no sprite, so a custom icon would not survive a reload.
+Persistent pins, curated in PINS.md, with icons of our own. A saved pin persists
+`name, pos, type, checked, ownerID, author` and no sprite, so the icon is put
+back at load time by looking the pin's name up among the ones we place. That is
+safe because Valheim cannot rename a pin: placing one asks for a name and makes a
+new pin, and clicking an existing one only ticks it off.
 
-- Resources are found by component, not by name: `Pickable`, `PickableItem`,
-  `MineRock`, `MineRock5`, `ResourceRoot`, `Beehive`, `DropOnDestroyed`. Each
-  declares what it yields, so pin rules can be written against the item dropped.
-- Locations, dungeons and crypts.
-- Portals, pinned with their tag as the name.
-- **Pins are never removed automatically.** Mining out a deposit leaves its pin.
-  That makes deduplication mandatory: before pinning, check for an existing pin
-  within the merge distance, otherwise walking past the same deposit stacks pins
-  on it until the map is unusable.
+- What to pin is a curated list, not a component sweep. Detection matches the
+  prefab and then asks `Heightmap.FindBiome` where the thing stands, because the
+  same berry can be worth pinning in one biome and not another.
+- Scattered objects are found by sweeping what the game has loaded. Places, the
+  crypts and caves and fortresses, are assembled differently and need their own
+  mechanism.
+- **Pins are never removed automatically**, and whether to place one is asked of
+  our own record of where we have already pinned, never of the pins on the map.
+  Those are different questions the moment a player deletes one of ours: the map
+  says nothing is there, the record says we put something there and were told to
+  take it away. The record also does the work of not stacking pins, since the
+  same deposit is nought metres from itself.
+
+### Named pins, still to do
+
+Three cases where a pin should carry a name it can only get from somewhere else.
+
+- **Traders.** The game pins a trader itself, through `m_locationIcons`, and the
+  pin arrives with no name. It should carry the trader's, so a map with Haldor
+  and the bog witch on it says which is which.
+- **Portals, on placing.** Dropping a portal should pin it straight away, with
+  the vanilla portal icon, which already exists and needs nothing drawn.
+- **Portals, on tagging.** Confirming the Set Tag screen should put that tag on
+  the pin already standing there. Editing the pin in place is the tidy way;
+  removing it and adding it again is acceptable and is what the death markers
+  already do, since nothing about a pin can be changed once its marker is built.
 
 ## Map
 

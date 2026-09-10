@@ -102,12 +102,25 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <EmbeddedResource Include="assets\ore.png" />
+        <EmbeddedResource Include="assets\forage.png" />
+        <EmbeddedResource Include="assets\dungeon.png" />
+        <EmbeddedResource Include="assets\loot.png" />
+        <EmbeddedResource Include="assets\spawner.png" />
+        <EmbeddedResource Include="assets\vegvisir.png" />
+        <EmbeddedResource Include="assets\beehive.png" />
+        <EmbeddedResource Include="assets\tar.png" />
+        <EmbeddedResource Include="assets\sap.png" />
         <EmbeddedResource Include="assets\boat.png" />
         <EmbeddedResource Include="assets\cart.png" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Plugin.cs" />
         <Compile Include="scripts\Icons.cs" />
+        <Compile Include="scripts\Pins\PinRules.cs" />
+        <Compile Include="scripts\Pins\PinRecord.cs" />
+        <Compile Include="scripts\Pins\PinNames.cs" />
+        <Compile Include="scripts\Pins\AutoPins.cs" />
         <Compile Include="scripts\MapPins.cs" />
         <Compile Include="scripts\Creatures\CreatureIcons.cs" />
         <Compile Include="scripts\Creatures\CreatureTracker.cs" />

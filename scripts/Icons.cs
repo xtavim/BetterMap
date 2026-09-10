@@ -38,6 +38,28 @@ namespace BetterMap.Scripts
         public static Sprite Boat => Get("boat.png");
         public static Sprite Cart => Get("cart.png");
 
+        /// <summary>
+        /// One icon per category rather than per resource: at pin size a copper deposit and a silver
+        /// vein are the same shape, and the pin's name already says which is which. Boss altars are
+        /// the exception and keep the game's own boss pin, which every player already reads.
+        /// </summary>
+        public static Sprite For(Pins.PinCategory category)
+        {
+            switch (category)
+            {
+                case Pins.PinCategory.Ore: return Get("ore.png");
+                case Pins.PinCategory.Forage: return Get("forage.png");
+                case Pins.PinCategory.Dungeon: return Get("dungeon.png");
+                case Pins.PinCategory.Loot: return Get("loot.png");
+                case Pins.PinCategory.Spawner: return Get("spawner.png");
+                case Pins.PinCategory.Vegvisir: return Get("vegvisir.png");
+                case Pins.PinCategory.Beehive: return Get("beehive.png");
+                case Pins.PinCategory.Tar: return Get("tar.png");
+                case Pins.PinCategory.Sap: return Get("sap.png");
+                default: return null;
+            }
+        }
+
         private static Sprite Get(string file)
         {
             if (_sprites.TryGetValue(file, out var cached)) return cached;
