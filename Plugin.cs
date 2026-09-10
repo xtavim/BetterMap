@@ -5,6 +5,7 @@ using HarmonyLib;
 using ServerSync;
 using BetterMap.Scripts;
 using BetterMap.Scripts.Creatures;
+using BetterMap.Scripts.Map;
 using UnityEngine;
 
 namespace BetterMap
@@ -60,6 +61,7 @@ namespace BetterMap
         {
             VegetationDumper.TryDump();
             CreatureTracker.Tick();
+            DeathMarkers.Tick();
         }
 
         private ConfigEntry<T> ConfigSync<T>(string group, string name, T value, ConfigDescription description,
@@ -148,7 +150,7 @@ namespace BetterMap
 
             deathMarkersKept = ConfigSync("Map", "Death Markers Kept", 3,
                 new ConfigDescription(
-                    "How many death markers to keep. Vanilla keeps only the most recent one.",
+                    "How many of your death markers to keep on the map. The game drops a marker where you died but never saves it, so without this they are gone the next time you load the world.",
                     new AcceptableValueRange<int>(1, 20)));
 
             // Also the radius creatures are tracked within, deliberately not mentioned: keeping the

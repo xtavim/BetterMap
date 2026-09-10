@@ -106,6 +106,7 @@
         <Compile Include="scripts\Creatures\CreatureIcons.cs" />
         <Compile Include="scripts\Creatures\CreatureTracker.cs" />
         <Compile Include="scripts\Creatures\CreaturePatches.cs" />
+        <Compile Include="scripts\Map\DeathMarkers.cs" />
         <Compile Include="scripts\Map\MapPatches.cs" />
         <Compile Include="scripts\PrefabDumper.cs" />
         <Compile Include="scripts\VegetationDumper.cs" />

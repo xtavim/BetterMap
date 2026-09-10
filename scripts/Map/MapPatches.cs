@@ -1,4 +1,5 @@
 using HarmonyLib;
+using UnityEngine;
 
 namespace BetterMap.Scripts.Map
 {
@@ -17,6 +18,28 @@ namespace BetterMap.Scripts.Map
         private static void Minimap_UpdateExplore_Prefix(Minimap __instance)
         {
             __instance.m_exploreRadius = Plugin.explorationRadius.Value;
+        }
+
+        /// <summary>
+        /// Runs after the game has added its own death pin, which the rebuild then replaces with
+        /// one that will still be there after a reload. The player has not moved yet: respawning
+        /// is scheduled from here, not done.
+        /// </summary>
+        [HarmonyPostfix, HarmonyPatch(typeof(Player), "OnDeath")]
+        private static void Player_OnDeath_Postfix(Player __instance)
+        {
+            if (__instance != Player.m_localPlayer) return;
+
+            DeathMarkers.Record(__instance.transform.position);
+        }
+
+        /// <summary>
+        /// Loading map data clears every pin, ours included.
+        /// </summary>
+        [HarmonyPostfix, HarmonyPatch(typeof(Minimap), "SetMapData")]
+        private static void Minimap_SetMapData_Postfix()
+        {
+            DeathMarkers.Invalidate();
         }
     }
 }
