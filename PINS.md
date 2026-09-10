@@ -7,6 +7,8 @@ Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locati
 - The same resource can be on in one biome and off in another, so the pin decision needs the
   biome at the object's position (`Heightmap.FindBiome`), not just the prefab name.
 - **Dungeon interiors are never pinned.**
+- **Boss altars are off by default.** Vanilla already pins them when you use a vegvisir,
+  so pinning them automatically duplicates a mechanic the game already has.
 - Pins are detected from objects loaded in the world. The placement tables below are the menu
   for deciding what to pin, not a runtime lookup.
 - Auto pins never remove themselves, so a new pin is skipped when one already exists within
@@ -17,9 +19,9 @@ Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locati
 ## Meadows
 ### Decided
 
-**On by default:** `Eikthyrnir` (boss altar) · `Beehive`
+**On by default:** `Beehive`
 
-**Off by default:** `RaspberryBush` · `Pickable_Flint` · `Pickable_Mushroom` · `Pickable_Dandelion` · `Runestone_Boars`
+**Off by default:** `Eikthyrnir` (boss altar) · `RaspberryBush` · `Pickable_Flint` · `Pickable_Mushroom` · `Pickable_Dandelion` · `Runestone_Boars`
 
 `Runestone_Boars` carries nine `Spawner_Boar` creature spawners, so it is a renewable boar farm rather than a lore stone. `Runestone_Meadows` has no spawner and is flavour only.
 
