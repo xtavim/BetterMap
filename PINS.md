@@ -23,11 +23,10 @@ Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locati
   since boss altars are off precisely because vegvisirs reveal them; the boss altars themselves;
   the creature farms; the common forage; and the four places with real loot, `TheHole01`,
   `VoltureNest`, `CharredTowerRuins1` and `_dvergr`.
-- Four more were dropped in a second pass, each for its own reason: `Ruin2` holds a vegvisir but
-  there are two hundred of them, which is too many for the stone to carry; `Greydwarf_camp1` and
-  `CharredStone_Spawner` are creature farms at three hundred apiece, far denser than the farms
-  that survived; and `YggaShoot_small1` reaches a hundred per zone, which nobody needs help
-  finding.
+- Three more were dropped in a second pass: `Greydwarf_camp1` and `CharredStone_Spawner` are
+  creature farms at three hundred apiece, far denser than the farms that survived, and
+  `YggaShoot_small1` reaches a hundred per zone, which nobody needs help finding. `Ruin2` stays
+  on the vegvisir rule despite there being two hundred of them.
 - At the end of the curation the off-by-default lists get a pruning pass: anything that is
   simply not worth a checkbox is dropped entirely rather than shipped as an unused config entry.
 - **Anything vanilla already pins is out of scope**, with no config entry at all: traders,
@@ -67,6 +66,7 @@ container and spawner buildings, the shipwrecks and the infested trees.
 | BlackForest | `GDKing` | off | 4 | OfferingBowl x1 + RuneStone x1 |
 | BlackForest | `Pickable_Mushroom` | off | 1-2, 3-5, 80-100 | Mushroom x1 |
 | BlackForest | `Runestone_Greydwarfs` | off | 25 | CreatureSpawner x5 + RuneStone x1 |
+| BlackForest | `Ruin2` | off | 200 | `barrell` -> Blueberries x2-4, DeerHide x2-3, Flint x + CreatureSpawner x8 + Container x1 + Vegvisir x1 |
 | BlackForest | `StoneTowerRuins03/07/08/09/10` | off | 80 | `Beehive` -> Honey x1-3, QueenBee x1-1 + CreatureSpawner x11 + Container x2 +  |
 | Swamp | `Pickable_SeedTurnip` | **on** | 0-0,5 | TurnipSeeds x3 |
 | Swamp | `Pickable_Thistle` | **on** | 1-2 | Thistle x1 |
@@ -186,7 +186,7 @@ Beehives are in `WoodHouse1,2,3,4,5,6,7,9,10,11,13` (qty 20 each), `BearCave` (5
 `BlueberryBush` · `Pickable_Thistle` · `Pickable_SeedCarrot` · `BearCave` · `TrollCave02` ·
 `Crypt2` `Crypt3` `Crypt4`
 
-**Off by default:** `GDKing` (boss altar) · `Pickable_Mushroom` · `Runestone_Greydwarfs` ·
+**Off by default:** `GDKing` (boss altar) · `Pickable_Mushroom` · `Runestone_Greydwarfs` · `Ruin2` ·
 `Runestone_BlackForest` · `Ruin1` · `StoneHouse3` · `StoneHouse4` ·
 `StoneTowerRuins03/07/08/09/10` and the sunk variants · `Dolmen01-03` ·
 `BigRockClearing`
