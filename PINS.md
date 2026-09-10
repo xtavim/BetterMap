@@ -80,13 +80,14 @@ infested trees.
 | biome | setting | category | default | prefabs |
 |---|---|---|---|---|
 | Meadows | Beehives | beehive | **on** | `Beehive` |
+| Meadows | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
 | Meadows | Raspberry Bushes | forage | off | `RaspberryBush` |
 | Meadows | Flint | forage | off | `Pickable_Flint` |
 | Meadows | Mushrooms | forage | off | `Pickable_Mushroom` |
 | Meadows | Dandelions | forage | off | `Pickable_Dandelion` |
 | Meadows | Boar Runestones | spawner | off | `Runestone_Boars` |
 | Meadows | Altar of Eikthyr | boss | off | `Eikthyrnir` |
-| BlackForest | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| BlackForest | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
 | BlackForest | Copper Deposits | ore | **on** | `rock4_copper` |
 | BlackForest | Tin Deposits | ore | **on** | `MineRock_Tin` |
 | BlackForest | Beehives | beehive | **on** | `Beehive` |
@@ -100,35 +101,38 @@ infested trees.
 | BlackForest | Bear Caves | dungeon | **on** | `BearCave` |
 | BlackForest | Mushrooms | forage | off | `Pickable_Mushroom` |
 | BlackForest | Altar of the Elder | boss | off | `GDKing` |
-| Swamp | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| Swamp | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
 | Swamp | Turnip Seeds | forage | **on** | `Pickable_SeedTurnip` |
-| Swamp | Thistle | forage | **on** | `Pickable_Thistle` |
+| Swamp | Thistle | forage | off | `Pickable_Thistle` |
 | Swamp | Sunken Crypts | dungeon | **on** | `SunkenCrypt4` |
 | Swamp | Muddy Scrap Piles | ore | off | `mudpile_beacon` |
 | Swamp | Surtling Fire Holes | spawner | off | `FireHole` |
 | Swamp | Draugr Runestones | spawner | off | `Runestone_Draugr` |
 | Swamp | Mushrooms | forage | off | `Pickable_Mushroom` |
 | Swamp | Altar of Bonemass | boss | off | `Bonemass` |
-| Mountain | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| Mountain | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
 | Mountain | Silver Deposits | ore | **on** | `silvervein` |
 | Mountain | Obsidian Deposits | ore | **on** | `MineRock_Obsidian` |
 | Mountain | Drake Nests | forage | **on** | `DrakeNest01` |
 | Mountain | Altar of Moder | boss | off | `Dragonqueen` |
-| Plains | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| Plains | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
 | Plains | Tar Pits | tar | **on** | `TarPit1`, `TarPit1_1`, `TarPit2`, `TarPit2_1`, `TarPit3`, `TarPit3_1` |
-| Plains | Cloudberry Bushes | forage | **on** | `CloudberryBush` |
+| Plains | Fuling Totems | loot | **on** | `goblin_totempole` |
+| Plains | Cloudberry Bushes | forage | off | `CloudberryBush` |
 | Plains | Altar of Yagluth | boss | off | `GoblinKing` |
 | Mistlands | Yggdrasil Roots | sap | **on** | `YggdrasilRoot` |
 | Mistlands | Giant Remains | ore | **on** | `giant_ribs`, `giant_helmet1`, `giant_helmet2`, `giant_sword1`, `giant_sword2` |
-| Mistlands | Magecap | forage | **on** | `Pickable_Mushroom_Magecap` |
+| Mistlands | Magecap | forage | off | `Pickable_Mushroom_Magecap` |
 | Mistlands | Jotun Puffs | forage | **on** | `Pickable_Mushroom_JotunPuffs` |
 | Mistlands | Entrance to the Queen | dungeon | **on** | `Mistlands_DvergrBossEntrance1` |
+| Mistlands | Dvergr Needle Crates | loot | **on** | `dvergrprops_crate_long` |
 | Mistlands | Dvergr Excavations | loot | **on** | `Mistlands_Excavation1`, `Mistlands_Excavation2`, `Mistlands_Excavation3` |
-| AshLands | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| AshLands | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
 | AshLands | Flametal | ore | **on** | `LeviathanLava` |
 | AshLands | Sulfur Arches | ore | **on** | `SulfurArch` |
 | AshLands | Unstable Lava Rock | ore | **on** | `UnstableLavaRock` |
-| AshLands | Smoke Puffs | forage | **on** | `Pickable_SmokePuff` |
+| AshLands | Vineberries | forage | **on** | `VineAsh` |
+| AshLands | Smoke Puffs | forage | off | `Pickable_SmokePuff` |
 | AshLands | Ash Pots | loot | **on** | `ashland_pot2_red` |
 | AshLands | Places of Mystery | loot | **on** | `PlaceofMystery1`, `PlaceofMystery2`, `PlaceofMystery3` |
 | AshLands | Charred Fortresses | dungeon | **on** | `CharredFortress` |
@@ -136,14 +140,14 @@ infested trees.
 | AshLands | Volture Nests | loot | off | `VoltureNest` |
 | AshLands | Charred Tower Ruins | loot | off | `CharredTowerRuins1` |
 | AshLands | Charred Spawner Towers | spawner | off | `CharredTowerRuins3` |
-| AshLands | Dvergr Town | loot | off | `_dvergr` |
+| AshLands | Dvergr Town | loot | off | `CharredTowerRuins1_dvergr` |
 | AshLands | Altar of Fader | boss | off | `FaderLocation` |
-| DeepNorth | Vegvisirs | vegvisir | **on** | `Vegvisir` |
+| DeepNorth | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
 | DeepNorth | Frozen Trolls | ore | **on** | `DN_gammeltrollFrac01`, `DN_gammeltrollFrac02` |
 | DeepNorth | Morkhalla | dungeon | **on** | `MorkBorg` |
 | DeepNorth | Memorial Places | loot | **on** | `NorthMemorialPlace` |
 | DeepNorth | Kale Seeds | forage | **on** | `Pickable_SeedKale` |
-| DeepNorth | Lingonberry Bushes | forage | **on** | `LingonberryBush` |
+| DeepNorth | Lingonberry Bushes | forage | off | `LingonberryBush` |
 | DeepNorth | Snowballs | forage | off | `Pickable_Snowball` |
 | DeepNorth | The Hole | loot | off | `TheHole01` |
 | Ocean | Leviathans | ore | **on** | `Leviathan` |

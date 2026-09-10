@@ -14,7 +14,8 @@ namespace BetterMap.Scripts.Pins
         Beehive,
         Tar,
         Sap,
-        Boss
+        Boss,
+        Portal
     }
 
     /// <summary>
@@ -59,6 +60,17 @@ namespace BetterMap.Scripts.Pins
                 Prefabs = new[] { "Beehive" },
                 Biome = Heightmap.Biome.Meadows,
                 Category = PinCategory.Beehive,
+                DefaultOn = true,
+                IsLocation = false
+            },
+            new Rule
+            {
+                Name = "Vegvisirs",
+                Description = "The runestones that reveal a boss on your map.",
+                NameToken = "$piece_vegvisir",
+                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
+                Biome = Heightmap.Biome.Meadows,
+                Category = PinCategory.Vegvisir,
                 DefaultOn = true,
                 IsLocation = false
             },
@@ -127,7 +139,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map. Pinned wherever they stand, rather than the ruin around them.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir" },
+                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
                 Biome = Heightmap.Biome.BlackForest,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -270,7 +282,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir" },
+                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
                 Biome = Heightmap.Biome.Swamp,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -293,7 +305,7 @@ namespace BetterMap.Scripts.Pins
                 Prefabs = new[] { "Pickable_Thistle" },
                 Biome = Heightmap.Biome.Swamp,
                 Category = PinCategory.Forage,
-                DefaultOn = true,
+                DefaultOn = false,
                 IsLocation = false
             },
             new Rule
@@ -361,7 +373,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir" },
+                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
                 Biome = Heightmap.Biome.Mountain,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -395,7 +407,7 @@ namespace BetterMap.Scripts.Pins
                 Biome = Heightmap.Biome.Mountain,
                 Category = PinCategory.Forage,
                 DefaultOn = true,
-                IsLocation = false
+                IsLocation = true
             },
             new Rule
             {
@@ -412,7 +424,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir" },
+                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
                 Biome = Heightmap.Biome.Plains,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -426,6 +438,16 @@ namespace BetterMap.Scripts.Pins
                 Biome = Heightmap.Biome.Plains,
                 Category = PinCategory.Tar,
                 DefaultOn = true,
+                IsLocation = true
+            },
+            new Rule
+            {
+                Name = "Fuling Totems",
+                Description = "The totem in a fuling village, and the only way to summon Yagluth. Pinned instead of the village around it.",
+                Prefabs = new[] { "goblin_totempole" },
+                Biome = Heightmap.Biome.Plains,
+                Category = PinCategory.Loot,
+                DefaultOn = true,
                 IsLocation = false
             },
             new Rule
@@ -435,7 +457,7 @@ namespace BetterMap.Scripts.Pins
                 Prefabs = new[] { "CloudberryBush" },
                 Biome = Heightmap.Biome.Plains,
                 Category = PinCategory.Forage,
-                DefaultOn = true,
+                DefaultOn = false,
                 IsLocation = false
             },
             new Rule
@@ -476,7 +498,7 @@ namespace BetterMap.Scripts.Pins
                 Prefabs = new[] { "Pickable_Mushroom_Magecap" },
                 Biome = Heightmap.Biome.Mistlands,
                 Category = PinCategory.Forage,
-                DefaultOn = true,
+                DefaultOn = false,
                 IsLocation = false
             },
             new Rule
@@ -501,6 +523,16 @@ namespace BetterMap.Scripts.Pins
             },
             new Rule
             {
+                Name = "Dvergr Needle Crates",
+                Description = "The long crate holding a dvergr needle, which is what a sap extractor is built from. One stands in each guard tower, excavation, harbour and lighthouse.",
+                Prefabs = new[] { "dvergrprops_crate_long" },
+                Biome = Heightmap.Biome.Mistlands,
+                Category = PinCategory.Loot,
+                DefaultOn = true,
+                IsLocation = false
+            },
+            new Rule
+            {
                 Name = "Dvergr Excavations",
                 Description = "Dvergr dig sites, with crates to break and dvergr who mind you breaking them.",
                 Prefabs = new[] { "Mistlands_Excavation1", "Mistlands_Excavation2", "Mistlands_Excavation3" },
@@ -514,7 +546,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir" },
+                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
                 Biome = Heightmap.Biome.AshLands,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -538,7 +570,7 @@ namespace BetterMap.Scripts.Pins
                 Biome = Heightmap.Biome.AshLands,
                 Category = PinCategory.Ore,
                 DefaultOn = true,
-                IsLocation = false
+                IsLocation = true
             },
             new Rule
             {
@@ -552,12 +584,22 @@ namespace BetterMap.Scripts.Pins
             },
             new Rule
             {
+                Name = "Vineberries",
+                Description = "The vines in the charred ruins. Vineberries, which can be replanted.",
+                Prefabs = new[] { "VineAsh" },
+                Biome = Heightmap.Biome.AshLands,
+                Category = PinCategory.Forage,
+                DefaultOn = true,
+                IsLocation = false
+            },
+            new Rule
+            {
                 Name = "Smoke Puffs",
                 Description = "The smoking mushrooms.",
                 Prefabs = new[] { "Pickable_SmokePuff" },
                 Biome = Heightmap.Biome.AshLands,
                 Category = PinCategory.Forage,
-                DefaultOn = true,
+                DefaultOn = false,
                 IsLocation = false
             },
             new Rule
@@ -635,7 +677,7 @@ namespace BetterMap.Scripts.Pins
             {
                 Name = "Dvergr Town",
                 Description = "The dvergr settlements out on the ash sea.",
-                Prefabs = new[] { "_dvergr" },
+                Prefabs = new[] { "CharredTowerRuins1_dvergr" },
                 Biome = Heightmap.Biome.AshLands,
                 Category = PinCategory.Loot,
                 DefaultOn = false,
@@ -656,7 +698,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir" },
+                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
                 Biome = Heightmap.Biome.DeepNorth,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -670,7 +712,7 @@ namespace BetterMap.Scripts.Pins
                 Biome = Heightmap.Biome.DeepNorth,
                 Category = PinCategory.Ore,
                 DefaultOn = true,
-                IsLocation = false
+                IsLocation = true
             },
             new Rule
             {
@@ -709,7 +751,7 @@ namespace BetterMap.Scripts.Pins
                 Prefabs = new[] { "LingonberryBush" },
                 Biome = Heightmap.Biome.DeepNorth,
                 Category = PinCategory.Forage,
-                DefaultOn = true,
+                DefaultOn = false,
                 IsLocation = false
             },
             new Rule

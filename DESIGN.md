@@ -90,6 +90,30 @@ new pin, and clicking an existing one only ticks it off.
   take it away. The record also does the work of not stacking pins, since the
   same deposit is nought metres from itself.
 
+### Our own pin types, still to do
+
+Every automatic pin is saved as `Icon3`, which was chosen because the type is the
+only thing about a pin the save keeps that we can key the filter off. It has a
+cost that shows the first time anyone uses the map's own filter: alt clicking a
+legend icon calls `ToggleIconFilter` on that type, so hiding the player's own
+`Icon3` pins hides all of ours with them, and there is no free type. All
+eighteen already mean something.
+
+The fix is to give the categories types of their own, past the end of the enum,
+which also hands the player our icons to place by hand. Nothing about that needs
+Jotunn, but it is the largest piece of UI work in the mod:
+
+- `m_visibleIconTypes` is `new bool[Enum.GetValues(typeof(PinType)).Length]`, so
+  it has to be resized before a larger value is ever used. `AddPin` refuses
+  anything past its length, and `UpdatePins` indexes it directly.
+- `GetSprite` looks the type up in `m_icons`, a `List<SpriteData>` of type and
+  sprite pairs, so each new type needs an entry.
+- The legend buttons are ordinary UI objects. Cloning one and pointing its two
+  handlers at the new type is plain Unity.
+
+Until then the honest answer is the `Auto Pins > Enable` setting, which is not
+the same thing: it stops us pinning rather than hiding what is pinned.
+
 ### Named pins, still to do
 
 Three cases where a pin should carry a name it can only get from somewhere else.

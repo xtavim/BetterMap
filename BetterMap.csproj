@@ -121,6 +121,8 @@
         <Compile Include="scripts\Pins\PinRecord.cs" />
         <Compile Include="scripts\Pins\PinNames.cs" />
         <Compile Include="scripts\Pins\AutoPins.cs" />
+        <Compile Include="scripts\Pins\PortalPins.cs" />
+        <Compile Include="scripts\Pins\NamedPins.cs" />
         <Compile Include="scripts\MapPins.cs" />
         <Compile Include="scripts\Creatures\CreatureIcons.cs" />
         <Compile Include="scripts\Creatures\CreatureTracker.cs" />

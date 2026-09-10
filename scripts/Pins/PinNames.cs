@@ -111,8 +111,9 @@ namespace BetterMap.Scripts.Pins
             {
                 foreach (var prefabName in rule.Prefabs)
                 {
-                    var prefab = scene.GetPrefab(prefabName);
-                    if (prefab == null) continue;
+                    // A place has no prefab under that name, and is named by the curated list.
+                    var prefab = rule.IsLocation ? null : scene.GetPrefab(prefabName);
+                    if (prefab == null && !rule.IsLocation) continue;
 
                     var name = For(rule, prefab);
 

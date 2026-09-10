@@ -32,6 +32,8 @@ namespace BetterMap
         // Auto pins
         public static ConfigEntry<bool> autoPin;
         public static ConfigEntry<bool> autoPinPortals;
+        public static ConfigEntry<bool> nameTraderPins;
+        public static ConfigEntry<bool> revealTraders;
         public static ConfigEntry<float> autoPinMergeDistance;
         public static ConfigEntry<float> autoPinInterval;
 
@@ -159,7 +161,15 @@ namespace BetterMap
 
             autoPinPortals = ConfigSync("Auto Pins", "Pin Portals", true,
                 new ConfigDescription(
-                    "Pin portals with their tag as the pin name."));
+                    "Pin portals where they stand, named by their tag, using the game's own portal icon. Renaming a portal renames its pin."));
+
+            revealTraders = ConfigSync("Auto Pins", "Reveal Traders", false,
+                new ConfigDescription(
+                    "Put every trader in the world on your map at once, Haldor and Hildir and the bog witch, without having to stumble across them. Off by default because finding them is part of the game. On a server this is decided by the server, and takes effect the next time you connect."));
+
+            nameTraderPins = ConfigSync("Auto Pins", "Name Trader Pins", true,
+                new ConfigDescription(
+                    "Put the trader's name on the pin the game already places for them, so Haldor, Hildir and the bog witch can be told apart on the map."));
 
             autoPinMergeDistance = ConfigSync("Auto Pins", "Merge Distance", 5f,
                 new ConfigDescription(
