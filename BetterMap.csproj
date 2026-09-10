@@ -94,6 +94,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Plugin.cs" />
+        <Compile Include="scripts\PrefabDumper.cs" />
         <Compile Include="PluginInfo.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>

@@ -33,6 +33,7 @@ namespace BetterMap
         public static ConfigEntry<float> explorationRadius;
 
         public static ConfigEntry<bool> debugMode;
+        public static ConfigEntry<bool> dumpPrefabs;
 
         public new static readonly ManualLogSource Logger =
             BepInEx.Logging.Logger.CreateLogSource(PluginInfo.PLUGIN_NAME);
@@ -145,6 +146,10 @@ namespace BetterMap
             debugMode = ConfigSync("Debug", "Debug Mode", false,
                 new ConfigDescription(
                     "Log what is being pinned and tracked."), false);
+
+            dumpPrefabs = ConfigSync("Debug", "Dump Prefabs", false,
+                new ConfigDescription(
+                    "Write every harvestable, creature, location and vehicle prefab in the installed game to BetterMap.prefabs.txt next to this config. Runs once per game start. Diagnostic only."), false);
 
             Config.SaveOnConfigSet = true;
             Config.Save();
