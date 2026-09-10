@@ -23,9 +23,11 @@ Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locati
   since boss altars are off precisely because vegvisirs reveal them; the boss altars themselves;
   the creature farms; the common forage; and the four places with real loot, `TheHole01`,
   `VoltureNest`, `CharredTowerRuins1` and `_dvergr`.
-- `Ruin2`, `Greydwarf_camp1`, `CharredStone_Spawner` and `YggaShoot_small1` were dropped in a
-  second pass: a vegvisir alone does not justify pinning two hundred ruins, and yggdrasil
-  shoots at up to a hundred per zone are not something anyone needs help finding.
+- Four more were dropped in a second pass, each for its own reason: `Ruin2` holds a vegvisir but
+  there are two hundred of them, which is too many for the stone to carry; `Greydwarf_camp1` and
+  `CharredStone_Spawner` are creature farms at three hundred apiece, far denser than the farms
+  that survived; and `YggaShoot_small1` reaches a hundred per zone, which nobody needs help
+  finding.
 - At the end of the curation the off-by-default lists get a pruning pass: anything that is
   simply not worth a checkbox is dropped entirely rather than shipped as an unused config entry.
 - **Anything vanilla already pins is out of scope**, with no config entry at all: traders,
