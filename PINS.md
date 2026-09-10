@@ -395,6 +395,21 @@ them the scarcest thing in the game.
 
 ## DeepNorth
 
+### Decided
+
+**On by default:** `DN_gammeltrollFrac01` `DN_gammeltrollFrac02` (GoldOre) · `MorkBorg` ·
+`NorthMemorialPlace` · `Pickable_SeedKale` · `LingonberryBush`
+
+**Off by default:** `Pickable_Snowball` · `TheHole01` · `ShipWreck01_DN` · `ShipWreck02_DN` ·
+`ShipSetting02` · `ShipSetting03` · `DN_hut01` · `LumberCamp` · `Runestone_DeepNorth`
+
+**Dropped:** `ice_rock1` yields nothing.
+
+**Out of scope:** `DN_Bossroom`, vanilla pins it.
+
+The frozen trolls are the only source of gold. `NorthMemorialPlace` holds eleven containers at
+fifteen per world, the densest loot site anywhere in the dump.
+
 ### Scattered (vegetation)
 
 | prefab | qty per zone | yields |
