@@ -288,6 +288,21 @@ Tar has no other source, which is what earns the pits their pin despite there be
 
 ## Mistlands
 
+### Decided
+
+**On by default:** `YggdrasilRoot` (sap) · `giant_ribs` (BlackMarble) · `giant_helmet1` ·
+`giant_helmet2` · `giant_sword1` · `giant_sword2` · `Pickable_Mushroom_Magecap` ·
+`Pickable_Mushroom_JotunPuffs` · `Mistlands_DvergrBossEntrance1` ·
+`Mistlands_Excavation1/2/3`
+
+**Off by default:** `YggaShoot_small1` · `Mistlands_DvergrTownEntrance1/2` · `Mistlands_RoadPost1` ·
+`Mistlands_RockSpire1` · `Mistlands_Giant1` · `Mistlands_GuardTower1/2/3` and the ruined variants ·
+`Mistlands_Harbour1` · `Mistlands_Lighthouse1_new` · `Runestone_Mistlands`
+
+The Queen is behind `DvergrBossEntrance1`, a location rather than an offering bowl, so the boss
+altar rule does not apply to it. Softtissue is gated behind the excavations the same way surtling
+cores are gated behind fire holes.
+
 ### Scattered (vegetation)
 
 | prefab | qty per zone | yields |
