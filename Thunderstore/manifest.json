@@ -1,0 +1,9 @@
+{
+  "name": "BetterMap",
+  "version_number": "1.0.0",
+  "description": "Puts creatures, boats, carts and resources on your map. Pins what you find as you find it, keeps your death markers, and names the traders. Everything can be turned on and off, biome by biome, and syncs with ServerSync.",
+  "website_url": "https://github.com/xtavim/BetterMap",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2350"
+  ]
+}
