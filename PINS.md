@@ -13,6 +13,8 @@ Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locati
   a runestone and a set of spawners is a creature farm, not a resource site: the value comes
   from killing what it produces. Locations that merely happen to contain spawners alongside
   loot or a unique resource are judged on that instead.
+- **Out of scope entirely, no config entry:** shipwrecks in every biome, and `InfestedTree01`,
+  which is visible from a long way off and needs no pin.
 - At the end of the curation the off-by-default lists get a pruning pass: anything that is
   simply not worth a checkbox is dropped entirely rather than shipped as an unused config entry.
 - **Anything vanilla already pins is out of scope**, with no config entry at all: traders,
@@ -22,6 +24,129 @@ Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locati
   for deciding what to pin, not a runtime lookup.
 - Auto pins never remove themselves, so a new pin is skipped when one already exists within
   the merge distance.
+
+## Everything, one table
+
+`on` means pinned out of the box. Everything else ships as an unchecked box.
+
+| biome | prefab | default | qty | what it is |
+|---|---|---|---|---|
+| Meadows | `Beehive` | **on** |  |  |
+| Meadows | `Eikthyrnir` | off | 3 | OfferingBowl x1 + RuneStone x1 |
+| Meadows | `RaspberryBush` | off | 1-2, 2-3 | Raspberry x1 |
+| Meadows | `Pickable_Flint` | off | 30-30 | Flint x1 |
+| Meadows | `Pickable_Mushroom` | off | 1-2, 3-5, 80-100 | Mushroom x1 |
+| Meadows | `Pickable_Dandelion` | off | 3-5, 40-60, 8-10 | Dandelion x1 |
+| Meadows | `Runestone_Boars` | off | 50 | CreatureSpawner x9 + RuneStone x1 |
+| BlackForest | `rock4_copper` | **on** | 0-1 | Stone x1-1, CopperOre x1-1 |
+| BlackForest | `MineRock_Tin` | **on** | 20-20 | TinOre x1-1 |
+| BlackForest | `Beehive` | **on** |  |  |
+| BlackForest | `BlueberryBush` | **on** | 1-1, 3-5 | Blueberries x1 |
+| BlackForest | `Pickable_Thistle` | **on** | 1-2 | Thistle x1 |
+| BlackForest | `Pickable_SeedCarrot` | **on** | 0-0,5 | CarrotSeeds x3 |
+| BlackForest | `BearCave` | **on** | 50 | `Pickable_Mushroom_yellow` -> MushroomYellow x1 + `Beehive` -> Honey x1-3, Que |
+| BlackForest | `TrollCave02` | **on** | 200 | `Pickable_Mushroom_yellow` -> MushroomYellow x1 + Container x4 + CreatureSpawn |
+| BlackForest | `Crypt2` | **on** | 200 | CreatureSpawner x3 |
+| BlackForest | `Crypt3` | **on** | 200 | CreatureSpawner x3 |
+| BlackForest | `Crypt4` | **on** | 200 | CreatureSpawner x3 |
+| BlackForest | `GDKing` | off | 4 | OfferingBowl x1 + RuneStone x1 |
+| BlackForest | `Pickable_Mushroom` | off | 1-2, 3-5, 80-100 | Mushroom x1 |
+| BlackForest | `Runestone_Greydwarfs` | off | 25 | CreatureSpawner x5 + RuneStone x1 |
+| BlackForest | `Runestone_BlackForest` | off | 50 | RuneStone x1 |
+| BlackForest | `Ruin1` | off | 200 | CreatureSpawner x6 + Container x1 |
+| BlackForest | `Ruin2` | off | 200 | `barrell` -> Blueberries x2-4, DeerHide x2-3, Flint x + CreatureSpawner x8 + C |
+| BlackForest | `StoneHouse3` | off | 200 | CreatureSpawner x1 + Container x1 |
+| BlackForest | `StoneHouse4` | off | 200 | CreatureSpawner x2 |
+| BlackForest | `StoneTowerRuins03/07/08/09/10` | off | 80 | `Beehive` -> Honey x1-3, QueenBee x1-1 + CreatureSpawner x11 + Container x2 +  |
+| BlackForest | `Greydwarf_camp1` | off | 300 | `Spawner_GreydwarfNest` -> AncientSeed x1-1 + SpawnArea x1 |
+| BlackForest | `Dolmen01-03` | off | 100 | CreatureSpawner x1 |
+| BlackForest | `BigRockClearing` | off | 10 | `Pickable_Thistle` -> Thistle x1 |
+| Swamp | `Pickable_SeedTurnip` | **on** | 0-0,5 | TurnipSeeds x3 |
+| Swamp | `Pickable_Thistle` | **on** | 1-2 | Thistle x1 |
+| Swamp | `SunkenCrypt4` | **on** | 175 | CreatureSpawner x2 |
+| Swamp | `FireHole` | off | 75 | CreatureSpawner x3 |
+| Swamp | `Runestone_Draugr` | off | 50 | CreatureSpawner x3 + RuneStone x1 |
+| Swamp | `Bonemass` | off | 5 | OfferingBowl x1 + RuneStone x1 |
+| Swamp | `mudpile_beacon` | off | 0-5 | IronScrap x1-1, WitheredBone x1-1 |
+| Swamp | `Pickable_Mushroom` | off | 1-2 | Mushroom x1 |
+| Swamp | `Grave1` | off | 200 | SpawnArea x3 + CreatureSpawner x3 + Container x1 |
+| Swamp | `SwampHut1-5` | off | 50 | Container x1 + CreatureSpawner x1 |
+| Swamp | `SwampRuin1/2` | off | 30 | CreatureSpawner x3 + Vegvisir x1 + Container x1 + SpawnArea x1 |
+| Swamp | `SwampWell1` | off | 25 | CreatureSpawner x2 |
+| Swamp | `Runestone_Swamps` | off | 100 | RuneStone x1 |
+| Mountain | `silvervein` | **on** | 1-1 | Stone x1-1, SilverOre x1-1 |
+| Mountain | `MineRock_Obsidian` | **on** | 10-15 | Obsidian x1-1 |
+| Mountain | `DrakeNest01` | **on** | 200 | `Pickable_DragonEgg` -> DragonEgg x1 + CreatureSpawner x3 |
+| Mountain | `Dragonqueen` | off | 3 | RuneStone x1 + OfferingBowl x1 |
+| Mountain | `AbandonedLogCabin02/03/04` | off | 33 | Container x2 + CreatureSpawner x2 |
+| Mountain | `StoneTowerRuins04/05` | off | 50 | CreatureSpawner x5 + Container x2 + Vegvisir x1 |
+| Mountain | `_leet` | off |  |  |
+| Mountain | `MountainWell1` | off | 25 | Container x1 |
+| Mountain | `DrakeLorestone` | off | 50 | RuneStone x1 |
+| Mountain | `Runestone_Mountains` | off | 100 | RuneStone x1 |
+| Plains | `TarPit1` | **on** | 100 | `Pickable_TarBig` -> Tar x15 + `Pickable_Tar` -> Tar x4 + CreatureSpawner x9 |
+| Plains | `TarPit1_1` | **on** | 50 | `Pickable_TarBig` -> Tar x15 + `Pickable_Tar` -> Tar x4 + CreatureSpawner x9 |
+| Plains | `TarPit2` | **on** | 16 | `Pickable_Tar` -> Tar x4 + `Pickable_TarBig` -> Tar x15 + CreatureSpawner x9 |
+| Plains | `TarPit2_1` | **on** | 20 | `Pickable_Tar` -> Tar x4 + `Pickable_TarBig` -> Tar x15 + CreatureSpawner x9 |
+| Plains | `TarPit3` | **on** | 100 | `Pickable_TarBig` -> Tar x15 + `Pickable_Tar` -> Tar x4 + CreatureSpawner x6 |
+| Plains | `TarPit3_1` | **on** | 100 | `Pickable_TarBig` -> Tar x15 + `Pickable_Tar` -> Tar x4 + CreatureSpawner x6 |
+| Plains | `CloudberryBush` | **on** | 1-3 | Cloudberry x1 |
+| Plains | `GoblinKing` | off | 4 | OfferingBowl x1 + RuneStone x1 |
+| Plains | `GoblinHut01/02/03` | off | 30 | `goblin_roof_45d_corner` -> DeerHide x1-1 + CreatureSpawner x3 |
+| Plains | `StoneTower1/3` | off | 50 | `goblin_banner` -> Wood x1-1, DeerHide x1-1 + `goblin_roof_45d_corner` -> Deer |
+| Plains | `StoneHenge1-5` | off | 5 | CreatureSpawner x3 + Container x1 + Vegvisir x1 |
+| Plains | `Ruin3` | off | 50 | CreatureSpawner x2 + Container x1 |
+| Plains | `Runestone_Plains` | off | 100 | RuneStone x1 |
+| Mistlands | `YggdrasilRoot` | **on** | 1-3, 2-4 | sap |
+| Mistlands | `giant_ribs` | **on** | 1-2 | BlackMarble x1-1 |
+| Mistlands | `giant_helmet1` | **on** | 1-2, 3-3 | IronScrap x1-1, CopperScrap x1-1 |
+| Mistlands | `giant_helmet2` | **on** | 1-2, 3-3 | IronScrap x1-1, CopperScrap x1-1 |
+| Mistlands | `giant_sword1` | **on** | 1-2, 3-5, 3-5 | IronScrap x1-1, CopperScrap x1-1 |
+| Mistlands | `giant_sword2` | **on** | 1-2, 3-5, 3-5 | IronScrap x1-1, CopperScrap x1-1 |
+| Mistlands | `Pickable_Mushroom_Magecap` | **on** | 2-2 | MushroomMagecap x1 |
+| Mistlands | `Pickable_Mushroom_JotunPuffs` | **on** | 1-2 | MushroomJotunPuffs x1 |
+| Mistlands | `Mistlands_DvergrBossEntrance1` | **on** | 5 | `dvergrprops_banner` -> JuteBlue x1-1 + `dvergrprops_curtain` -> JuteBlue x1-1 |
+| Mistlands | `Mistlands_Excavation1/2/3` | **on** | 40 | `dvergrprops_wood_wall` -> Wood x1-1, CopperScrap x1-1 + `dvergrprops_wood_pol |
+| Mistlands | `YggaShoot_small1` | off | 100-100, 40-40, 6-6, 60-60 | Wood x1-1, YggdrasilWood x1-1 |
+| Mistlands | `Mistlands_DvergrTownEntrance1/2` | off | 120 | `blackmarble_post01` -> BlackMarble x1-1 + CreatureSpawner x5 |
+| Mistlands | `Mistlands_RoadPost1` | off | 500 | `blackmarble_post01` -> BlackMarble x1-1 + CreatureSpawner x2 |
+| Mistlands | `Mistlands_RockSpire1` | off | 200 | `blackmarble_post01` -> BlackMarble x1-1 + Container x1 + CreatureSpawner x1 |
+| Mistlands | `Mistlands_Giant1` | off | 250 | CreatureSpawner x5 |
+| Mistlands | `Mistlands_GuardTower1/2/3` | off | 75 | `dvergrprops_wood_pole` -> Wood x1-1, CopperScrap x1-1 + `dvergrprops_curtain` |
+| Mistlands | `Mistlands_Harbour1` | off | 100 | `dvergrprops_wood_pole` -> Wood x1-1, CopperScrap x1-1 + `dvergrprops_crate` - |
+| Mistlands | `Mistlands_Lighthouse1_new` | off | 100 | `dvergrprops_curtain` -> JuteBlue x1-1 + `dvergrprops_wood_pole` -> Wood x1-1, |
+| Mistlands | `Runestone_Mistlands` | off | 50 | RuneStone x1 |
+| AshLands | `UnstableLavaRock` | **on** | 1-1 | ProustitePowder x1-1 |
+| AshLands | `Pickable_SmokePuff` | **on** | 2-2 | MushroomSmokePuff x1 |
+| AshLands | `ashland_pot2_red` | **on** | 1-2 | Pot_Shard_Green x1-1, Pot_Shard_Green x1-1, Bronze x1-1, Iro |
+| AshLands | `LeviathanLava` | **on** | 100 | `LeviathanLava` -> FlametalOreNew x1-1  (tier 3, hp 100) |
+| AshLands | `PlaceofMystery1/2/3` | **on** | 1 | `Pickable_Swordpiece3` -> DyrnwynTipFragment x1 + `Spawner_CharredStone_Elite` |
+| AshLands | `CharredFortress` | **on** | 20 | `Ashlands_Fortress_Wall_Spikes` -> BronzeScrap x1-1 + `Charred_altar_bellfragm |
+| AshLands | `SulfurArch` | **on** | 100 | `Pickable_SulfurRock` -> SulfurStone x1 |
+| AshLands | `FaderLocation` | off | 3 | RuneStone x1 + OfferingBowl x1 |
+| AshLands | `Pickable_Charredskull` | off | 20-40 | Charredskull x1 |
+| AshLands | `MorgenHole1/2/3` | off | 40 | `asksvin_carrion` -> BoneFragments x2-15, AsksvinCarrionSkull + `asksvin_carri |
+| AshLands | `VoltureNest` | off | 350 | `asksvin_carrion` -> BoneFragments x2-15, AsksvinCarrionSkull + `asksvin_carri |
+| AshLands | `CharredTowerRuins1` | off | 30 | `Pickable_Fiddlehead` -> Fiddleheadfern x1 + `ashland_pot1_red` -> Pot_Shard_G |
+| AshLands | `_dvergr` | off |  |  |
+| AshLands | `CharredTowerRuins3` | off | 30 | `Spawner_CharredStone` -> Grausten x1-1, Charredskull x1-1 + SpawnArea x1 |
+| AshLands | `CharredRuins1-4` | off | 75 | `ashland_pot3_red` -> Pot_Shard_Green x1-1, Pot_Shard_Green x1 + `ashland_pot2 |
+| AshLands | `CharredStone_Spawner` | off | 300 | `Spawner_CharredStone` -> Grausten x1-1, Charredskull x1-1 + SpawnArea x1 |
+| AshLands | `Runestone_Ashlands` | off | 70 | RuneStone x1 |
+| DeepNorth | `DN_gammeltrollFrac01` | **on** | 30 | `TrollFrost_Frac_legs` -> Stone x1-1, GoldOre x1-1  (tier 6, hp 50 |
+| DeepNorth | `DN_gammeltrollFrac02` | **on** | 30 | `TrollFrost_Frac_arm` -> Stone x1-1, GoldOre x1-1  (tier 6, hp 50 |
+| DeepNorth | `MorkBorg` | **on** | 40 | `Morkhalla_Eye1` -> AncientGemstoneBlack x1 + `Morkhalla_Eye2` -> AncientGemst |
+| DeepNorth | `NorthMemorialPlace` | **on** | 15 | Container x11 + RuneStone x1 + Vegvisir x1 + OfferingBowl x1 |
+| DeepNorth | `Pickable_SeedKale` | **on** | 0-0,5 | KaleSeeds x3 |
+| DeepNorth | `LingonberryBush` | **on** | 1-2 | Lingonberry x1 |
+| DeepNorth | `Pickable_Snowball` | off | 2-5 | Snowball x1 |
+| DeepNorth | `TheHole01` | off | 40 | `prop_cauldron_ext3_butchertable` -> FineWood x1-5, RoundLog x1-5 + `prop_piec |
+| DeepNorth | `ShipSetting02` | off | 100 | Container x1 |
+| DeepNorth | `ShipSetting03` | off | 50 | Container x3 |
+| DeepNorth | `DN_hut01` | off | 40 | Container x1 |
+| DeepNorth | `LumberCamp` | off | 50 | Container x1 |
+| DeepNorth | `Runestone_DeepNorth` | off | 70 | RuneStone x1 |
+| Ocean | `Leviathan` | **on** | 0-0,01 | Chitin x1-1 |
 
 ---
 
@@ -84,7 +209,7 @@ Beehives are in `WoodHouse1,2,3,4,5,6,7,9,10,11,13` (qty 20 each), `BearCave` (5
 `Crypt2` `Crypt3` `Crypt4`
 
 **Off by default:** `GDKing` (boss altar) · `Pickable_Mushroom` · `Runestone_Greydwarfs` ·
-`Runestone_BlackForest` · `ShipWreck01-04` · `Ruin1` · `Ruin2` · `StoneHouse3` · `StoneHouse4` ·
+`Runestone_BlackForest` · `Ruin1` · `Ruin2` · `StoneHouse3` · `StoneHouse4` ·
 `StoneTowerRuins03/07/08/09/10` and the sunk variants · `Greydwarf_camp1` · `Dolmen01-03` ·
 `BigRockClearing`
 
@@ -148,8 +273,8 @@ object, not on the location that happens to contain it.
 
 **Off by default:** `FireHole` and `Runestone_Draugr`, both pure spawn sites ·
 `Bonemass` (boss altar) · `mudpile_beacon` · `Pickable_Mushroom` ·
-`InfestedTree01` · `Grave1` · `SwampHut1-5` and variants · `SwampRuin1/2` · `SwampWell1` ·
-`ShipWreck01-04` · `Runestone_Swamps`
+`Grave1` · `SwampHut1-5` and variants · `SwampRuin1/2` · `SwampWell1` ·
+`Runestone_Swamps`
 
 **Out of scope:** `BogWitch_Camp`, vanilla pins it.
 
@@ -244,7 +369,7 @@ useful pin in the biome.
 `CloudberryBush`
 
 **Off by default:** `GoblinKing` (boss altar) · `GoblinHut01/02/03` · `StoneTower1/3` ·
-`StoneHenge1-5` · `Ruin3` · `ShipWreck01-04` · `Runestone_Plains`
+`StoneHenge1-5` · `Ruin3` · `Runestone_Plains`
 
 **Dropped:** `StoneHouse1_heath`, `StoneHouse2_heath`, `StoneHouse5_heath` have a quantity of
 zero and never generate, so they get no entry at all.
@@ -404,7 +529,7 @@ them the scarcest thing in the game.
 **On by default:** `DN_gammeltrollFrac01` `DN_gammeltrollFrac02` (GoldOre) · `MorkBorg` ·
 `NorthMemorialPlace` · `Pickable_SeedKale` · `LingonberryBush`
 
-**Off by default:** `Pickable_Snowball` · `TheHole01` · `ShipWreck01_DN` · `ShipWreck02_DN` ·
+**Off by default:** `Pickable_Snowball` · `TheHole01` ·
 `ShipSetting02` · `ShipSetting03` · `DN_hut01` · `LumberCamp` · `Runestone_DeepNorth`
 
 **Dropped:** `ice_rock1` yields nothing.
@@ -449,7 +574,7 @@ fifteen per world, the densest loot site anywhere in the dump.
 
 **On by default:** `Leviathan` (Chitin)
 
-**Off by default:** `ShipWreck01-04`
+**Off by default:** none.
 
 Leviathan is the rarest scatter in the dump at 0.01 per zone and the only source of Chitin.
 Shipwrecks are off in every biome they appear in: Black Forest, Swamp, Deep North and Ocean.
