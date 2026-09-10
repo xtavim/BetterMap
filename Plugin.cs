@@ -14,10 +14,11 @@ namespace BetterMap
     {
         // Entities
         public static ConfigEntry<bool> showCreatures;
-        public static ConfigEntry<float> creatureRadius;
         public static ConfigEntry<float> creatureRefreshInterval;
         public static ConfigEntry<bool> showEntityNames;
         public static ConfigEntry<bool> tintTamedCreatures;
+        public static ConfigEntry<bool> tintHostileCreatures;
+        public static ConfigEntry<float> creatureIconScale;
 
         // Vehicles
         public static ConfigEntry<bool> showBoats;
@@ -87,11 +88,6 @@ namespace BetterMap
                 new ConfigDescription(
                     "Show creatures on the minimap and the map, using their trophy as the icon."));
 
-            creatureRadius = ConfigSync("Creatures", "Creature Radius", 60f,
-                new ConfigDescription(
-                    "How far from the player, in meters, creatures are tracked. Creatures outside this are not drawn and are not processed at all.",
-                    new AcceptableValueRange<float>(10f, 300f)));
-
             creatureRefreshInterval = ConfigSync("Creatures", "Creature Refresh Interval", 0.5f,
                 new ConfigDescription(
                     "How often, in seconds, the set of tracked creatures is rebuilt. Their pins follow them every frame regardless.",
@@ -101,9 +97,18 @@ namespace BetterMap
                 new ConfigDescription(
                     "Show a name under every creature pin. Creatures with no trophy icon, and tamed creatures that have been given a name, always show theirs regardless of this setting."));
 
+            creatureIconScale = ConfigSync("Creatures", "Creature Icon Scale", 1f,
+                new ConfigDescription(
+                    "Size of creature icons, as a multiple of a normal pin. 1 is the size of a vanilla pin, 32 pixels on the minimap and 48 on the map.",
+                    new AcceptableValueRange<float>(0.5f, 3f)));
+
             tintTamedCreatures = ConfigSync("Creatures", "Tint Tamed Creatures", true,
                 new ConfigDescription(
                     "Tint the pins of tamed creatures green so they stand out from the wildlife."));
+
+            tintHostileCreatures = ConfigSync("Creatures", "Tint Hostile Creatures", true,
+                new ConfigDescription(
+                    "Tint red the pins of creatures that will attack you on sight. Only applies to creatures with no trophy to use as an icon, which are drawn with a plain pin: a creature drawn as its own trophy is already recognisable."));
 
             // Vehicles -------------------------------------------------------
 
@@ -146,6 +151,9 @@ namespace BetterMap
                     "How many death markers to keep. Vanilla keeps only the most recent one.",
                     new AcceptableValueRange<int>(1, 20)));
 
+            // Also the radius creatures are tracked within, deliberately not mentioned: keeping the
+            // two the same is what stops a creature being pinned on ground that is still black, and
+            // it is one less number for anyone to get wrong.
             explorationRadius = ConfigSync("Map", "Exploration Radius", 100f,
                 new ConfigDescription(
                     "How much of the map is uncovered as you walk, in meters. 100 is the vanilla value.",

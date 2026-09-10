@@ -6,13 +6,13 @@ namespace BetterMap.Scripts.Creatures
     public static class CreaturePatches
     {
         /// <summary>
-        /// UpdatePins sets every pin's icon colour on every frame, white for our own pins, so a tint
-        /// applied once is gone by the next frame. Reapplying it here is the only place it sticks.
+        /// The only point at which creature pins can be styled: UpdatePins decides size and colour
+        /// itself, so anything set earlier is overwritten by the time the pin is drawn.
         /// </summary>
         [HarmonyPostfix, HarmonyPatch(typeof(Minimap), "UpdatePins")]
         private static void Minimap_UpdatePins_Postfix()
         {
-            CreatureTracker.ApplyTints();
+            CreatureTracker.RestylePins();
         }
     }
 }
