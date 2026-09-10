@@ -115,6 +115,70 @@ namespace BetterMap.Scripts
             File.WriteAllText(path, report.ToString());
 
             Plugin.Logger.LogInfo($"VegetationDumper: wrote {path} ({byBiome.Count} biomes, {withDrops} harvestable)");
+
+            DumpLocations(zones);
+        }
+
+        /// <summary>
+        /// Locations are the other half of the picture. Some resource sites are not scattered as
+        /// vegetation but placed inside a location: flametal and gold never appear in the
+        /// vegetation dump for that reason.
+        ///
+        /// Only metadata is read here. The prefab behind a location is a soft reference and would
+        /// have to be loaded to see what is inside it, which is not worth doing for a few hundred
+        /// locations until the names turn out to be ambiguous.
+        /// </summary>
+        private static void DumpLocations(ZoneSystem zones)
+        {
+            var byBiome = new Dictionary<string, List<string>>();
+
+            foreach (var loc in zones.m_locations)
+            {
+                if (loc == null || !loc.m_enable) continue;
+
+                var icon = loc.m_iconAlways ? "icon:always" : loc.m_iconPlaced ? "icon:placed" : "";
+                var unique = loc.m_unique ? "unique" : "";
+
+                var line = $"  {loc.m_prefabName,-42} qty {loc.m_quantity,-6} {icon,-12} {unique}".TrimEnd();
+
+                foreach (var biome in Biomes(loc.m_biome))
+                {
+                    if (!byBiome.TryGetValue(biome, out var list))
+                    {
+                        list = new List<string>();
+                        byBiome[biome] = list;
+                    }
+
+                    list.Add(line);
+                }
+            }
+
+            var report = new StringBuilder();
+            report.AppendLine("BetterMap location dump");
+            report.AppendLine($"Valheim {Version.GetVersionString()}   {zones.m_locations.Count} locations");
+            report.AppendLine();
+            report.AppendLine("Resource sites placed inside a location rather than scattered as vegetation.");
+            report.AppendLine("icon:always and icon:placed are locations vanilla already puts on the map itself.");
+            report.AppendLine();
+
+            foreach (var biome in byBiome.Keys.OrderBy(b => b, StringComparer.OrdinalIgnoreCase))
+            {
+                report.AppendLine(new string('=', 100));
+                report.AppendLine($"{biome}  ({byBiome[biome].Count})");
+                report.AppendLine(new string('=', 100));
+
+                foreach (var line in byBiome[biome].OrderBy(l => l, StringComparer.OrdinalIgnoreCase))
+                {
+                    report.AppendLine(line);
+                }
+
+                report.AppendLine();
+            }
+
+            var path = Path.Combine(Paths.ConfigPath, "BetterMap.locations.txt");
+            File.WriteAllText(path, report.ToString());
+
+            Plugin.Logger.LogInfo($"VegetationDumper: wrote {path} ({zones.m_locations.Count} locations)");
         }
 
         private static IEnumerable<string> Biomes(Heightmap.Biome biome)
