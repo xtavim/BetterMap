@@ -441,6 +441,15 @@ fifteen per world, the densest loot site anywhere in the dump.
 
 ## Ocean
 
+### Decided
+
+**On by default:** `Leviathan` (Chitin)
+
+**Off by default:** `ShipWreck01-04`
+
+Leviathan is the rarest scatter in the dump at 0.01 per zone and the only source of Chitin.
+Shipwrecks are off in every biome they appear in: Black Forest, Swamp, Deep North and Ocean.
+
 ### Scattered (vegetation)
 
 | prefab | qty per zone | yields |
