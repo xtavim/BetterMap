@@ -223,7 +223,7 @@ namespace BetterMap.Scripts
                 // Anything under a RandomSpawn only appears some of the time, which is the
                 // difference between a fortress that always holds its altar and a house that
                 // sometimes holds a beehive.
-                var random = go.GetComponentInParent<RandomSpawn>();
+                var random = go.GetComponentInParent<RandomSpawn>(true);
                 var chance = random != null ? $"  [{random.m_chanceToSpawn:0}% chance]" : "";
 
                 var drops = DescribeDirectHarvest(go);
