@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using ServerSync;
+using BetterMap.Scripts;
 using UnityEngine;
 
 namespace BetterMap
@@ -51,6 +52,11 @@ namespace BetterMap
             InitializeHarmonyPatches();
 
             Logger.LogInfo($"{PluginInfo.PLUGIN_NAME} {PluginInfo.PLUGIN_VERSION} loaded");
+        }
+
+        private void Update()
+        {
+            VegetationDumper.TryDump();
         }
 
         private ConfigEntry<T> ConfigSync<T>(string group, string name, T value, ConfigDescription description,

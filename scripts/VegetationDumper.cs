@@ -18,20 +18,29 @@ namespace BetterMap.Scripts
     ///
     /// This is the menu the pin whitelist is curated from, not a rule in itself.
     /// </summary>
-    [HarmonyPatch]
     public static class VegetationDumper
     {
         private static bool _dumped;
 
-        [HarmonyPostfix, HarmonyPatch(typeof(ZoneSystem), nameof(ZoneSystem.Awake))]
-        private static void ZoneSystem_Awake_Postfix(ZoneSystem __instance)
+        /// <summary>
+        /// Polled rather than patched onto a lifecycle method. m_vegetation is not the serialized
+        /// list: ZoneSystem.Start calls SetupLocations, which merges in the per biome location
+        /// lists, and only then is Mistlands, Ashlands and Deep North content present. Waiting for
+        /// the player to spawn puts us safely after all of it.
+        /// </summary>
+        public static void TryDump()
         {
             if (_dumped || !Plugin.dumpPrefabs.Value) return;
+
+            var zones = ZoneSystem.instance;
+            if (zones == null || Player.m_localPlayer == null) return;
+            if (zones.m_vegetation == null || zones.m_vegetation.Count == 0) return;
+
             _dumped = true;
 
             try
             {
-                Dump(__instance);
+                Dump(zones);
             }
             catch (Exception e)
             {
@@ -125,7 +134,24 @@ namespace BetterMap.Scripts
         }
 
         // Only the components that actually yield something. Anything with no harvest is scenery.
+        //
+        // World generation places the intact rock, which carries no harvest component at all: the
+        // MineRock lives on the fractured object it swaps to when hit. Copper and silver both look
+        // like scenery unless that reference is followed.
         private static string DescribeHarvest(GameObject prefab)
+        {
+            var direct = DescribeDirectHarvest(prefab);
+            if (direct != null) return direct;
+
+            var destructible = prefab.GetComponent<Destructible>();
+            var fractured = destructible?.m_spawnWhenDestroyed;
+            if (fractured == null) return null;
+
+            var indirect = DescribeDirectHarvest(fractured);
+            return indirect == null ? null : $"{indirect}   [via {fractured.name}]";
+        }
+
+        private static string DescribeDirectHarvest(GameObject prefab)
         {
             var pickable = prefab.GetComponent<Pickable>();
             if (pickable?.m_itemPrefab != null)
