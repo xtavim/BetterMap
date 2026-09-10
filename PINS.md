@@ -23,6 +23,9 @@ Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locati
   since boss altars are off precisely because vegvisirs reveal them; the boss altars themselves;
   the creature farms; the common forage; and the four places with real loot, `TheHole01`,
   `VoltureNest`, `CharredTowerRuins1` and `_dvergr`.
+- `Ruin2`, `Greydwarf_camp1`, `CharredStone_Spawner` and `YggaShoot_small1` were dropped in a
+  second pass: a vegvisir alone does not justify pinning two hundred ruins, and yggdrasil
+  shoots at up to a hundred per zone are not something anyone needs help finding.
 - At the end of the curation the off-by-default lists get a pruning pass: anything that is
   simply not worth a checkbox is dropped entirely rather than shipped as an unused config entry.
 - **Anything vanilla already pins is out of scope**, with no config entry at all: traders,
@@ -62,9 +65,7 @@ container and spawner buildings, the shipwrecks and the infested trees.
 | BlackForest | `GDKing` | off | 4 | OfferingBowl x1 + RuneStone x1 |
 | BlackForest | `Pickable_Mushroom` | off | 1-2, 3-5, 80-100 | Mushroom x1 |
 | BlackForest | `Runestone_Greydwarfs` | off | 25 | CreatureSpawner x5 + RuneStone x1 |
-| BlackForest | `Ruin2` | off | 200 | `barrell` -> Blueberries x2-4, DeerHide x2-3, Flint x + CreatureSpawner x8 + C |
 | BlackForest | `StoneTowerRuins03/07/08/09/10` | off | 80 | `Beehive` -> Honey x1-3, QueenBee x1-1 + CreatureSpawner x11 + Container x2 +  |
-| BlackForest | `Greydwarf_camp1` | off | 300 | `Spawner_GreydwarfNest` -> AncientSeed x1-1 + SpawnArea x1 |
 | Swamp | `Pickable_SeedTurnip` | **on** | 0-0,5 | TurnipSeeds x3 |
 | Swamp | `Pickable_Thistle` | **on** | 1-2 | Thistle x1 |
 | Swamp | `SunkenCrypt4` | **on** | 175 | CreatureSpawner x2 |
@@ -99,7 +100,6 @@ container and spawner buildings, the shipwrecks and the infested trees.
 | Mistlands | `Pickable_Mushroom_JotunPuffs` | **on** | 1-2 | MushroomJotunPuffs x1 |
 | Mistlands | `Mistlands_DvergrBossEntrance1` | **on** | 5 | `dvergrprops_banner` -> JuteBlue x1-1 + `dvergrprops_curtain` -> JuteBlue x1-1 |
 | Mistlands | `Mistlands_Excavation1/2/3` | **on** | 40 | `dvergrprops_wood_wall` -> Wood x1-1, CopperScrap x1-1 + `dvergrprops_wood_pol |
-| Mistlands | `YggaShoot_small1` | off | 100-100, 40-40, 6-6, 60-60 | Wood x1-1, YggdrasilWood x1-1 |
 | AshLands | `UnstableLavaRock` | **on** | 1-1 | ProustitePowder x1-1 |
 | AshLands | `Pickable_SmokePuff` | **on** | 2-2 | MushroomSmokePuff x1 |
 | AshLands | `ashland_pot2_red` | **on** | 1-2 | Pot_Shard_Green x1-1, Pot_Shard_Green x1-1, Bronze x1-1, Iro |
@@ -114,7 +114,6 @@ container and spawner buildings, the shipwrecks and the infested trees.
 | AshLands | `CharredTowerRuins1` | off | 30 | `Pickable_Fiddlehead` -> Fiddleheadfern x1 + `ashland_pot1_red` -> Pot_Shard_G |
 | AshLands | `_dvergr` | off |  |  |
 | AshLands | `CharredTowerRuins3` | off | 30 | `Spawner_CharredStone` -> Grausten x1-1, Charredskull x1-1 + SpawnArea x1 |
-| AshLands | `CharredStone_Spawner` | off | 300 | `Spawner_CharredStone` -> Grausten x1-1, Charredskull x1-1 + SpawnArea x1 |
 | DeepNorth | `DN_gammeltrollFrac01` | **on** | 30 | `TrollFrost_Frac_legs` -> Stone x1-1, GoldOre x1-1  (tier 6, hp 50 |
 | DeepNorth | `DN_gammeltrollFrac02` | **on** | 30 | `TrollFrost_Frac_arm` -> Stone x1-1, GoldOre x1-1  (tier 6, hp 50 |
 | DeepNorth | `MorkBorg` | **on** | 40 | `Morkhalla_Eye1` -> AncientGemstoneBlack x1 + `Morkhalla_Eye2` -> AncientGemst |
@@ -186,8 +185,8 @@ Beehives are in `WoodHouse1,2,3,4,5,6,7,9,10,11,13` (qty 20 each), `BearCave` (5
 `Crypt2` `Crypt3` `Crypt4`
 
 **Off by default:** `GDKing` (boss altar) · `Pickable_Mushroom` · `Runestone_Greydwarfs` ·
-`Runestone_BlackForest` · `Ruin1` · `Ruin2` · `StoneHouse3` · `StoneHouse4` ·
-`StoneTowerRuins03/07/08/09/10` and the sunk variants · `Greydwarf_camp1` · `Dolmen01-03` ·
+`Runestone_BlackForest` · `Ruin1` · `StoneHouse3` · `StoneHouse4` ·
+`StoneTowerRuins03/07/08/09/10` and the sunk variants · `Dolmen01-03` ·
 `BigRockClearing`
 
 Crypt entrances are pinned. The no dungeon rule covers what is inside them, not the way in.
@@ -401,7 +400,7 @@ Tar has no other source, which is what earns the pits their pin despite there be
 `Pickable_Mushroom_JotunPuffs` · `Mistlands_DvergrBossEntrance1` ·
 `Mistlands_Excavation1/2/3`
 
-**Off by default:** `YggaShoot_small1` · `Mistlands_DvergrTownEntrance1/2` · `Mistlands_RoadPost1` ·
+**Off by default:** `Mistlands_DvergrTownEntrance1/2` · `Mistlands_RoadPost1` ·
 `Mistlands_RockSpire1` · `Mistlands_Giant1` · `Mistlands_GuardTower1/2/3` and the ruined variants ·
 `Mistlands_Harbour1` · `Mistlands_Lighthouse1_new` · `Runestone_Mistlands`
 
@@ -458,7 +457,7 @@ cores are gated behind fire holes.
 
 **Off by default:** `FaderLocation` (boss altar) · `Pickable_Charredskull` · `MorgenHole1/2/3` ·
 `VoltureNest` · `CharredTowerRuins1` and `_dvergr` · `CharredTowerRuins3` · `CharredRuins1-4` ·
-`CharredStone_Spawner` · `Runestone_Ashlands`
+`Runestone_Ashlands`
 
 `PlaceofMystery1/2/3` are one of each per world and hold the three Dyrnwyn fragments, which makes
 them the scarcest thing in the game.
