@@ -132,13 +132,21 @@ namespace BetterMap.Scripts.Pins
         {
             if (vanilla == null) return;
 
-            TopRight(vanilla);
-            vanilla.anchoredPosition = new Vector2(-Margin, -Margin);
+            Anchor(vanilla, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f));
+            vanilla.anchoredPosition = new Vector2(-Margin, 0f);
 
             if (extras != null)
             {
-                TopRight(extras);
-                extras.anchoredPosition = new Vector2(-Margin - vanilla.rect.width - Gap, -Margin);
+                Anchor(extras, new Vector2(1f, 0.5f), new Vector2(1f, 0f));
+                extras.anchoredPosition = new Vector2(-Margin - vanilla.rect.width - Gap, -vanilla.rect.height / 2f);
+            }
+
+            var toggle = map.m_publicPosition != null ? map.m_publicPosition.transform.parent as RectTransform : null;
+
+            if (toggle != null)
+            {
+                Anchor(toggle, new Vector2(1f, 0f), new Vector2(1f, 0f));
+                toggle.anchoredPosition = new Vector2(-Margin, Margin);
             }
 
             var biome = map.m_biomeNameLarge != null ? map.m_biomeNameLarge.rectTransform : null;
@@ -154,11 +162,11 @@ namespace BetterMap.Scripts.Pins
             }
         }
 
-        private static void TopRight(RectTransform rect)
+        private static void Anchor(RectTransform rect, Vector2 anchor, Vector2 pivot)
         {
-            rect.anchorMin = Vector2.one;
-            rect.anchorMax = Vector2.one;
-            rect.pivot = Vector2.one;
+            rect.anchorMin = anchor;
+            rect.anchorMax = anchor;
+            rect.pivot = pivot;
         }
 
         // No button on purpose: whether creatures and vehicles are drawn is a setting, not
