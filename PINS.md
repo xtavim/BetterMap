@@ -344,6 +344,19 @@ cores are gated behind fire holes.
 
 ## AshLands
 
+### Decided
+
+**On by default:** `UnstableLavaRock` (ProustitePowder) · `Pickable_SmokePuff` ·
+`ashland_pot2_red` · `LeviathanLava` (FlametalOreNew) · `PlaceofMystery1/2/3` ·
+`CharredFortress` · `SulfurArch`
+
+**Off by default:** `FaderLocation` (boss altar) · `Pickable_Charredskull` · `MorgenHole1/2/3` ·
+`VoltureNest` · `CharredTowerRuins1` and `_dvergr` · `CharredTowerRuins3` · `CharredRuins1-4` ·
+`CharredStone_Spawner` · `Runestone_Ashlands`
+
+`PlaceofMystery1/2/3` are one of each per world and hold the three Dyrnwyn fragments, which makes
+them the scarcest thing in the game.
+
 ### Scattered (vegetation)
 
 | prefab | qty per zone | yields |
