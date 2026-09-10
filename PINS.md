@@ -9,6 +9,9 @@ Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locati
 - **Dungeon interiors are never pinned.**
 - **Boss altars are off by default.** Vanilla already pins them when you use a vegvisir,
   so pinning them automatically duplicates a mechanic the game already has.
+- **Anything vanilla already pins is out of scope**, with no config entry at all: traders,
+  Hildir's camps, the bog witch, the start temple, the Deep North boss room. Those are the
+  locations flagged `icon:always` or `icon:placed` in the dump.
 - Pins are detected from objects loaded in the world. The placement tables below are the menu
   for deciding what to pin, not a runtime lookup.
 - Auto pins never remove themselves, so a new pin is skipped when one already exists within
@@ -132,6 +135,20 @@ object, not on the location that happens to contain it.
 ---
 
 ## Swamp
+
+### Decided
+
+**On by default:** `Pickable_SeedTurnip` · `Pickable_Thistle` · `SunkenCrypt4` · `FireHole` ·
+`Runestone_Draugr`
+
+**Off by default:** `Bonemass` (boss altar) · `mudpile_beacon` · `Pickable_Mushroom` ·
+`InfestedTree01` · `Grave1` · `SwampHut1-5` and variants · `SwampRuin1/2` · `SwampWell1` ·
+`ShipWreck01-04` · `Runestone_Swamps`
+
+**Out of scope:** `BogWitch_Camp`, vanilla pins it.
+
+`FireHole` is in because surtling cores are gated behind it and there are only 75 per world.
+`Runestone_Draugr` carries three spawners, the same farm pattern as the boars and greydwarfs.
 
 ### Scattered (vegetation)
 
