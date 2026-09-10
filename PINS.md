@@ -234,6 +234,19 @@ useful pin in the biome.
 
 ## Plains
 
+### Decided
+
+**On by default:** `TarPit1` `TarPit1_1` `TarPit2` `TarPit2_1` `TarPit3` `TarPit3_1` ·
+`CloudberryBush`
+
+**Off by default:** `GoblinKing` (boss altar) · `GoblinHut01/02/03` · `StoneTower1/3` ·
+`StoneHenge1-5` · `Ruin3` · `ShipWreck01-04` · `Runestone_Plains`
+
+**Dropped:** `StoneHouse1_heath`, `StoneHouse2_heath`, `StoneHouse5_heath` have a quantity of
+zero and never generate, so they get no entry at all.
+
+Tar has no other source, which is what earns the pits their pin despite there being 386 of them.
+
 ### Scattered (vegetation)
 
 | prefab | qty per zone | yields |
