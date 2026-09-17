@@ -53,7 +53,11 @@
                 <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files\Steam\steamapps\common\Valheim</GamePath>
                 <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files (x86)\Steam\steamapps\common\Valheim</GamePath>
                 <GamePath Condition="!Exists('$(GamePath)')">D:\SteamLibrary\steamapps\common\Valheim</GamePath>
-                <BepInExPath Condition="!Exists('$(BepInExPath)')AND Exists('$(GamePath)')">$(GamePath)\BepInEx</BepInExPath>
+                <BepInExPath Condition="!Exists('$(BepInExPath)\core') AND Exists('$(GamePath)\BepInEx\core')">$(GamePath)\BepInEx</BepInExPath>
+                <!-- Gale and r2modman keep BepInEx in a profile of their own rather than in the game folder. -->
+                <BepInExPath Condition="!Exists('$(BepInExPath)\core') AND '$(GaleProfile)' != '' AND Exists('$(APPDATA)\com.kesomannen.gale\valheim\profiles\$(GaleProfile)\BepInEx\core')">$(APPDATA)\com.kesomannen.gale\valheim\profiles\$(GaleProfile)\BepInEx</BepInExPath>
+                <BepInExPath Condition="!Exists('$(BepInExPath)\core') AND Exists('$(APPDATA)\com.kesomannen.gale\valheim\profiles\Default\BepInEx\core')">$(APPDATA)\com.kesomannen.gale\valheim\profiles\Default\BepInEx</BepInExPath>
+                <BepInExPath Condition="!Exists('$(BepInExPath)\core') AND Exists('$(APPDATA)\r2modmanPlus-local\Valheim\profiles\Default\BepInEx\core')">$(APPDATA)\r2modmanPlus-local\Valheim\profiles\Default\BepInEx</BepInExPath>
                 <CorlibPath Condition="!Exists('$(CorlibPath)') AND Exists('$(GamePath)')">$(GamePath)\valheim_Data\Managed</CorlibPath>
                 <CorlibPath Condition="!Exists('$(CorlibPath)') AND Exists('$(GamePath)')">$(GamePath)\unstripped_corlib</CorlibPath>
                 <PublicizedAssembliesPath Condition="!Exists('$(PublicizedAssembliesPath)') AND Exists('$(GamePath)')">$(GamePath)\valheim_Data\Managed\publicized_assemblies</PublicizedAssembliesPath>
@@ -63,7 +67,7 @@
     </Choose>
     <ItemGroup>
         <Reference Include="0Harmony">
-            <HintPath>$(GamePath)\BepInEx\core\0Harmony.dll</HintPath>
+            <HintPath>$(BepInExPath)\core\0Harmony.dll</HintPath>
         </Reference>
         <Reference Include="assembly_guiutils">
           <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_guiutils_publicized.dll</HintPath>
@@ -84,7 +88,7 @@
           <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_valheim_publicized.dll</HintPath>
         </Reference>
         <Reference Include="BepInEx">
-            <HintPath>$(GamePath)\BepInEx\core\BepInEx.dll</HintPath>
+            <HintPath>$(BepInExPath)\core\BepInEx.dll</HintPath>
         </Reference>
         <Reference Include="ServerSync">
             <HintPath>lib/ServerSync.dll</HintPath>

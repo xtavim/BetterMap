@@ -43,6 +43,9 @@ namespace BetterMap.Scripts.Pins
 
         private static Minimap _builtInto;
 
+        private static RectTransform _panel;
+        private static RectTransform _extras;
+
         public static Minimap.PinType TypeOf(PinCategory category)
         {
             return _types.TryGetValue(category, out var type) ? type : Plugin.AutoPinType;
@@ -132,14 +135,14 @@ namespace BetterMap.Scripts.Pins
         {
             if (vanilla == null) return;
 
-            Anchor(vanilla, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f));
-            vanilla.anchoredPosition = new Vector2(-Margin, 0f);
+            _panel = vanilla;
+            _extras = extras;
 
-            if (extras != null)
-            {
-                Anchor(extras, new Vector2(1f, 0.5f), new Vector2(1f, 1f));
-                extras.anchoredPosition = new Vector2(-Margin - vanilla.rect.width - Gap, vanilla.rect.height / 2f);
-            }
+            Anchor(vanilla, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f));
+
+            if (extras != null) Anchor(extras, new Vector2(1f, 0.5f), new Vector2(1f, 1f));
+
+            Rescale();
 
             var toggle = map.m_publicPosition != null ? map.m_publicPosition.transform.parent as RectTransform : null;
 
@@ -160,6 +163,34 @@ namespace BetterMap.Scripts.Pins
 
                 map.m_biomeNameLarge.alignment = TMPro.TextAlignmentOptions.Top;
             }
+        }
+
+        // Scaling the panels rather than the icons on them takes the whole legend down together: the
+        // game's own rows, ours, the spacing between them and the backing they sit on. Sizing and
+        // spacing stay in the units the game laid them out in, so the panel goes on adapting to
+        // however many rows it ends up holding.
+        //
+        // Kept apart from the rest of the arranging so changing the setting can call it again. The
+        // legend is built once per map and rebuilding it to resize it would mean cloning every row
+        // over again.
+        public static void Rescale()
+        {
+            if (_panel == null) return;
+
+            var scale = Plugin.legendScale.Value;
+
+            _panel.localScale = Vector3.one * scale;
+            _panel.anchoredPosition = new Vector2(-Margin, 0f);
+
+            if (_extras == null) return;
+
+            _extras.localScale = Vector3.one * scale;
+
+            // The panel's own width is what the game laid out, before scaling, so the gap between the
+            // two has to be measured in what is actually drawn.
+            _extras.anchoredPosition = new Vector2(
+                -Margin - _panel.rect.width * scale - Gap,
+                _panel.rect.height * scale / 2f);
         }
 
         private static void Anchor(RectTransform rect, Vector2 anchor, Vector2 pivot)
