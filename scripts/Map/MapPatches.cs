@@ -16,6 +16,14 @@ namespace BetterMap.Scripts.Map
         private static void Minimap_Start_Postfix()
         {
             Pins.PinLegend.Install();
+            MapLayout.Apply();
+        }
+
+        // Measured again on every open, since the window can be resized between one look and the next.
+        [HarmonyPostfix, HarmonyPatch(typeof(Minimap), "SetMapMode")]
+        private static void Minimap_SetMapMode_Postfix(Minimap.MapMode mode)
+        {
+            if (mode == Minimap.MapMode.Large) Pins.PinLegend.Rescale();
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(Minimap), "UpdatePins")]

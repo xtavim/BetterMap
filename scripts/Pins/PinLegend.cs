@@ -45,6 +45,7 @@ namespace BetterMap.Scripts.Pins
 
         private static RectTransform _panel;
         private static RectTransform _extras;
+        private static RectTransform _area;
 
         public static Minimap.PinType TypeOf(PinCategory category)
         {
@@ -137,67 +138,43 @@ namespace BetterMap.Scripts.Pins
 
             _panel = vanilla;
             _extras = extras;
-
-            Anchor(vanilla, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f));
-
-            if (extras != null) Anchor(extras, new Vector2(1f, 0.5f), new Vector2(1f, 1f));
+            _area = map.m_largeRoot != null ? map.m_largeRoot.transform as RectTransform : null;
 
             Rescale();
-
-            var toggle = map.m_publicPosition != null ? map.m_publicPosition.transform.parent as RectTransform : null;
-
-            if (toggle != null)
-            {
-                Anchor(toggle, new Vector2(1f, 0f), new Vector2(1f, 0f));
-                toggle.anchoredPosition = new Vector2(-Margin, Margin);
-            }
-
-            var biome = map.m_biomeNameLarge != null ? map.m_biomeNameLarge.rectTransform : null;
-
-            if (biome != null)
-            {
-                biome.anchorMin = new Vector2(0.5f, 1f);
-                biome.anchorMax = new Vector2(0.5f, 1f);
-                biome.pivot = new Vector2(0.5f, 1f);
-                biome.anchoredPosition = new Vector2(0f, -Margin);
-
-                map.m_biomeNameLarge.alignment = TMPro.TextAlignmentOptions.Top;
-            }
         }
 
-        // Scaling the panels rather than the icons on them takes the whole legend down together: the
-        // game's own rows, ours, the spacing between them and the backing they sit on. Sizing and
-        // spacing stay in the units the game laid them out in, so the panel goes on adapting to
-        // however many rows it ends up holding.
-        //
-        // Kept apart from the rest of the arranging so changing the setting can call it again. The
-        // legend is built once per map and rebuilding it to resize it would mean cloning every row
-        // over again.
-        public static void Rescale()
-        {
-            if (_panel == null) return;
-
-            var scale = Plugin.legendScale.Value;
-
-            _panel.localScale = Vector3.one * scale;
-            _panel.anchoredPosition = new Vector2(-Margin, 0f);
-
-            if (_extras == null) return;
-
-            _extras.localScale = Vector3.one * scale;
-
-            // The panel's own width is what the game laid out, before scaling, so the gap between the
-            // two has to be measured in what is actually drawn.
-            _extras.anchoredPosition = new Vector2(
-                -Margin - _panel.rect.width * scale - Gap,
-                _panel.rect.height * scale / 2f);
-        }
-
-        private static void Anchor(RectTransform rect, Vector2 anchor, Vector2 pivot)
+        public static void Anchor(RectTransform rect, Vector2 anchor, Vector2 pivot)
         {
             rect.anchorMin = anchor;
             rect.anchorMax = anchor;
             rect.pivot = pivot;
+        }
+
+        // Scaling the panel takes the whole legend with it, icons and backing alike, and leaves the
+        // spacing in the units the game laid it out in. Never enlarged past its natural size.
+        public static void Rescale()
+        {
+            if (_panel == null) return;
+
+            var scale = 1f;
+
+            var natural = _panel.rect.height;
+            var available = _area != null ? _area.rect.height - Margin * 2f : 0f;
+
+            if (natural > 0f && available > 0f) scale = Mathf.Min(1f, available / natural);
+
+            Anchor(_panel, Vector2.one, Vector2.one);
+
+            _panel.localScale = Vector3.one * scale;
+            _panel.anchoredPosition = new Vector2(-Margin, -Margin);
+
+            if (_extras == null) return;
+
+            Anchor(_extras, Vector2.one, Vector2.one);
+
+            _extras.localScale = Vector3.one * scale;
+
+            _extras.anchoredPosition = new Vector2(-Margin - _panel.rect.width * scale - Gap, -Margin);
         }
 
         // No button on purpose: whether creatures and vehicles are drawn is a setting, not

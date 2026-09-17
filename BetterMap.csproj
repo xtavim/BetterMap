@@ -81,6 +81,9 @@
         <Reference Include="Splatform">
             <HintPath>$(GamePath)/valheim_Data/Managed/Splatform.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.TextRenderingModule">
+            <HintPath>$(GamePath)\valheim_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+        </Reference>
         <Reference Include="UnityEngine.UI">
             <HintPath>$(GamePath)/valheim_Data/Managed/UnityEngine.UI.dll</HintPath>
         </Reference>
@@ -142,6 +145,7 @@
         <Compile Include="scripts\Vehicles\VehicleTracker.cs" />
         <Compile Include="scripts\Vehicles\VehiclePatches.cs" />
         <Compile Include="scripts\Map\DeathMarkers.cs" />
+        <Compile Include="scripts\Map\MapLayout.cs" />
         <Compile Include="scripts\Map\MapPatches.cs" />
         <Compile Include="PluginInfo.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

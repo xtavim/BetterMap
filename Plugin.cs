@@ -39,7 +39,6 @@ namespace BetterMap
         public static ConfigEntry<int> deathMarkersKept;
         public static ConfigEntry<float> explorationRadius;
         public static ConfigEntry<float> iconScale;
-        public static ConfigEntry<float> legendScale;
 
         public static ConfigEntry<bool> debugMode;
         public static ConfigEntry<bool> forgetPinned;
@@ -173,13 +172,6 @@ namespace BetterMap
                 new ConfigDescription(
                     "Size of every pin on the map, as a multiple of its normal size. 1 leaves the game's own size, 32 pixels on the minimap and 48 on the map.",
                     new AcceptableValueRange<float>(0.5f, 3f)));
-
-            legendScale = ConfigSync("Map", "Legend Scale", 0.75f,
-                new ConfigDescription(
-                    "Size of the pin legend down the side of the map, as a multiple of its normal size. The whole column scales together, the game's own rows and the ones BetterMap adds, since the legend grows long enough with everything on it to be worth shrinking. 1 leaves it as the game draws it.",
-                    new AcceptableValueRange<float>(0.25f, 1.5f)), false);
-
-            legendScale.SettingChanged += (sender, args) => PinLegend.Rescale();
 
             BindPinRules();
 

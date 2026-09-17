@@ -98,7 +98,6 @@ Then one section per biome, **Auto Pins - Meadows** through **Auto Pins - Ocean*
 | Death Markers Kept | 3 | How many of your death markers to keep |
 | Exploration Radius | 100m | How much ground the map uncovers as you walk. Also how far creatures and resources are spotted |
 | Icon Scale | 1.25 | The size of every pin on the map |
-| Legend Scale | 0.75 | The size of the pin legend down the side of the map |
 
 ## Compatibility
 
