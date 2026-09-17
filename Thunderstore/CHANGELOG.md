@@ -1,14 +1,23 @@
 # Changelog
 
-## [1.0.1] - 2026-09-18
+## [1.0.2] - 2026-09-18
 
 ### Changed
 
-- **The pin legend fits the screen.** With every BetterMap icon on it the column was running off the
-  bottom. It now hangs from the top right corner and sizes itself to the height of the map.
+- **The pin legend fits the screen.** It now hangs from the top right corner and sizes itself to the
+  height of the map, so it no longer runs off the bottom. **Legend Scale** is gone with it: there is
+  nothing left to set.
 
 - **The map is tidier.** The cartography table and public position toggles sit in the bottom left
   corner, and the key hints are a list in the top left instead of a row along the bottom.
+
+## [1.0.1] - 2026-09-17
+
+### Changed
+
+- **The pin legend is smaller.** With every BetterMap icon added to it the column ran most of the
+  height of the screen. The whole legend now draws at three quarters size, the game's own rows and
+  ours together, and **Legend Scale** under Map adjusts it.
 
 
 ## [1.0.0] - 2026-09-10
