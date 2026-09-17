@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.1] - 2026-09-17
+
+### Changed
+
+- **The pin legend is smaller.** With every BetterMap icon added to it the column ran most of the
+  height of the screen. The whole legend now draws at three quarters size, the game's own rows and
+  ours together, and **Legend Scale** under Map adjusts it. Changing the setting resizes the legend
+  straight away, without reopening the map.
+
+
 ## [1.0.0] - 2026-09-10
 
 First release, built for Valheim 1.0.
