@@ -20,6 +20,18 @@ namespace BetterMap.Scripts.Pins
 
         private static Dictionary<int, Watch> _byPrefab;
         private static Dictionary<int, Watch> _byLocation;
+        private static List<PinRules.Rule> _byComponent;
+        private static List<System.Type> _componentTypes;
+
+        // Which kinds of location have ever been seen to hold one of the things we look for inside
+        // them, so the other twenty odd kinds are searched once and skipped forever after. Only ever
+        // told about a location that has finished building: a proxy still waiting on its contents has
+        // nothing to say yet, and writing down "nothing here" would make that permanent.
+        private static readonly Dictionary<int, bool> _holds = new Dictionary<int, bool>();
+
+        private static readonly AccessTools.FieldRef<LocationProxy, GameObject> ProxyInstance =
+            AccessTools.FieldRefAccess<LocationProxy, GameObject>("m_instance");
+
 
         private static int _proxyHash;
 
@@ -35,7 +47,7 @@ namespace BetterMap.Scripts.Pins
             _nextSweep = Time.time + Plugin.autoPinInterval.Value;
 
             Build();
-            if (_byPrefab.Count == 0 && _byLocation.Count == 0) return;
+            if (_byPrefab.Count == 0 && _byLocation.Count == 0 && _byComponent.Count == 0) return;
 
             if (_proxyHash == 0 && ZoneSystem.instance != null && ZoneSystem.instance.m_locationProxyPrefab != null)
             {
@@ -78,7 +90,11 @@ namespace BetterMap.Scripts.Pins
 
                 if (prefab == _proxyHash)
                 {
-                    if (!_byLocation.TryGetValue(zdo.GetInt(ZDOVars.s_location, 0), out watch)) continue;
+                    var location = zdo.GetInt(ZDOVars.s_location, 0);
+
+                    Inside(location, pair.Value, zdo.GetPosition(), origin, rangeSqr, merge);
+
+                    if (!_byLocation.TryGetValue(location, out watch)) continue;
                 }
                 else if (!_byPrefab.TryGetValue(prefab, out watch))
                 {
@@ -103,6 +119,80 @@ namespace BetterMap.Scripts.Pins
                     break;
                 }
             }
+        }
+
+        // Vegvisirs and their like are built into a location rather than spawned as objects of their
+        // own, so they have no ZDO and this sweep cannot see them. What it can see is the proxy the
+        // game leaves standing, and the location is parented to it, so they are reachable from there.
+        //
+        // Each is pinned where it stands and judged on the biome it stands in, not on the location's,
+        // because a ruin can straddle a border. A dungeon's interior is built far from its entrance
+        // and so falls outside the range check on its own, which is how it stays unpinned.
+        public static void Inside(int location, ZNetView nview, Vector3 where, Vector3 origin, float rangeSqr,
+            float merge)
+        {
+            if (_byComponent == null || _byComponent.Count == 0) return;
+            if (nview == null || (where - origin).sqrMagnitude > rangeSqr) return;
+
+            if (_holds.TryGetValue(location, out var holds) && !holds) return;
+
+            var proxy = nview.GetComponent<LocationProxy>();
+            if (proxy == null) return;
+
+            // Nothing is concluded about a location that has not finished building. Writing down
+            // "holds none" here would be permanent, and the contents arrive a moment later.
+            if (ProxyInstance != null && ProxyInstance(proxy) == null) return;
+
+            var any = false;
+
+            // Once per kind of thing, not once per rule. The rules are the same component seven times
+            // over, one per biome, and each scan walks the whole location.
+            foreach (var type in _componentTypes)
+            {
+                var found = nview.GetComponentsInChildren(type, true);
+                if (found.Length == 0) continue;
+
+                any = true;
+
+                foreach (var component in found)
+                {
+                    if (component == null) continue;
+
+                    var position = component.transform.position;
+                    if ((position - origin).sqrMagnitude > rangeSqr) continue;
+
+                    var biome = Heightmap.FindBiome(position);
+
+                    foreach (var rule in _byComponent)
+                    {
+                        if (rule.Component != type || rule.Biome != biome) continue;
+                        if (rule.Enabled == null || !rule.Enabled.Value) break;
+
+                        if (PinRecord.Has(rule.Category, position, merge)) break;
+
+                        Place(rule, null, position);
+                        break;
+                    }
+                }
+            }
+
+            _holds[location] = any;
+        }
+
+        public static void Spawned(LocationProxy proxy)
+        {
+            if (!Plugin.autoPin.Value || _byComponent == null || _byComponent.Count == 0) return;
+            if (proxy == null || Player.m_localPlayer == null || Minimap.instance == null) return;
+
+            var nview = proxy.GetComponent<ZNetView>();
+            if (nview == null || !nview.IsValid()) return;
+
+            var range = Plugin.explorationRadius.Value;
+
+            // No flush here. Locations spawn in their hundreds as the world loads, and the record is
+            // written out by the sweep a moment later anyway.
+            Inside(nview.GetZDO().GetInt(ZDOVars.s_location, 0), nview, proxy.transform.position,
+                Player.m_localPlayer.transform.position, range * range, Plugin.autoPinMergeDistance.Value);
         }
 
         private static void Portal(ZDO zdo, Vector3 origin, float rangeSqr, float merge)
@@ -176,9 +266,20 @@ namespace BetterMap.Scripts.Pins
 
             _byPrefab = new Dictionary<int, Watch>();
             _byLocation = new Dictionary<int, Watch>();
+            _byComponent = new List<PinRules.Rule>();
+            _componentTypes = new List<System.Type>();
 
             foreach (var rule in PinRules.All)
             {
+                if (rule.Component != null)
+                {
+                    _byComponent.Add(rule);
+
+                    if (!_componentTypes.Contains(rule.Component)) _componentTypes.Add(rule.Component);
+
+                    continue;
+                }
+
                 var into = rule.IsLocation ? _byLocation : _byPrefab;
 
                 foreach (var prefabName in rule.Prefabs)
@@ -219,7 +320,7 @@ namespace BetterMap.Scripts.Pins
 
             if (Plugin.debugMode.Value)
             {
-                Plugin.Logger.LogInfo($"AutoPins: watching {_byPrefab.Count} prefabs and {_byLocation.Count} places");
+                Plugin.Logger.LogInfo($"AutoPins: watching {_byPrefab.Count} prefabs, {_byLocation.Count} places and {_byComponent.Count} built in");
             }
         }
 
@@ -230,6 +331,8 @@ namespace BetterMap.Scripts.Pins
 
             foreach (var rule in PinRules.All)
             {
+                if (rule.Component != null) continue;
+
                 foreach (var name in rule.Prefabs)
                 {
                     if (rule.IsLocation)

@@ -50,6 +50,11 @@ namespace BetterMap.Scripts.Pins
             public bool DefaultOn;
             public bool IsLocation;
             public ConfigEntry<bool> Enabled;
+
+            // Set instead of Prefabs for anything the game builds into a location rather than
+            // spawning as a networked object of its own. Those have no ZDO, so the sweep can only
+            // find them by looking inside the locations it already walks.
+            public System.Type Component;
         }
 
         public static readonly List<Rule> All = new List<Rule>
@@ -62,7 +67,10 @@ for b, n, ps, c, d, isloc, desc in RULES:
     CS.append('                Description = "%s",' % desc.replace('"', '\\"'))
     if n in NAMES:
         CS.append('                NameToken = "%s",' % NAMES[n])
-    CS.append("                Prefabs = new[] { %s }," % ", ".join('"%s"' % p for p in ps))
+    if ps and ps[0].startswith("@"):
+        CS.append("                Component = typeof(%s)," % ps[0][1:])
+    else:
+        CS.append("                Prefabs = new[] { %s }," % ", ".join('"%s"' % p for p in ps))
     CS.append("                Biome = Heightmap.Biome.%s," % b)
     CS.append("                Category = PinCategory.%s," % c.capitalize())
     CS.append("                DefaultOn = %s," % ("true" if d else "false"))
@@ -77,8 +85,10 @@ open("scripts/Pins/PinRules.cs", "w", encoding="utf-8", newline="\r\n").write("\
 
 MD = ["| biome | setting | category | default | prefabs |", "|---|---|---|---|---|"]
 for b, n, ps, c, d, isloc, desc in RULES:
-    MD.append("| %s | %s | %s | %s | %s |" % (
-        b, n, c, "**on**" if d else "off", ", ".join("`%s`" % p for p in ps)))
+    what = ("the `%s` component, wherever a location holds one" % ps[0][1:]) \
+        if ps and ps[0].startswith("@") else ", ".join("`%s`" % p for p in ps)
+
+    MD.append("| %s | %s | %s | %s | %s |" % (b, n, c, "**on**" if d else "off", what))
 
 t = open("PINS.md", encoding="utf-8").read().replace("\r\n", "\n")
 i = t.index("| biome |")

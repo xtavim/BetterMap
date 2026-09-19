@@ -56,6 +56,17 @@ namespace BetterMap.Scripts.Map
             DeathMarkers.Record(__instance.transform.position);
         }
 
+        // A location builds its contents a moment after the proxy appears, so the sweep can arrive to
+        // an empty shell. Catching the moment it finishes means a vegvisir is pinned as the ground
+        // loads rather than on the next sweep.
+        [HarmonyPostfix, HarmonyPatch(typeof(LocationProxy), "SpawnLocation")]
+        private static void LocationProxy_SpawnLocation_Postfix(LocationProxy __instance, bool __result)
+        {
+            if (!__result) return;
+
+            Pins.AutoPins.Spawned(__instance);
+        }
+
         [HarmonyPostfix, HarmonyPatch(typeof(Minimap), "SetMapData")]
         private static void Minimap_SetMapData_Postfix()
         {

@@ -187,10 +187,22 @@ namespace BetterMap
             Config.Save();
         }
 
+        // A rule's name is its config key, and BepInEx refuses a handful of characters in one. An
+        // apostrophe in something like "Hildir's Cave" would otherwise throw here, in Awake, and take
+        // the whole configuration down with it rather than the one checkbox.
+        private const string ForbiddenInKeys = "=\n\t\\\"'[]";
+
         private void BindPinRules()
         {
             foreach (var rule in PinRules.All)
             {
+                if (rule.Name == null || rule.Name.IndexOfAny(ForbiddenInKeys.ToCharArray()) >= 0)
+                {
+                    Logger.LogError(
+                        $"PinRules: \"{rule.Name}\" cannot be a setting, it uses one of {ForbiddenInKeys}. Skipped.");
+                    continue;
+                }
+
                 rule.Enabled = ConfigSync($"Auto Pins - {rule.Biome}", rule.Name, rule.DefaultOn,
                     new ConfigDescription(rule.Description));
             }

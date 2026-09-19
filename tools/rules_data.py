@@ -15,7 +15,7 @@ NAMES = {
 RULES = [
  ("Meadows", "Beehives", ["Beehive"], "beehive", True, False,
   "Wild beehives, in and around the abandoned houses. Honey and a queen bee."),
- ("Meadows", "Vegvisirs", ["Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss"], "vegvisir", True, False,
+ ("Meadows", "Vegvisirs", ["@Vegvisir"], "vegvisir", True, False,
   "The runestones that reveal a boss on your map."),
  ("Meadows", "Raspberry Bushes", ["RaspberryBush"], "forage", False, False,
   "Raspberry bushes."),
@@ -30,7 +30,7 @@ RULES = [
  ("Meadows", "Altar of Eikthyr", ["Eikthyrnir"], "boss", False, True,
   "Where Eikthyr is summoned. Off by default: use a vegvisir and the game pins it for you."),
 
- ("BlackForest", "Vegvisirs", ["Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss"], "vegvisir", True, False,
+ ("BlackForest", "Vegvisirs", ["@Vegvisir"], "vegvisir", True, False,
   "The runestones that reveal a boss on your map. Pinned wherever they stand, rather than the ruin around them."),
  ("BlackForest", "Copper Deposits", ["rock4_copper"], "ore", True, False,
   "The large half buried rocks you mine for copper."),
@@ -59,7 +59,7 @@ RULES = [
  ("BlackForest", "Altar of the Elder", ["GDKing"], "boss", False, True,
   "Where the Elder is summoned. Off by default: use a vegvisir and the game pins it for you."),
 
- ("Swamp", "Vegvisirs", ["Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss"], "vegvisir", True, False,
+ ("Swamp", "Vegvisirs", ["@Vegvisir"], "vegvisir", True, False,
   "The runestones that reveal a boss on your map."),
  ("Swamp", "Turnip Seeds", ["Pickable_SeedTurnip"], "forage", True, False,
   "Wild turnip seeds. Rare, and the only way to start a turnip farm."),
@@ -78,18 +78,20 @@ RULES = [
  ("Swamp", "Altar of Bonemass", ["Bonemass"], "boss", False, True,
   "Where Bonemass is summoned. Off by default: use a vegvisir and the game pins it for you."),
 
- ("Mountain", "Vegvisirs", ["Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss"], "vegvisir", True, False,
+ ("Mountain", "Vegvisirs", ["@Vegvisir"], "vegvisir", True, False,
   "The runestones that reveal a boss on your map."),
  ("Mountain", "Silver Deposits", ["silvervein"], "ore", True, False,
   "Silver under the snow. Buried, so a pin is worth more here than anywhere else."),
- ("Mountain", "Obsidian Deposits", ["MineRock_Obsidian"], "ore", True, False,
+ ("Mountain", "Obsidian Deposits", ["MineRock_Obsidian"], "ore", False, False,
   "The black spires you mine for obsidian."),
  ("Mountain", "Drake Nests", ["DrakeNest01"], "forage", True, True,
   "The nests on the peaks, each holding a dragon egg."),
+ ("Mountain", "Frost Caves", ["MountainCave02"], "dungeon", True, True,
+  "The cave mouths in the snow, holding fenring, cultists and the wolf armour."),
  ("Mountain", "Altar of Moder", ["Dragonqueen"], "boss", False, True,
   "Where Moder is summoned. Off by default: use a vegvisir and the game pins it for you."),
 
- ("Plains", "Vegvisirs", ["Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss"], "vegvisir", True, False,
+ ("Plains", "Vegvisirs", ["@Vegvisir"], "vegvisir", True, False,
   "The runestones that reveal a boss on your map."),
  ("Plains", "Tar Pits", ["TarPit1", "TarPit1_1", "TarPit2", "TarPit2_1", "TarPit3", "TarPit3_1"], "tar", True, True,
   "The black pools, with growths to pick and a nest of tar blobs guarding them."),
@@ -115,7 +117,7 @@ RULES = [
  ("Mistlands", "Dvergr Excavations", ["Mistlands_Excavation1", "Mistlands_Excavation2", "Mistlands_Excavation3"], "loot", True, True,
   "Dvergr dig sites, with crates to break and dvergr who mind you breaking them."),
 
- ("AshLands", "Vegvisirs", ["Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss"], "vegvisir", True, False,
+ ("AshLands", "Vegvisirs", ["@Vegvisir"], "vegvisir", True, False,
   "The runestones that reveal a boss on your map."),
  ("AshLands", "Flametal", ["LeviathanLava"], "ore", True, False,
   "The flametal in the lava lakes."),
@@ -146,7 +148,7 @@ RULES = [
  ("AshLands", "Altar of Fader", ["FaderLocation"], "boss", False, True,
   "Where Fader is summoned. Off by default: use a vegvisir and the game pins it for you."),
 
- ("DeepNorth", "Vegvisirs", ["Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss"], "vegvisir", True, False,
+ ("DeepNorth", "Vegvisirs", ["@Vegvisir"], "vegvisir", True, False,
   "The runestones that reveal a boss on your map."),
  ("DeepNorth", "Frozen Trolls", ["DN_gammeltrollFrac01", "DN_gammeltrollFrac02"], "ore", True, True,
   "The trolls frozen into the ice, mined for gold ore. Needs a black metal pickaxe."),

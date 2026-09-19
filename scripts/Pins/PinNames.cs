@@ -80,6 +80,12 @@ namespace BetterMap.Scripts.Pins
 
             foreach (var rule in PinRules.All)
             {
+                if (rule.Prefabs == null)
+                {
+                    if (!string.IsNullOrEmpty(rule.NameToken)) categories[rule.NameToken] = rule.Category;
+                    continue;
+                }
+
                 foreach (var prefabName in rule.Prefabs)
                 {
                     var prefab = rule.IsLocation ? null : scene.GetPrefab(prefabName);

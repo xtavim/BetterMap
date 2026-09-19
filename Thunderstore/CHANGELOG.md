@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.0.4] - 2026-09-20
+
+### Fixed
+
+- **Vegvisirs are pinned.** They never were. They are built into the ruins that hold them rather
+  than placed as objects of their own, so the sweep that finds everything else could not see them.
+
+### Added
+
+- **Frost caves** are pinned, on by default.
+
+### Changed
+
+- **Obsidian deposits** ship unticked.
+
 ## [1.0.3] - 2026-09-19
 
 ### Added

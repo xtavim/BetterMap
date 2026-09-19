@@ -31,6 +31,11 @@ namespace BetterMap.Scripts.Pins
             public bool DefaultOn;
             public bool IsLocation;
             public ConfigEntry<bool> Enabled;
+
+            // Set instead of Prefabs for anything the game builds into a location rather than
+            // spawning as a networked object of its own. Those have no ZDO, so the sweep can only
+            // find them by looking inside the locations it already walks.
+            public System.Type Component;
         }
 
         public static readonly List<Rule> All = new List<Rule>
@@ -51,7 +56,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
+                Component = typeof(Vegvisir),
                 Biome = Heightmap.Biome.Meadows,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -122,7 +127,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map. Pinned wherever they stand, rather than the ruin around them.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
+                Component = typeof(Vegvisir),
                 Biome = Heightmap.Biome.BlackForest,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -265,7 +270,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
+                Component = typeof(Vegvisir),
                 Biome = Heightmap.Biome.Swamp,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -356,7 +361,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
+                Component = typeof(Vegvisir),
                 Biome = Heightmap.Biome.Mountain,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -417,7 +422,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
+                Component = typeof(Vegvisir),
                 Biome = Heightmap.Biome.Plains,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -539,7 +544,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
+                Component = typeof(Vegvisir),
                 Biome = Heightmap.Biome.AshLands,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,
@@ -691,7 +696,7 @@ namespace BetterMap.Scripts.Pins
                 Name = "Vegvisirs",
                 Description = "The runestones that reveal a boss on your map.",
                 NameToken = "$piece_vegvisir",
-                Prefabs = new[] { "Vegvisir_Eikthyr", "Vegvisir_GDKing", "Vegvisir_Bonemass", "Vegvisir_DragonQueen", "Vegvisir_GoblinKing", "Vegvisir_Fader", "Vegvisir_DNBoss" },
+                Component = typeof(Vegvisir),
                 Biome = Heightmap.Biome.DeepNorth,
                 Category = PinCategory.Vegvisir,
                 DefaultOn = true,

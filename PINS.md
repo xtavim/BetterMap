@@ -1,6 +1,8 @@
 # BetterMap — pin curation
 What the mod pins, decided biome by biome against the game's own data rather than a wiki.
 Generated from the three dumps: 4597 prefabs, 257 vegetation entries, 232 locations, Valheim 1.0.7.
+That dump is behind the game and is known to be short at least one location, the frost caves, which
+were added by hand. Re-run the dumps before trusting it for anything new.
 
 ## Rules
 - Config is **sectioned by biome**, with a checkbox for **every single resource**. No grouped lumps.
@@ -80,14 +82,14 @@ infested trees.
 | biome | setting | category | default | prefabs |
 |---|---|---|---|---|
 | Meadows | Beehives | beehive | **on** | `Beehive` |
-| Meadows | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
+| Meadows | Vegvisirs | vegvisir | **on** | the `Vegvisir` component, wherever a location holds one |
 | Meadows | Raspberry Bushes | forage | off | `RaspberryBush` |
 | Meadows | Flint | forage | off | `Pickable_Flint` |
 | Meadows | Mushrooms | forage | off | `Pickable_Mushroom` |
 | Meadows | Dandelions | forage | off | `Pickable_Dandelion` |
 | Meadows | Boar Runestones | spawner | off | `Runestone_Boars` |
 | Meadows | Altar of Eikthyr | boss | off | `Eikthyrnir` |
-| BlackForest | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
+| BlackForest | Vegvisirs | vegvisir | **on** | the `Vegvisir` component, wherever a location holds one |
 | BlackForest | Copper Deposits | ore | **on** | `rock4_copper` |
 | BlackForest | Tin Deposits | ore | **on** | `MineRock_Tin` |
 | BlackForest | Beehives | beehive | **on** | `Beehive` |
@@ -101,7 +103,7 @@ infested trees.
 | BlackForest | Bear Caves | dungeon | **on** | `BearCave` |
 | BlackForest | Mushrooms | forage | off | `Pickable_Mushroom` |
 | BlackForest | Altar of the Elder | boss | off | `GDKing` |
-| Swamp | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
+| Swamp | Vegvisirs | vegvisir | **on** | the `Vegvisir` component, wherever a location holds one |
 | Swamp | Turnip Seeds | forage | **on** | `Pickable_SeedTurnip` |
 | Swamp | Thistle | forage | off | `Pickable_Thistle` |
 | Swamp | Sunken Crypts | dungeon | **on** | `SunkenCrypt4` |
@@ -110,13 +112,13 @@ infested trees.
 | Swamp | Draugr Runestones | spawner | off | `Runestone_Draugr` |
 | Swamp | Mushrooms | forage | off | `Pickable_Mushroom` |
 | Swamp | Altar of Bonemass | boss | off | `Bonemass` |
-| Mountain | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
+| Mountain | Vegvisirs | vegvisir | **on** | the `Vegvisir` component, wherever a location holds one |
 | Mountain | Silver Deposits | ore | **on** | `silvervein` |
 | Mountain | Obsidian Deposits | ore | off | `MineRock_Obsidian` |
 | Mountain | Drake Nests | forage | **on** | `DrakeNest01` |
 | Mountain | Frost Caves | dungeon | **on** | `MountainCave02` |
 | Mountain | Altar of Moder | boss | off | `Dragonqueen` |
-| Plains | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
+| Plains | Vegvisirs | vegvisir | **on** | the `Vegvisir` component, wherever a location holds one |
 | Plains | Tar Pits | tar | **on** | `TarPit1`, `TarPit1_1`, `TarPit2`, `TarPit2_1`, `TarPit3`, `TarPit3_1` |
 | Plains | Fuling Totems | loot | **on** | `goblin_totempole` |
 | Plains | Cloudberry Bushes | forage | off | `CloudberryBush` |
@@ -128,7 +130,7 @@ infested trees.
 | Mistlands | Entrance to the Queen | dungeon | **on** | `Mistlands_DvergrBossEntrance1` |
 | Mistlands | Dvergr Needle Crates | loot | **on** | `dvergrprops_crate_long` |
 | Mistlands | Dvergr Excavations | loot | **on** | `Mistlands_Excavation1`, `Mistlands_Excavation2`, `Mistlands_Excavation3` |
-| AshLands | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
+| AshLands | Vegvisirs | vegvisir | **on** | the `Vegvisir` component, wherever a location holds one |
 | AshLands | Flametal | ore | **on** | `LeviathanLava` |
 | AshLands | Sulfur Arches | ore | **on** | `SulfurArch` |
 | AshLands | Unstable Lava Rock | ore | **on** | `UnstableLavaRock` |
@@ -143,7 +145,7 @@ infested trees.
 | AshLands | Charred Spawner Towers | spawner | off | `CharredTowerRuins3` |
 | AshLands | Dvergr Town | loot | off | `CharredTowerRuins1_dvergr` |
 | AshLands | Altar of Fader | boss | off | `FaderLocation` |
-| DeepNorth | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
+| DeepNorth | Vegvisirs | vegvisir | **on** | the `Vegvisir` component, wherever a location holds one |
 | DeepNorth | Frozen Trolls | ore | **on** | `DN_gammeltrollFrac01`, `DN_gammeltrollFrac02` |
 | DeepNorth | Morkhalla | dungeon | **on** | `MorkBorg` |
 | DeepNorth | Memorial Places | loot | **on** | `NorthMemorialPlace` |
