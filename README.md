@@ -26,7 +26,7 @@ Anyone else's boat only shows when you are close enough to see it.
 
 Ore, berries, seeds, tar pits, beehives, crypts, caves and more get pinned as you come across them. There is a checkbox for every single one, grouped by biome, so you decide what is worth marking.
 
-Out of the box it pins the things worth a trip and leaves the clutter alone: copper, tin, silver, obsidian, flametal, gold, the crypts and caves, tar pits, vegvisirs, the fuling totem and the rarer seeds.
+Out of the box it pins the things worth a trip and leaves the clutter alone: copper, tin, silver, flametal, gold, the crypts and caves, tar pits, vegvisirs, the fuling totem and the rarer seeds.
 
 **A pin you delete stays deleted.** Walking past the same place again will not put it back.
 

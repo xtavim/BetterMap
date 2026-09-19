@@ -112,8 +112,9 @@ infested trees.
 | Swamp | Altar of Bonemass | boss | off | `Bonemass` |
 | Mountain | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
 | Mountain | Silver Deposits | ore | **on** | `silvervein` |
-| Mountain | Obsidian Deposits | ore | **on** | `MineRock_Obsidian` |
+| Mountain | Obsidian Deposits | ore | off | `MineRock_Obsidian` |
 | Mountain | Drake Nests | forage | **on** | `DrakeNest01` |
+| Mountain | Frost Caves | dungeon | **on** | `MountainCave02` |
 | Mountain | Altar of Moder | boss | off | `Dragonqueen` |
 | Plains | Vegvisirs | vegvisir | **on** | `Vegvisir_Eikthyr`, `Vegvisir_GDKing`, `Vegvisir_Bonemass`, `Vegvisir_DragonQueen`, `Vegvisir_GoblinKing`, `Vegvisir_Fader`, `Vegvisir_DNBoss` |
 | Plains | Tar Pits | tar | **on** | `TarPit1`, `TarPit1_1`, `TarPit2`, `TarPit2_1`, `TarPit3`, `TarPit3_1` |
@@ -327,9 +328,10 @@ site rule even though surtling cores are gated behind the fire holes.
 
 ### Decided
 
-**On by default:** `silvervein` (SilverOre) · `MineRock_Obsidian` · `DrakeNest01` (DragonEgg)
+**On by default:** `silvervein` (SilverOre) · `DrakeNest01` (DragonEgg) ·
+`MountainCave02` (frost caves)
 
-**Off by default:** `Dragonqueen` (boss altar) · `AbandonedLogCabin02/03/04` ·
+**Off by default:** `MineRock_Obsidian` · `Dragonqueen` (boss altar) · `AbandonedLogCabin02/03/04` ·
 `StoneTowerRuins04/05` and `_leet` · `MountainWell1` · `DrakeLorestone` · `Runestone_Mountains`
 
 **Out of scope:** `AncientUpgradeStation`, `Hildir_cave`, vanilla pins both.

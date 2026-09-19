@@ -379,7 +379,7 @@ namespace BetterMap.Scripts.Pins
                 Prefabs = new[] { "MineRock_Obsidian" },
                 Biome = Heightmap.Biome.Mountain,
                 Category = PinCategory.Ore,
-                DefaultOn = true,
+                DefaultOn = false,
                 IsLocation = false
             },
             new Rule
@@ -389,6 +389,16 @@ namespace BetterMap.Scripts.Pins
                 Prefabs = new[] { "DrakeNest01" },
                 Biome = Heightmap.Biome.Mountain,
                 Category = PinCategory.Forage,
+                DefaultOn = true,
+                IsLocation = true
+            },
+            new Rule
+            {
+                Name = "Frost Caves",
+                Description = "The cave mouths in the snow, holding fenring, cultists and the wolf armour.",
+                Prefabs = new[] { "MountainCave02" },
+                Biome = Heightmap.Biome.Mountain,
+                Category = PinCategory.Dungeon,
                 DefaultOn = true,
                 IsLocation = true
             },
