@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.3] - 2026-09-19
+
+### Added
+
+- **Death markers can be cleared.** Right click one to remove it, the same as any other pin.
+
 ## [1.0.2] - 2026-09-18
 
 ### Changed

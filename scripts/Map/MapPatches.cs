@@ -32,6 +32,22 @@ namespace BetterMap.Scripts.Map
             MapPins.ApplyScale();
         }
 
+        // Death markers are drawn unsaved, and the game only offers saved pins for removal, so a right
+        // click passes through them. Ours are taken only when the game turned nothing down.
+        [HarmonyPrefix, HarmonyPatch(typeof(Minimap), "RemovePinUnderPointer")]
+        private static void Minimap_RemovePinUnderPointer_Prefix(Minimap __instance, out int __state)
+        {
+            __state = MapPins.Of(__instance).Count;
+        }
+
+        [HarmonyPostfix, HarmonyPatch(typeof(Minimap), "RemovePinUnderPointer")]
+        private static void Minimap_RemovePinUnderPointer_Postfix(Minimap __instance, int __state)
+        {
+            if (MapPins.Of(__instance).Count != __state) return;
+
+            DeathMarkers.RemoveUnderPointer(__instance);
+        }
+
         [HarmonyPostfix, HarmonyPatch(typeof(Player), "OnDeath")]
         private static void Player_OnDeath_Postfix(Player __instance)
         {

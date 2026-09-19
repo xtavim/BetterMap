@@ -20,6 +20,14 @@ namespace BetterMap.Scripts.Map
         private static readonly AccessTools.FieldRef<Minimap, List<Minimap.PinData>> MapPins =
             AccessTools.FieldRefAccess<Minimap, List<Minimap.PinData>>("m_pins");
 
+        private static readonly Func<Minimap, Vector3, Vector3> ScreenToWorld =
+            AccessTools.MethodDelegate<Func<Minimap, Vector3, Vector3>>(
+                AccessTools.Method(typeof(Minimap), "ScreenToWorldPoint"));
+
+        private static readonly Func<Minimap, float> InteractRadius =
+            AccessTools.MethodDelegate<Func<Minimap, float>>(
+                AccessTools.PropertyGetter(typeof(Minimap), "PinInteractRadius"));
+
         private static bool _rebuilt;
 
         public static void Tick()
@@ -58,6 +66,42 @@ namespace BetterMap.Scripts.Map
 
             Store(markers);
             Rebuild();
+        }
+
+        // The pin is only a drawing of what is stored, so taking it off the map is not enough: the
+        // next rebuild would put it straight back.
+        public static bool RemoveUnderPointer(Minimap map)
+        {
+            if (map == null || Player.m_localPlayer == null || ZNet.instance == null) return false;
+            if (ScreenToWorld == null || InteractRadius == null) return false;
+
+            var pos = ScreenToWorld(map, ZInput.pointerPosition);
+            var radius = InteractRadius(map);
+            var world = ZNet.instance.GetWorldUID();
+
+            var markers = Load();
+            var closest = -1;
+            var nearest = radius;
+
+            for (var i = 0; i < markers.Count; i++)
+            {
+                if (markers[i].World != world) continue;
+
+                var distance = Utils.DistanceXZ(pos, markers[i].Pos);
+                if (distance > nearest) continue;
+
+                nearest = distance;
+                closest = i;
+            }
+
+            if (closest < 0) return false;
+
+            markers.RemoveAt(closest);
+
+            Store(markers);
+            Rebuild();
+
+            return true;
         }
 
         private static string DayLabel()

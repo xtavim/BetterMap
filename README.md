@@ -34,6 +34,8 @@ Out of the box it pins the things worth a trip and leaves the clutter alone: cop
 
 The game drops a marker where you died but never saves it, so it is gone the next time you load. BetterMap keeps them, and keeps more than one.
 
+Right click one to clear it, the same as any other pin.
+
 ### 🧭 Traders
 
 Haldor, Hildir and the bog witch get their names on the map instead of an unlabelled icon.
