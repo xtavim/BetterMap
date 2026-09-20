@@ -521,6 +521,16 @@ namespace BetterMap.Scripts.Pins
             },
             new Rule
             {
+                Name = "Infested Mines",
+                Description = "The dvergr town gates, and the infested mine behind them.",
+                Prefabs = new[] { "Mistlands_DvergrTownEntrance1", "Mistlands_DvergrTownEntrance2" },
+                Biome = Heightmap.Biome.Mistlands,
+                Category = PinCategory.Dungeon,
+                DefaultOn = true,
+                IsLocation = true
+            },
+            new Rule
+            {
                 Name = "Dvergr Needle Crates",
                 Description = "The long crate holding a dvergr needle, which is what a sap extractor is built from. One stands in each guard tower, excavation, harbour and lighthouse.",
                 Prefabs = new[] { "dvergrprops_crate_long" },
@@ -626,6 +636,17 @@ namespace BetterMap.Scripts.Pins
                 Name = "Charred Fortresses",
                 Description = "The fortresses, holding a molten core, a bell fragment and a great many charred.",
                 Prefabs = new[] { "CharredFortress" },
+                Biome = Heightmap.Biome.AshLands,
+                Category = PinCategory.Dungeon,
+                DefaultOn = true,
+                IsLocation = true
+            },
+            new Rule
+            {
+                Name = "Putrid Holes",
+                Description = "The dens a morgen sleeps in, three chests apiece and a vegvisir.",
+                NameToken = "$location_morgenhole",
+                Prefabs = new[] { "MorgenHole1", "MorgenHole2", "MorgenHole3" },
                 Biome = Heightmap.Biome.AshLands,
                 Category = PinCategory.Dungeon,
                 DefaultOn = true,

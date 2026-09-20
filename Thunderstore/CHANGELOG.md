@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.5] - 2026-09-20
+
+### Added
+
+- **Infested mines** in the Mistlands and **putrid holes** in the Ashlands are pinned.
+
+### Fixed
+
+- A vegvisir pin no longer appears at ruins that do not actually have one.
+- Pin icons no longer clash with mods that add their own, such as TargetPortal.
+- No more repeated errors after loading a world a second time in the same session.
+
 ## [1.0.4] - 2026-09-20
 
 ### Fixed

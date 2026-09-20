@@ -154,11 +154,14 @@ namespace BetterMap.Scripts.Pins
                 var found = nview.GetComponentsInChildren(type, true);
                 if (found.Length == 0) continue;
 
+                // Whether this kind of place ever holds one, which is what gets remembered, is not
+                // whether this one does. A location carries props it may or may not raise, and one
+                // left switched off is not standing there to be found.
                 any = true;
 
                 foreach (var component in found)
                 {
-                    if (component == null) continue;
+                    if (component == null || !component.gameObject.activeInHierarchy) continue;
 
                     var position = component.transform.position;
                     if ((position - origin).sqrMagnitude > rangeSqr) continue;

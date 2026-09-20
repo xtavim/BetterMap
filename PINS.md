@@ -128,6 +128,7 @@ infested trees.
 | Mistlands | Magecap | forage | off | `Pickable_Mushroom_Magecap` |
 | Mistlands | Jotun Puffs | forage | **on** | `Pickable_Mushroom_JotunPuffs` |
 | Mistlands | Entrance to the Queen | dungeon | **on** | `Mistlands_DvergrBossEntrance1` |
+| Mistlands | Infested Mines | dungeon | **on** | `Mistlands_DvergrTownEntrance1`, `Mistlands_DvergrTownEntrance2` |
 | Mistlands | Dvergr Needle Crates | loot | **on** | `dvergrprops_crate_long` |
 | Mistlands | Dvergr Excavations | loot | **on** | `Mistlands_Excavation1`, `Mistlands_Excavation2`, `Mistlands_Excavation3` |
 | AshLands | Vegvisirs | vegvisir | **on** | the `Vegvisir` component, wherever a location holds one |
@@ -139,6 +140,7 @@ infested trees.
 | AshLands | Ash Pots | loot | **on** | `ashland_pot2_red` |
 | AshLands | Places of Mystery | loot | **on** | `PlaceofMystery1`, `PlaceofMystery2`, `PlaceofMystery3` |
 | AshLands | Charred Fortresses | dungeon | **on** | `CharredFortress` |
+| AshLands | Putrid Holes | dungeon | **on** | `MorgenHole1`, `MorgenHole2`, `MorgenHole3` |
 | AshLands | Charred Skulls | forage | off | `Pickable_Charredskull` |
 | AshLands | Volture Nests | loot | off | `VoltureNest` |
 | AshLands | Charred Tower Ruins | loot | off | `CharredTowerRuins1` |
@@ -429,9 +431,9 @@ Tar has no other source, which is what earns the pits their pin despite there be
 **On by default:** `YggdrasilRoot` (sap) · `giant_ribs` (BlackMarble) · `giant_helmet1` ·
 `giant_helmet2` · `giant_sword1` · `giant_sword2` · `Pickable_Mushroom_Magecap` ·
 `Pickable_Mushroom_JotunPuffs` · `Mistlands_DvergrBossEntrance1` ·
-`Mistlands_Excavation1/2/3`
+`Mistlands_Excavation1/2/3` · `Mistlands_DvergrTownEntrance1/2` (infested mines)
 
-**Off by default:** `Mistlands_DvergrTownEntrance1/2` · `Mistlands_RoadPost1` ·
+**Off by default:** `Mistlands_RoadPost1` ·
 `Mistlands_RockSpire1` · `Mistlands_Giant1` · `Mistlands_GuardTower1/2/3` and the ruined variants ·
 `Mistlands_Harbour1` · `Mistlands_Lighthouse1_new` · `Runestone_Mistlands`
 
@@ -484,9 +486,9 @@ cores are gated behind fire holes.
 
 **On by default:** `UnstableLavaRock` (ProustitePowder) · `Pickable_SmokePuff` ·
 `ashland_pot2_red` · `LeviathanLava` (FlametalOreNew) · `PlaceofMystery1/2/3` ·
-`CharredFortress` · `SulfurArch`
+`CharredFortress` · `SulfurArch` · `MorgenHole1/2/3` (putrid holes)
 
-**Off by default:** `FaderLocation` (boss altar) · `Pickable_Charredskull` · `MorgenHole1/2/3` ·
+**Off by default:** `FaderLocation` (boss altar) · `Pickable_Charredskull` ·
 `VoltureNest` · `CharredTowerRuins1` and `_dvergr` · `CharredTowerRuins3` · `CharredRuins1-4` ·
 `Runestone_Ashlands`
 

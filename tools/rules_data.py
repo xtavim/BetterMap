@@ -9,6 +9,7 @@ NAMES = {
     "Greydwarf Nests": "Greydwarf Nest",
     "Giant Remains": "Giant Remains",
     "Ash Pots": "Ash Pot",
+    "Putrid Holes": "$location_morgenhole",
     "Leviathans": "Leviathan",
 }
 
@@ -112,6 +113,8 @@ RULES = [
   "The pale puffball mushrooms, for eitr."),
  ("Mistlands", "Entrance to the Queen", ["Mistlands_DvergrBossEntrance1"], "dungeon", True, True,
   "The way into the infested mine where the Queen waits."),
+ ("Mistlands", "Infested Mines", ["Mistlands_DvergrTownEntrance1", "Mistlands_DvergrTownEntrance2"], "dungeon", True, True,
+  "The dvergr town gates, and the infested mine behind them."),
  ("Mistlands", "Dvergr Needle Crates", ["dvergrprops_crate_long"], "loot", True, False,
   "The long crate holding a dvergr needle, which is what a sap extractor is built from. One stands in each guard tower, excavation, harbour and lighthouse."),
  ("Mistlands", "Dvergr Excavations", ["Mistlands_Excavation1", "Mistlands_Excavation2", "Mistlands_Excavation3"], "loot", True, True,
@@ -135,6 +138,8 @@ RULES = [
   "Where the pieces of Dyrnwyn are. Three in the world, and no way to finish the sword without them."),
  ("AshLands", "Charred Fortresses", ["CharredFortress"], "dungeon", True, True,
   "The fortresses, holding a molten core, a bell fragment and a great many charred."),
+ ("AshLands", "Putrid Holes", ["MorgenHole1", "MorgenHole2", "MorgenHole3"], "dungeon", True, True,
+  "The dens a morgen sleeps in, three chests apiece and a vegvisir."),
  ("AshLands", "Charred Skulls", ["Pickable_Charredskull"], "forage", False, False,
   "Skulls on the ground, picked for charred skull."),
  ("AshLands", "Volture Nests", ["VoltureNest"], "loot", False, True,
