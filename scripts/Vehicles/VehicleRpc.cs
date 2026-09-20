@@ -43,7 +43,13 @@ namespace BetterMap.Scripts.Vehicles
             var used = VehicleMemory.Used();
             package.Write(used.Count);
 
-            foreach (var id in used) package.Write(id);
+            // The same bytes a ZDOID writes. Building one here would register its owner in the game's
+            // own table.
+            foreach (var id in used)
+            {
+                package.Write(id.User);
+                package.Write(id.Id);
+            }
 
             ZRoutedRpc.instance.InvokeRoutedRPC(RequestName, package);
         }

@@ -3,11 +3,31 @@ using System.Globalization;
 
 namespace BetterMap.Scripts.Vehicles
 {
+    // A ZDOID holds its owner as an index into a list the game rebuilds on every world load, so one
+    // kept across a reload reads an owner that is no longer there.
+    public readonly struct Owned : System.IEquatable<Owned>
+    {
+        public readonly long User;
+        public readonly uint Id;
+
+        public Owned(long user, uint id)
+        {
+            User = user;
+            Id = id;
+        }
+
+        public bool Equals(Owned other) => User == other.User && Id == other.Id;
+
+        public override bool Equals(object other) => other is Owned owned && Equals(owned);
+
+        public override int GetHashCode() => (User.GetHashCode() * 397) ^ (int)Id;
+    }
+
     public static class VehicleMemory
     {
         private const string CustomDataKey = "BetterMap.vehicles";
 
-        private static readonly HashSet<ZDOID> _used = new HashSet<ZDOID>();
+        private static readonly HashSet<Owned> _used = new HashSet<Owned>();
 
         private static long _world;
         private static bool _loaded;
@@ -19,14 +39,14 @@ namespace BetterMap.Scripts.Vehicles
             Load();
             if (!_loaded) return;
 
-            if (!_used.Add(id)) return;
+            if (!_used.Add(new Owned(id.UserID, id.ID))) return;
 
             Store();
 
             if (Plugin.debugMode.Value) Plugin.Logger.LogInfo($"VehicleMemory: remembered {id}");
         }
 
-        public static HashSet<ZDOID> Used()
+        public static HashSet<Owned> Used()
         {
             Load();
             return _used;
@@ -64,7 +84,7 @@ namespace BetterMap.Scripts.Vehicles
                 if (!long.TryParse(parts[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out var user)) continue;
                 if (!uint.TryParse(parts[2], NumberStyles.Integer, CultureInfo.InvariantCulture, out var id)) continue;
 
-                _used.Add(new ZDOID(user, id));
+                _used.Add(new Owned(user, id));
             }
         }
 
@@ -93,8 +113,8 @@ namespace BetterMap.Scripts.Vehicles
                 kept.Add(string.Join(";", new[]
                 {
                     _world.ToString(CultureInfo.InvariantCulture),
-                    id.UserID.ToString(CultureInfo.InvariantCulture),
-                    id.ID.ToString(CultureInfo.InvariantCulture)
+                    id.User.ToString(CultureInfo.InvariantCulture),
+                    id.Id.ToString(CultureInfo.InvariantCulture)
                 }));
             }
 
