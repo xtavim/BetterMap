@@ -33,6 +33,8 @@ namespace BetterMap.Scripts.Pins
             AccessTools.FieldRefAccess<LocationProxy, GameObject>("m_instance");
 
 
+        private static readonly int VanillaTypes = System.Enum.GetValues(typeof(Minimap.PinType)).Length;
+
         private static int _proxyHash;
 
         private static float _nextSweep;
@@ -246,7 +248,11 @@ namespace BetterMap.Scripts.Pins
             {
                 if (!PinLegend.CategoryOf(pin.m_type, out var category))
                 {
-                    if (pin.m_type != Plugin.AutoPinType) continue;
+                    // The number a category ends up with depends on what else claimed a slot before
+                    // us, so a pin saved under one set of mods can come back under another and no
+                    // longer match. Its name still does. Only pins that could be ours are asked:
+                    // a portal tagged "Troll Caves" is not a troll cave.
+                    if ((int)pin.m_type < VanillaTypes && pin.m_type != Plugin.AutoPinType) continue;
                     if (!PinNames.Category(pin.m_name, out category)) continue;
                 }
 

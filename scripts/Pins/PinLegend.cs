@@ -99,7 +99,14 @@ namespace BetterMap.Scripts.Pins
             var death = Parent(map.m_selectedIconDeath);
             var extras = death != null ? death.parent as RectTransform : null;
 
-            var first = Enum.GetValues(typeof(Minimap.PinType)).Length;
+            // The next free slot is however long the array is now, not how long the game made it.
+            // Another mod may have taken the slots past the enum and grown it before we got here, and
+            // starting from the enum would hand our pins the same numbers as theirs.
+            var visible = VisibleIconTypes(map);
+            var first = visible != null
+                ? Mathf.Max(visible.Length, Enum.GetValues(typeof(Minimap.PinType)).Length)
+                : Enum.GetValues(typeof(Minimap.PinType)).Length;
+
             Grow(map, first + Ours.Length + 2);
 
             var step = Step(map);
