@@ -71,7 +71,7 @@ namespace BetterMap.Scripts.Pins
         private static void Sweep()
         {
             var origin = Player.m_localPlayer.transform.position;
-            var range = Plugin.explorationRadius.Value;
+            var range = Plugin.autoPinRadius.Value;
             var rangeSqr = range * range;
             var merge = Plugin.autoPinMergeDistance.Value;
 
@@ -192,7 +192,7 @@ namespace BetterMap.Scripts.Pins
             var nview = proxy.GetComponent<ZNetView>();
             if (nview == null || !nview.IsValid()) return;
 
-            var range = Plugin.explorationRadius.Value;
+            var range = Plugin.autoPinRadius.Value;
 
             // No flush here. Locations spawn in their hundreds as the world loads, and the record is
             // written out by the sweep a moment later anyway.
@@ -209,8 +209,8 @@ namespace BetterMap.Scripts.Pins
 
             if (PinRecord.Has(PinCategory.Portal, position, merge)) return;
 
-            var pin = Minimap.instance.AddPin(position, PortalPins.PinType,
-                PortalPins.Label(PortalPins.TagOf(zdo)), save: true, isChecked: false);
+            var pin = PinFilters.AddQuietly(position, PortalPins.PinType,
+                PortalPins.Label(PortalPins.TagOf(zdo)));
 
             pin.m_NamePinData = new Minimap.PinNameData(pin);
 
@@ -223,8 +223,7 @@ namespace BetterMap.Scripts.Pins
         {
             var name = PinNames.For(rule, nview != null ? nview.gameObject : null);
 
-            var pin = Minimap.instance.AddPin(position, PinLegend.TypeOf(rule.Category), name,
-                save: true, isChecked: false);
+            var pin = PinFilters.AddQuietly(position, PinLegend.TypeOf(rule.Category), name);
 
             var icon = Icons.For(rule.Category);
             if (icon != null) pin.m_icon = icon;

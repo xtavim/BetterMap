@@ -125,9 +125,10 @@ infested trees.
 | Plains | Altar of Yagluth | boss | off | `GoblinKing` |
 | Mistlands | Yggdrasil Roots | sap | **on** | `YggdrasilRoot` |
 | Mistlands | Giant Remains | ore | **on** | `giant_ribs`, `giant_helmet1`, `giant_helmet2`, `giant_sword1`, `giant_sword2` |
+| Mistlands | Giant Skulls | ore | **on** | `Mistlands_Giant1` |
 | Mistlands | Magecap | forage | off | `Pickable_Mushroom_Magecap` |
 | Mistlands | Jotun Puffs | forage | **on** | `Pickable_Mushroom_JotunPuffs` |
-| Mistlands | Entrance to the Queen | dungeon | **on** | `Mistlands_DvergrBossEntrance1` |
+| Mistlands | Entrance to the Queen | dungeon | off | `Mistlands_DvergrBossEntrance1` |
 | Mistlands | Infested Mines | dungeon | **on** | `Mistlands_DvergrTownEntrance1`, `Mistlands_DvergrTownEntrance2` |
 | Mistlands | Dvergr Needle Crates | loot | **on** | `dvergrprops_crate_long` |
 | Mistlands | Dvergr Excavations | loot | **on** | `Mistlands_Excavation1`, `Mistlands_Excavation2`, `Mistlands_Excavation3` |
@@ -430,16 +431,22 @@ Tar has no other source, which is what earns the pits their pin despite there be
 
 **On by default:** `YggdrasilRoot` (sap) · `giant_ribs` (BlackMarble) · `giant_helmet1` ·
 `giant_helmet2` · `giant_sword1` · `giant_sword2` · `Pickable_Mushroom_Magecap` ·
-`Pickable_Mushroom_JotunPuffs` · `Mistlands_DvergrBossEntrance1` ·
-`Mistlands_Excavation1/2/3` · `Mistlands_DvergrTownEntrance1/2` (infested mines)
+`Pickable_Mushroom_JotunPuffs` ·
+`Mistlands_Excavation1/2/3` · `Mistlands_DvergrTownEntrance1/2` (infested mines) ·
+`Mistlands_Giant1` (giant skulls)
 
-**Off by default:** `Mistlands_RoadPost1` ·
-`Mistlands_RockSpire1` · `Mistlands_Giant1` · `Mistlands_GuardTower1/2/3` and the ruined variants ·
+**Off by default:** `Mistlands_DvergrBossEntrance1` · `Mistlands_RoadPost1` ·
+`Mistlands_RockSpire1` · `Mistlands_GuardTower1/2/3` and the ruined variants ·
 `Mistlands_Harbour1` · `Mistlands_Lighthouse1_new` · `Runestone_Mistlands`
 
-The Queen is behind `DvergrBossEntrance1`, a location rather than an offering bowl, so the boss
-altar rule does not apply to it. Softtissue is gated behind the excavations the same way surtling
-cores are gated behind fire holes.
+The Queen is behind `DvergrBossEntrance1`, a location rather than an offering bowl, but a vegvisir
+pins it all the same, so it follows the boss altar rule and is off by default. Softtissue comes from the excavations and from the brain inside
+each giant skull.
+
+`Mistlands_Giant1` is the giant skeleton, skull and brain included. The dump records nothing in it
+but spawners, which is why it was first pruned as a creature farm; the skull and brain are missing
+from the dump, not from the game. It is pinned as a place because those pieces were never captured
+by name.
 
 ### Scattered (vegetation)
 

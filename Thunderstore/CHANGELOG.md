@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.6] - 2026-09-24
+
+### Added
+
+- **Giant skulls** in the Mistlands are pinned. Black marble and soft tissue.
+- **Separate radius** for creatures, vehicles and auto pins. Exploration Radius now only uncovers
+  the map. All three default to 100m and go up to 200m.
+
+### Changed
+
+- **Entrance to the Queen** is off by default. A vegvisir already pins it.
+- **Server sync** only covers gameplay settings now. Icon size, names, tints, intervals, death
+  markers and which resources get pinned are up to each player.
+
+### Fixed
+
+- **Pins hidden in the legend stay hidden.** New auto pins no longer show them again, and your
+  choice is kept across relogs.
+
 ## [1.0.5] - 2026-09-20
 
 ### Added

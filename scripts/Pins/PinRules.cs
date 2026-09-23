@@ -491,6 +491,16 @@ namespace BetterMap.Scripts.Pins
             },
             new Rule
             {
+                Name = "Giant Skulls",
+                Description = "The skulls of the fallen giants. Black marble, and soft tissue from the brain inside.",
+                Prefabs = new[] { "Mistlands_Giant1" },
+                Biome = Heightmap.Biome.Mistlands,
+                Category = PinCategory.Ore,
+                DefaultOn = true,
+                IsLocation = true
+            },
+            new Rule
+            {
                 Name = "Magecap",
                 Description = "The blue glowing mushrooms, for eitr.",
                 Prefabs = new[] { "Pickable_Mushroom_Magecap" },
@@ -512,11 +522,11 @@ namespace BetterMap.Scripts.Pins
             new Rule
             {
                 Name = "Entrance to the Queen",
-                Description = "The way into the infested mine where the Queen waits.",
+                Description = "The way into the infested mine where the Queen waits. Off by default: use a vegvisir and the game pins it for you.",
                 Prefabs = new[] { "Mistlands_DvergrBossEntrance1" },
                 Biome = Heightmap.Biome.Mistlands,
                 Category = PinCategory.Dungeon,
-                DefaultOn = true,
+                DefaultOn = false,
                 IsLocation = true
             },
             new Rule

@@ -62,7 +62,7 @@ namespace BetterMap.Scripts.Vehicles
             _wanted.Clear();
 
             var origin = Player.m_localPlayer.transform.position;
-            var range = Plugin.explorationRadius.Value;
+            var range = Plugin.vehicleRadius.Value;
             var rangeSqr = range * range;
 
             foreach (var updater in Ship.Instances)

@@ -52,6 +52,11 @@ namespace BetterMap.Scripts.Pins
             return _types.TryGetValue(category, out var type) ? type : Plugin.AutoPinType;
         }
 
+        public static bool HasType(PinCategory category)
+        {
+            return _types.ContainsKey(category);
+        }
+
         public static bool CategoryOf(Minimap.PinType type, out PinCategory category)
         {
             return _categories.TryGetValue(type, out category);

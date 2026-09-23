@@ -133,6 +133,7 @@
         <Compile Include="scripts\Pins\AutoPins.cs" />
         <Compile Include="scripts\Pins\PortalPins.cs" />
         <Compile Include="scripts\Pins\PinLegend.cs" />
+        <Compile Include="scripts\Pins\PinFilters.cs" />
         <Compile Include="scripts\Pins\NamedPins.cs" />
         <Compile Include="scripts\MapPins.cs" />
         <Compile Include="scripts\Creatures\CreatureIcons.cs" />

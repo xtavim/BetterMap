@@ -48,7 +48,7 @@ Portals get pinned where you place them, named by their tag. Rename a portal and
 
 ### 🗺️ Map
 
-- The pin legend gets a row for each of the new icons, so you can place them by hand and hide them with a right click, same as the game's own
+- The pin legend gets a row for each of the new icons, so you can place them by hand and hide them with a right click, same as the game's own. What you hide stays hidden, even after a relog
 - Pin icons can be made bigger
 - The map uncovers as much ground as you want it to
 
@@ -66,6 +66,7 @@ Everything below can be changed in-game with Configuration Manager, or in `BepIn
 | --- | --- | --- |
 | Show Creatures | On | Creatures on the map, drawn as their trophy |
 | Creature Refresh Interval | 0.5s | How often the list of tracked creatures is rebuilt |
+| Creature Radius | 100m | How far away creatures are shown, up to 200m |
 | Show Creature Names | Off | A name under every creature. Creatures with no trophy, and named pets, always show theirs |
 | Tint Tamed Creatures | On | Tames are green |
 | Tint Hostile Creatures | On | Creatures that attack on sight are red |
@@ -79,6 +80,7 @@ Everything below can be changed in-game with Configuration Manager, or in `BepIn
 | Rotate Boat Icons | On | Boats point the way they are facing |
 | Show Vehicle Names | On | The name under each one |
 | Vehicle Refresh Interval | 5s | How often we ask the server where your vehicles are |
+| Vehicle Radius | 100m | How far away vehicles are followed as they move, up to 200m |
 
 ### Auto Pins
 
@@ -86,6 +88,7 @@ Everything below can be changed in-game with Configuration Manager, or in `BepIn
 | --- | --- | --- |
 | Enable | On | Pin resources as you come across them |
 | Sweep Interval | 2s | How often we look around for something to pin |
+| Pin Radius | 100m | How far away things are spotted for pinning, 5m to 200m |
 | Merge Distance | 5m | How close two pins of the same kind may be |
 | Pin Portals | On | Portals, named by their tag |
 | Name Trader Pins | On | The trader's name on the pin the game already places |
@@ -98,14 +101,14 @@ Then one section per biome, **Auto Pins - Meadows** through **Auto Pins - Ocean*
 | Setting | Default | What it does |
 | --- | --- | --- |
 | Death Markers Kept | 3 | How many of your death markers to keep |
-| Exploration Radius | 100m | How much ground the map uncovers as you walk. Also how far creatures and resources are spotted |
+| Exploration Radius | 100m | How much ground the map uncovers as you walk |
 | Icon Scale | 1.25 | The size of every pin on the map |
 
 ## Compatibility
 
 - Built against **Valheim 1.0** (build 25185596).
 - Requires **BepInExPack Valheim 5.4.2350** or newer.
-- Install on both the client and the server. Settings are synchronized with ServerSync, and the server's values take precedence while **Lock Configuration** is enabled.
+- Install on both the client and the server. While **Lock Configuration** is enabled, the server decides what is allowed: the exploration radius, whether creatures, boats and carts are shown and how far, whether auto pins are on and how far they reach, and revealing traders. Everything else is each player's own, including which resources get auto pinned.
 - Finding your boats and carts anywhere in the world needs the mod on the server. Without it you still see the ones near you.
 - Removing the mod does not break your map. Pins it placed stay where they are and go back to a plain icon.
 

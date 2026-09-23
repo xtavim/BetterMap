@@ -65,7 +65,7 @@ namespace BetterMap.Scripts.Creatures
         private static void Refresh()
         {
             var origin = Player.m_localPlayer.transform.position;
-            var range = Plugin.explorationRadius.Value;
+            var range = Plugin.creatureRadius.Value;
             var rangeSqr = range * range;
 
             _leaving.Clear();

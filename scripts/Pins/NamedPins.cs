@@ -86,8 +86,7 @@ namespace BetterMap.Scripts.Pins
 
             map.RemovePin(found);
 
-            var replacement = map.AddPin(found.m_pos, type, PortalPins.Label(tag),
-                save: true, isChecked: false);
+            var replacement = PinFilters.AddQuietly(found.m_pos, type, PortalPins.Label(tag));
 
             replacement.m_NamePinData = new Minimap.PinNameData(replacement);
 
