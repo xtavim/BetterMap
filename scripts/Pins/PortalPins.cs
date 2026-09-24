@@ -75,5 +75,38 @@ namespace BetterMap.Scripts.Pins
         {
             return zdo.GetString(ZDOVars.s_tag, "");
         }
+
+        private const float Reach = 2f;
+
+        public static void Destroyed(ZDO zdo)
+        {
+            var map = Minimap.instance;
+            if (map == null || zdo == null || !IsPortal(zdo.GetPrefab())) return;
+
+            var position = zdo.GetPosition();
+
+            // Only pins we placed are ours to take away; a pin the player put down by hand stays.
+            if (!PinRecord.Remove(PinCategory.Portal, position, Reach)) return;
+
+            Minimap.PinData found = null;
+            var nearest = Reach * Reach;
+
+            foreach (var pin in MapPins.Of(map))
+            {
+                if (pin.m_type != _type) continue;
+
+                var distance = (pin.m_pos - position).sqrMagnitude;
+                if (distance > nearest) continue;
+
+                nearest = distance;
+                found = pin;
+            }
+
+            if (found != null) map.RemovePin(found);
+
+            PinRecord.Flush();
+
+            if (Plugin.debugMode.Value) Plugin.Logger.LogInfo("PortalPins: portal at " + position + " destroyed, pin removed");
+        }
     }
 }

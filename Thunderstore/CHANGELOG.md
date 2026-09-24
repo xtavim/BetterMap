@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0] - 2026-09-24
+
+### Added
+
+- **Creature stars.** Starred creatures show a star and their star count on the map.
+- **Portal pins are removed** when the portal is destroyed or dismantled.
+- **Smooth zoom** on the map and the minimap.
+
 ## [1.0.6] - 2026-09-24
 
 ### Added

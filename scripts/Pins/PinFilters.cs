@@ -27,7 +27,6 @@ namespace BetterMap.Scripts.Pins
         // filters of a map still loading would overwrite the saved ones.
         private static Minimap _restoredOnto;
 
-        // Every pin we place goes through here, so a kind the player hid stays hidden.
         public static Minimap.PinData AddQuietly(Vector3 pos, Minimap.PinType type, string name)
         {
             var map = Minimap.instance;
@@ -45,7 +44,6 @@ namespace BetterMap.Scripts.Pins
             return pin;
         }
 
-        // The profile is read after the map is built, so this waits for both.
         public static void Tick()
         {
             var map = Minimap.instance;
@@ -127,7 +125,6 @@ namespace BetterMap.Scripts.Pins
             return visible == null || (int)type < 0 || (int)type >= visible.Length || visible[(int)type];
         }
 
-        // What ToggleIconFilter does after flipping one, without the gamepad rumble.
         private static void Refresh(Minimap map)
         {
             PinUpdateRequired(map) = true;

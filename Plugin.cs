@@ -19,6 +19,7 @@ namespace BetterMap
         public static ConfigEntry<float> creatureRefreshInterval;
         public static ConfigEntry<float> creatureRadius;
         public static ConfigEntry<bool> showEntityNames;
+        public static ConfigEntry<bool> showCreatureStars;
         public static ConfigEntry<bool> tintTamedCreatures;
         public static ConfigEntry<bool> tintHostileCreatures;
 
@@ -42,6 +43,7 @@ namespace BetterMap
         public static ConfigEntry<int> deathMarkersKept;
         public static ConfigEntry<float> explorationRadius;
         public static ConfigEntry<float> iconScale;
+        public static ConfigEntry<bool> smoothZoom;
 
         public static ConfigEntry<bool> debugMode;
         public static ConfigEntry<bool> forgetPinned;
@@ -111,6 +113,10 @@ namespace BetterMap
             showEntityNames = ConfigSync("Creatures", "Show Creature Names", false,
                 new ConfigDescription(
                     "Show a name under every creature pin. Creatures with no trophy icon, and tamed creatures that have been given a name, always show theirs regardless of this setting."), false);
+
+            showCreatureStars = ConfigSync("Creatures", "Show Creature Stars", true,
+                new ConfigDescription(
+                    "Show a star and a number above a creature's pin when it has stars, using the game's own star. The number is how many stars it has, so creatures past two stars from other mods show too."), false);
 
             tintTamedCreatures = ConfigSync("Creatures", "Tint Tamed Creatures", true,
                 new ConfigDescription(
@@ -191,6 +197,10 @@ namespace BetterMap
                 new ConfigDescription(
                     "Size of every pin on the map, as a multiple of its normal size. 1 leaves the game's own size, 32 pixels on the minimap and 48 on the map.",
                     new AcceptableValueRange<float>(0.5f, 3f)), false);
+
+            smoothZoom = ConfigSync("Map", "Smooth Zoom", true,
+                new ConfigDescription(
+                    "Glide between zoom levels on the map and the minimap instead of jumping."), false);
 
             BindPinRules();
 

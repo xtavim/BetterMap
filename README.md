@@ -15,6 +15,7 @@ Every creature near you shows up on the map, drawn as its own trophy. A boar loo
 - Creatures without a trophy get a plain pin with their name under it, so you always know what is out there
 - Tamed animals are tinted green, and a named pet shows its name
 - Anything that will attack you on sight is tinted red
+- Starred creatures show a star and how many stars they have
 
 ### ⛵ Boats and carts
 
@@ -44,13 +45,14 @@ If you want, BetterMap can also put **every trader in the world** on your map at
 
 ### 📍 Portals
 
-Portals get pinned where you place them, named by their tag. Rename a portal and its pin follows.
+Portals get pinned where you place them, named by their tag. Rename a portal and its pin follows. Destroy it and the pin goes with it.
 
 ### 🗺️ Map
 
 - The pin legend gets a row for each of the new icons, so you can place them by hand and hide them with a right click, same as the game's own. What you hide stays hidden, even after a relog
 - Pin icons can be made bigger
 - The map uncovers as much ground as you want it to
+- Zooming glides smoothly instead of jumping
 
 ## Installation
 
@@ -68,6 +70,7 @@ Everything below can be changed in-game with Configuration Manager, or in `BepIn
 | Creature Refresh Interval | 0.5s | How often the list of tracked creatures is rebuilt |
 | Creature Radius | 100m | How far away creatures are shown, up to 200m |
 | Show Creature Names | Off | A name under every creature. Creatures with no trophy, and named pets, always show theirs |
+| Show Creature Stars | On | A star and the star count on creatures that have stars |
 | Tint Tamed Creatures | On | Tames are green |
 | Tint Hostile Creatures | On | Creatures that attack on sight are red |
 
@@ -103,6 +106,7 @@ Then one section per biome, **Auto Pins - Meadows** through **Auto Pins - Ocean*
 | Death Markers Kept | 3 | How many of your death markers to keep |
 | Exploration Radius | 100m | How much ground the map uncovers as you walk |
 | Icon Scale | 1.25 | The size of every pin on the map |
+| Smooth Zoom | On | Glide between zoom levels instead of jumping |
 
 ## Compatibility
 

@@ -69,6 +69,43 @@ namespace BetterMap.Scripts.Pins
             _dirty = true;
         }
 
+        public static bool Remove(PinCategory category, Vector3 position, float within)
+        {
+            Load();
+            if (!_loaded) return false;
+
+            var withinSqr = within * within;
+            var removed = false;
+
+            var cx = Mathf.FloorToInt(position.x / CellSize);
+            var cz = Mathf.FloorToInt(position.z / CellSize);
+
+            for (var dx = -1; dx <= 1; dx++)
+            {
+                for (var dz = -1; dz <= 1; dz++)
+                {
+                    if (!_cells.TryGetValue(Key(cx + dx, cz + dz), out var entries)) continue;
+
+                    var gone = entries.RemoveAll(entry =>
+                    {
+                        if (entry.Category != category) return false;
+
+                        var ex = entry.X - position.x;
+                        var ez = entry.Z - position.z;
+                        return ex * ex + ez * ez <= withinSqr;
+                    });
+
+                    if (gone == 0) continue;
+
+                    Count -= gone;
+                    removed = true;
+                }
+            }
+
+            if (removed) _dirty = true;
+            return removed;
+        }
+
         public static void Flush()
         {
             if (!_dirty || !_loaded || Player.m_localPlayer == null) return;

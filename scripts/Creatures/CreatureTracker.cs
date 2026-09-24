@@ -16,6 +16,7 @@ namespace BetterMap.Scripts.Creatures
             public string Label;
             public bool Hostile;
             public bool HasIcon;
+            public int Level;
         }
 
         private struct Style
@@ -208,7 +209,8 @@ namespace BetterMap.Scripts.Creatures
                 Named = style.Named,
                 Label = style.Label,
                 Hostile = style.Hostile,
-                HasIcon = style.Icon != null
+                HasIcon = style.Icon != null,
+                Level = creature.GetLevel()
             };
         }
 
@@ -260,6 +262,8 @@ namespace BetterMap.Scripts.Creatures
                 var tracked = pair.Value;
                 var pin = tracked.Pin;
                 if (pin?.m_iconElement == null) continue;
+
+                CreatureStars.Apply(pin, tracked.Level);
 
                 if (tracked.Tamed)
                 {

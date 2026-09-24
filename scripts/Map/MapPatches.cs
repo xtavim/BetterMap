@@ -67,6 +67,12 @@ namespace BetterMap.Scripts.Map
             Pins.AutoPins.Spawned(__instance);
         }
 
+        [HarmonyPrefix, HarmonyPatch(typeof(ZNetScene), "OnZDODestroyed")]
+        private static void ZNetScene_OnZDODestroyed_Prefix(ZDO zdo)
+        {
+            Pins.PortalPins.Destroyed(zdo);
+        }
+
         [HarmonyPostfix, HarmonyPatch(typeof(Minimap), "SetMapData")]
         private static void Minimap_SetMapData_Postfix()
         {
