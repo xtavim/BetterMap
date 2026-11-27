@@ -30,7 +30,7 @@ namespace BetterMap.Scripts.Pins
                 var location = instance.m_location;
                 if (location == null || !Occupants.ContainsKey(location.m_prefabName)) continue;
 
-                icons[instance.m_position] = location.m_prefab.Name;
+                icons[instance.m_position] = location.m_prefab.name;
             }
         }
 
